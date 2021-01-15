@@ -7,7 +7,7 @@
     >
     <div>
       <div class="mt-16 -mb-3 flex text-sm">
-        <p class="mx-2">
+        <p class="mr-2">
           {{ formatDate(article.createdAt) }}
         </p>
         <span v-if="!!article.updatedAt && article.createdAt !== article.updatedAt" class="mx-2 text-gray-500">•</span>

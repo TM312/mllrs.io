@@ -1,9 +1,9 @@
 <template>
-  <footer class="flex justify-center border-gray-500 border-t-2">
+  <footer class="flex justify-center bg-gray-500">
     <p class="mt-4">
-      &#169; Thomas Moellers, PhD
+      &#169; Thomas Moellers
     </p>
-    <AppSearchInput class="ml-8" />
+    <!-- <AppSearchInput class="ml-8" /> -->
   </footer>
 </template>
 

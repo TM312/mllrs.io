@@ -1,5 +1,6 @@
 <template>
   <div>
+    <span class="uppercase text-gray-800 tracking-wider font-bold text-ss pr-2 py-1">Tags: </span>
     <span v-for="(tag, id) in article.tags" :key="id">
       <NuxtLink :to="`/tag/${tags[tag].slug}`">
         <span
