@@ -33,6 +33,6 @@ A similar but dynamically adaptive and responsive result can be achieved without
 
 ```
 
-<small class="text-gray-600">The number of cards displayed per row can be adjusted by changing the column values per size in the <b-row> component.</small>
+<small class="text-gray-600">The number of cards displayed per row can be adjusted by changing the column values per size in the <code class="bg-gray-800 text-gray-100 rounded p-1">b-row</code> component.</small>
 
 That’s it already and I hope it has been helpful.

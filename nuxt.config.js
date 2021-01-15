@@ -1,5 +1,8 @@
 export default {
   target: 'static',
+  // router: {
+  //   base: '/<repository-name>/'
+  // },
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -20,7 +23,8 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '~/plugins/formatDate'
+    '~/plugins/formatDate',
+    '~/plugins/capitalize'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
