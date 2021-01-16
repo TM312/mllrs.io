@@ -43,8 +43,8 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/content
-    '@nuxt/content',
-    '@nuxtjs/sitemap'
+    '@nuxt/content'
+    // '@nuxtjs/sitemap'
   ],
 
   // Content module configuration (https://go.nuxtjs.dev/config-content)
@@ -59,11 +59,11 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  },
-  sitemap: {
-    hostname: process.env.BASE_URL,
-    routes () {
-      return getRoutes()
-    }
   }
+  // sitemap: {
+  //   hostname: process.env.BASE_URL,
+  //   routes () {
+  //     return getRoutes()
+  //   }
+  // }
 }
