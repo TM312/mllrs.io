@@ -1,5 +1,6 @@
 <template>
   <div>
+    <CardRepository :repository="article.repository" />
     <span class="uppercase text-gray-800 tracking-wider font-bold text-ss pr-2 py-1">Tags: </span>
     <span v-for="(tag, id) in article.tags" :key="id">
       <NuxtLink :to="`/tag/${tags[tag].slug}`">
@@ -11,6 +12,12 @@
       </NuxtLink>
 
     </span>
+    <div v-if="article.repository" class="uppercase text-gray-800 tracking-wider font-bold text-ss pr-2 py-1">
+      <span>Repository:
+      </span>
+      <a :href="article.repository">Here
+      </a>
+    </div>
   </div>
 </template>
 

@@ -1,3 +1,4 @@
+import getRoutes from './utils/getRoutes'
 export default {
   target: 'static',
   router: {
@@ -24,7 +25,9 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     '~/plugins/formatDate',
-    '~/plugins/capitalize'
+    '~/plugins/capitalize',
+    '~/plugins/prism'
+
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -40,14 +43,15 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/content
-    '@nuxt/content'
+    '@nuxt/content',
+    '@nuxtjs/sitemap'
   ],
 
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {
     markdown: {
       prism: {
-        theme: 'prism-themes/themes/prism-material-oceanic.css'
+        theme: false
       }
     },
     nestedProperties: ['author.name']
@@ -55,5 +59,11 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+  },
+  sitemap: {
+    hostname: process.env.BASE_URL,
+    routes () {
+      return getRoutes()
+    }
   }
 }

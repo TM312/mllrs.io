@@ -5,6 +5,8 @@
       <br>
     </ArticleHead>
 
+    <TOC :toc="article.toc" class="my-4" />
+
     <!-- content from markdown -->
     <nuxt-content :document="article" />
     <ArticleTail :article="article" :tags="tags" class="my-4">
@@ -13,6 +15,8 @@
   </article>
 </template>
 <script>
+import Prism from '~/plugins/prism'
+
 export default {
   layout: 'main',
   async asyncData ({ $content, params }) {
@@ -35,6 +39,9 @@ export default {
       series
     }
   },
+  mounted () {
+    Prism.highlightAll()
+  },
 
   head () {
     return {
@@ -55,14 +62,29 @@ export default {
 <style>
 .nuxt-content p {
   margin-bottom: 20px;
+  font-size: 16px;
+  padding-top: 16px;
 }
+.nuxt-content h1 {
+  font-weight: bold;
+  font-size: 36px;
+  padding-top: 36px;
+}
+
 .nuxt-content h2 {
   font-weight: bold;
   font-size: 28px;
+  padding-top: 28px;
 }
 .nuxt-content h3 {
   font-weight: bold;
   font-size: 22px;
+  padding-top: 22px;
+}
+.nuxt-content li {
+  font-weight: bold;
+  font-size: 22px;
+  padding-top: 22px;
 }
 .icon.icon-link {
   background-image: url('~assets/svg/icon-hashtag.svg');

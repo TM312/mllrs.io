@@ -4,6 +4,7 @@ description: Make Bootstrap-Vues Card Decks responsive without custom CSS
 createdAt: 2021-01-11T00:01:00.000Z
 updatedAt: null
 series: building_blocks
+repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
 
 img: hello.png
 alt: THIS IS THE ALT
@@ -23,14 +24,27 @@ A similar but dynamically adaptive and responsive result can be achieved without
 
 
 ```vue[FooComponent.vue]
+<template>
 <b-row cols="1" cols-lg="2" cols-xl="4">
-    <b-col v-for="object in objects" :key=”object.id" class="py-3">
-        <b-card class="h-100” :title="object.title">
-            <b-card-text>{{ object.text }}</b-card-text>
+    <b-col v-for="item in items" :key="item.id" class="py-3">
+        <b-card class="h-100" :title="item.title">
+            <b-card-text>{{ item.text }}</b-card-text>
         </b-card>
     </b-col>
 </b-row>
+</template>
 
+<script>
+export default {
+  name: 'FooComponent',
+  props: {
+    items: {
+      type: Array,
+      required: true
+    }
+  }
+}
+</script>
 ```
 
 <small class="text-gray-600">The number of cards displayed per row can be adjusted by changing the column values per size in the <code class="bg-gray-800 text-gray-100 rounded p-1">b-row</code> component.</small>
