@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="font-bold text-4xl">
-      Posts
+      Articles
     </h1>
     <ul>
       <li
@@ -11,7 +11,9 @@
         <NuxtLink
           :to="`/article/${article.slug}`"
         >
-          {{ article.title }}
+          <p class="text-gray-800 font-medium hover:text-purple-800">
+            {{ article.title }}
+          </p>
         </NuxtLink>
       </li>
     </ul>

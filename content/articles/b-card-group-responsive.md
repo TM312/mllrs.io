@@ -6,7 +6,7 @@ updatedAt: null
 series: building_blocks
 repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
 
-img: hello.png
+img: article/hello.png
 alt: THIS IS THE ALT
 tags:
   - nuxtjs

@@ -1,5 +1,5 @@
 <template>
-  <article class="container mx-auto px-48">
+  <article class="container mx-auto px-48 my-8">
     <!-- <pre>{{ article }}</pre> -->
     <ArticleHead :article="article" :series="series" class="mb-4">
       <br>
