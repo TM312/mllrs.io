@@ -1,4 +1,4 @@
-import getRoutes from './utils/getRoutes'
+// import getRoutes from './utils/getRoutes'
 export default {
   target: 'static',
   router: {
