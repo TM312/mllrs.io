@@ -126,26 +126,30 @@ terraform {
     required_providers {
         github = {
             source  = "integrations/terraform-provider-github"
-            version = "~> 4.3" # checkout the current version during your implementation
+            version = "~> 4.3" # checkout the current version for your implementation
         }
     }
 }
 ```
 
 We configure each provider in a separate configuration file to separate concerns and a better overview.
-We create a new configuration file 'github.tf' (`touch github.tf`) and add the following code:
+In order to interact with our Github account we need to have a Github Access token with the necessary rights. Therefore we log into our account on <a href="https://github.com">Github.com</a>, select 'Settings' -> 'Developer settings' -> 'Personal access token' -> 'Generate new token'. The necessary permissions are 'repo', 'admin:org', and 'delete_repo'.
+For details, see <a href="https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token">here</a>.
+
+Now, we can create a new configuration file 'github.tf' (`touch github.tf`) and add the following code:
 ```tf[github.tf]
 # Configure the GitHub Provider
 provider "github" {
-  token = var.github_token
+  token = var.github_token #the newly create access token is used as a variable
   owner = <enter-your-github-account-id>
 }
 
+# here we define the repository
 resource "github_repository" "test_repo" {
   name        = "test_repo"
   description = "Main Repo for Shyp"
 
-  private = true
+  private = true #private is false by default. Adjust to your use case.
   visibility  = "private" #visibility overrides private
 
   template {
