@@ -113,8 +113,10 @@ Inside the <i>terraform directory</i> we create the following files and sub-dire
 
 3. Github Configuration
 
-Next we use Terraform to configure a new Github repository for our project including necessary secrets to execute the intended workflows on other services.
-In terraform plugins called "providers" allow us to interact with remote systems, such as Github. In order to use these, we need to declare them and – depending on the provider provide some base configuration. See <a href="https://www.terraform.io/docs/language/providers/configuration.html>
+Next we use Terraform to configure a new Github repository for our project including necessary secrets to execute the intended workflows on other services.<br>
+<i class="text-gray-600 pr-20">Note: Terraform can manage the creation and lifecycle of all your GitHub repositories. Terraform will not touch existing GitHub repositories, so it is safe to adopt gradually.</i> <a href="https://www.hashicorp.com/blog/managing-github-with-terraform">src</a>
+
+In terraform plugins called "providers" allow us to interact with remote systems, such as Github. In order to use these, we need to declare them and – depending on the provider provide some base configuration. Check <a href="https://www.terraform.io/docs/language/providers/configuration.html">here</a> for details.
 
 <a href="https://terraform.io">Terraform.io</a> provides extensive documentation for all providers.
 Therefore we define a Github provider (also see <a href="https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository">documentation</a>)
