@@ -3,13 +3,13 @@
     <h1 class="text-xl font-bold">
       Content
     </h1>
-    <ul>
+    <ol class="list-decimal">
       <li v-for="heading in toc" :key="heading.id">
         <NuxtLink :to="`#${heading.id}`">
           {{ heading.text }}
         </NuxtLink>
       </li>
-    </ul>
+    </ol>
     <!-- {{ toc }} -->
   </div>
 </template>
