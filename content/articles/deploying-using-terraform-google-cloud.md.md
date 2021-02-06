@@ -8,7 +8,9 @@ img: article/hello.png
 alt: THIS IS THE ALT
 tags:
   - terraform
-  - bootstrap-vue
+  - docker
+  - github_actions
+  - google_cloud
 
 ---
 # Introduction
