@@ -14,7 +14,8 @@ tags:
 
 ---
 # Introduction
-Development is only one part when buildign software. Deployment and maintenance depicts a major hurdle for new comers attempting to ship a product / web application. This post guides you from the state of a containerized web application organized in a docker-compose file to a consistent CI/CD workflow.
+Development is only one part when buildign software. Deployment and maintenance depicts a major hurdle for new comers attempting to ship a product / web application. This post guides you from the state of a containerized web application organized in a docker-compose file to a consistent CI/CD workflow. The core idea behind this approach is reduce the amount of manual setup and commands to a minimum.
+Our project is going to have two distinct environments, a <i>staging</i> and a <i>production</i> environment.
 
 ```
 .
@@ -26,16 +27,17 @@ Development is only one part when buildign software. Deployment and maintenance 
 ├── .gitignore
 └── docker-compose.yml
 ```
-<small class="text-gray-600">Example project structure. If you don't have a project to work with use the one from the <NuxtLink href="https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group">example repo</NuxtLink> for this article</small>
+<small class="text-gray-600">Example project structure. If you don't have a project to work with use the one from the <a href="https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group">example repo</a> for this article</small>
 
 
 We will use
 <ul class="list-disc">
-  <li>Terraform for the configuration of all relevant resources,</li>
-  <li>Github Actions to define the CI/CD workflow,</li>
-  <li>Docker Hub to host our Docker release images, and</li>
-  <li>Google Cloud to host our !!!</li>
-  <li>Cloudflare !!!</li>
+  <li><i>Terraform</i> for the configuration of all relevant resources,</li>
+  <li>a <i>Makefile</i> to store terminal commands.
+  <li><i>Github Actions</i> to define the CI/CD workflow,</li>
+  <li><i>Docker Hub</i> to host our Docker release images, and</li>
+  <li><i>Google Cloud</i> to host our !!!</li>
+  <li><i>Cloudflare</i> !!!</li>
 </ul>
 
 
@@ -46,7 +48,7 @@ The code repository can be found here.
 ## Technologies in use
 
 ### Terraform
-<NuxtLink href="https://www.terraform.io/">Terraform</NuxtLink> is infrastructure as code software tool. That is you declare the configuration for the resources you use, such as Github or AWS/Google Cloud in configuration files. Thereby you create the base for fast and consistent setup of these resources and more generally a consistent CI/CD workflow.
+<a href="https://www.terraform.io/">Terraform</a> is infrastructure as code software tool. That is you declare the configuration for the resources you use, such as Github or AWS/Google Cloud in configuration files. Thereby you create the base for fast and consistent setup of these resources and more generally a consistent CI/CD workflow.
 Terraform configurations are written as yml files using a special Hashicorp syntax. However, understanding and learning the syntax is not too difficult.
 
 ### Github Actions
@@ -57,22 +59,23 @@ Terraform configurations are written as yml files using a special Hashicorp synt
 
 
 # Prerequisites / Services
-- <NuxtLink href="https://docs.docker.com/engine/install/">Docker</NuxtLink> + <NuxtLink href="https://docs.docker.com/compose/install/">Docker-Compose</NuxtLink>
+<ul class="list-disc">
+  <li><a href="https://docs.docker.com/engine/install/">Docker</a> + <a href="https://docs.docker.com/compose/install/">Docker-Compose</a></li>
+</ul>
 
 
 In this article we will create/rely on accounts for the following services:
-
-- <NuxtLink href="https://github.com/" >Github</NuxtLink>
-- <NuxtLink href="https://hub.docker.com/">Dockerhub</NuxtLink>
-- <NuxtLink href="https://cloud.google.com/">Google Cloud</NuxtLink>
-
+<ul class="list-disc">
+  <li><a href="https://github.com/">Github</a></li>
+  <li><a href="https://hub.docker.com/">Dockerhub</a></li>
+  <li><a href="https://cloud.google.com/">Google Cloud</a></li>
+</ul>
 As a single developer you can use the services for free. Google Cloud further provides free credits for new accounts. If you don't have accounts for these services yet, now would be the best time to do.
 
 # Guide
 
-
-0. Install terraform and upgrade.
-First we will set up terraform. Terraform provides different ways to install that can be found in their <NuxtLink href="https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/gcp-get-started">official guide</NuxtLink>.
+0. Install Terraform and upgrade.
+First we will set up terraform. Terraform provides different ways to install that can be found in their <a href="https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/gcp-get-started">official guide</a>.
 
 Install using `brew` as follows:
 
@@ -84,16 +87,30 @@ brew upgrade hashicorp/tap/terraform #upgrade to latest version
 
 1. Initialize Terraform project
 
-```bash
-mkdir terraform && cd terraform \ #create terraform directory in project root and go to directory
-terraform init #initialize terraform project
+As our first step to integrate Terraform we create a new directory in the project root called <i>terraform</i>.<br>
+<small class="text-gray-600">You may use <code class="bg-gray-800 text-gray-100 rounded p-1">mkdir terraform</code> in the terminal to do so.</small>
+
+We use a <a href="https://www.gnu.org/software/make/manual/make.html#Introduction">Makefile</a> to store our commands. This approach is a good way to reduce the amount of manual commands and standardize our deployment process. To start things off, create a file named <i>Makefile</i>.<br>
+<small class="text-gray-600">You may use <code class="bg-gray-800 text-gray-100 rounded p-1">touch Makefile</code> in the terminal to do so.</small>
+
+We add the following lines to go to the newly created terraform directory and initialize a workspace for our current environment.
+
+```Makefile[Makefile]
+terraform-init:
+	cd terraform && \
+	terraform workspace select $(ENV) && \
+	terraform init
 ```
 
-2. Setting up terraform base structure
+<code class="bg-gray-800 text-gray-100 rounded p-1">$(ENV)</code> is an environmental variable we can specify before running any command. By default we want our commands to run on the staging environment. Therefore we add the lines <code class="bg-gray-800 text-gray-100 rounded p-1">ENV=stage</code> to our <i>.env</i> file.
+
+We run the command -> ###!!!!result
+
+2. Setting up Terraform base structure
 Inside the <i>terraform directory</i> we create the following files and sub-directories: <br>
 <ul class="list-disc">
-  <li> <code class="bg-gray-800 text-gray-100 rounded p-1">main.tf</code> The main configuration file, defining providers</li>
-  <li><code class="bg-gray-800 text-gray-100 rounded p-1">variables.tf</code> Defines all variables used across configuration files. Click <NuxtLink href="https://learn.hashicorp.com/tutorials/terraform/variables?in=terraform/configuration-language&utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS">here</NuxtLink> for details on Terraform variables.</li>
+  <li>The main configuration file, to configure Terraform itself, including providers and and backends.</li>
+  <li><code class="bg-gray-800 text-gray-100 rounded p-1">variables.tf</code> Defines all variables used across configuration files. Click <a href="https://learn.hashicorp.com/tutorials/terraform/variables?in=terraform/configuration-language&utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS">here</a> for details on Terraform variables.</li>
   <li><code class="bg-gray-800 text-gray-100 rounded p-1">environments</code> Parent dir for environment related configuration files.</li>
 </ul>
 
@@ -112,15 +129,18 @@ Inside the <i>terraform directory</i> we create the following files and sub-dire
 └── docker-compose.yml
 ```
 
+
+
+
 3. Github Configuration
 
 Next we use Terraform to configure a new Github repository for our project including necessary secrets to execute the intended workflows on other services.<br>
-<i class="text-gray-600 pr-20">Note: Terraform can manage the creation and lifecycle of all your GitHub repositories. Terraform will not touch existing GitHub repositories, so it is safe to adopt gradually.</i> <NuxtLink href="https://www.hashicorp.com/blog/managing-github-with-terraform">src</NuxtLink>
+<i class="text-gray-600 pr-20">Note: Terraform can manage the creation and lifecycle of all your GitHub repositories. Terraform will not touch existing GitHub repositories, so it is safe to adopt gradually.</i> <a href="https://www.hashicorp.com/blog/managing-github-with-terraform">src</a>
 
-In terraform plugins called <i>"providers"</i> allow us to interact with remote systems, such as Github. In order to use these, we need to declare them and – depending on the provider provide some base configuration. Check <NuxtLink href="https://www.terraform.io/docs/language/providers/configuration.html">here</NuxtLink> for details.
+In terraform plugins called <i>"providers"</i> allow us to interact with remote systems, such as Github. In order to use these, we need to declare them and – depending on the provider provide some base configuration. Check <a href="https://www.terraform.io/docs/language/providers/configuration.html">here</a> for details.
 
-<NuxtLink href="https://terraform.io">Terraform.io</NuxtLink> provides extensive documentation for all providers.
-Therefore we define a Github provider (also see <NuxtLink href="https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository">documentation</NuxtLink>)
+<a href="https://terraform.io">Terraform.io</a> provides extensive documentation for all providers.
+Therefore we define a Github provider (also see <a href="https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository">documentation</a>)
 
 ```tf[main.tf]
 terraform {
@@ -134,24 +154,23 @@ terraform {
 ```
 
 We configure each provider in a separate configuration file to separate concerns and a better overview.
-In order to interact with our Github account we need to have a Github Access token with the necessary rights. Therefore we log into our account on <NuxtLink href="https://github.com">Github.com</NuxtLink>, select 'Settings' -> 'Developer settings' -> 'Personal access token' -> 'Generate new token'. The necessary permissions are 'repo', 'admin:org', and 'delete_repo'.
-For details, see <NuxtLink href="https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token">here</NuxtLink>.
+In order to interact with our Github account we need to have a Github Access token with the necessary rights. Therefore we log into our account on <a href="https://github.com">Github.com</a>, select 'Settings' -> 'Developer settings' -> 'Personal access token' -> 'Generate new token'. The necessary permissions are 'repo', 'admin:org', and 'delete_repo'.
+For details, see <a href="https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token">here</a>.
 
 Now, we can create a new configuration file 'github.tf' (`touch github.tf`) and add the following code:
 ```tf[github.tf]
 # Configure the GitHub Provider
 provider "github" {
-  token = var.github_token #the newly create access token is used as a variable
-  owner = <enter-your-github-account-id>
+  token = var.github_token
+  owner = var.github_account_id
 }
 
-# here we define the repository
-resource "github_repository" "test_repo" {
-  name        = "test_repo"
-  description = "Main Repo for Shyp"
+resource "github_repository" "project_repo" {
+  name        = "project_repo"
+  description = "Main Repo for Project"
 
-  private = true #private is false by default. Adjust to your use case.
-  visibility  = "private" #visibility overrides private
+  private = true
+  visibility  = "private"
 
   template {
     owner = "github"
@@ -159,33 +178,79 @@ resource "github_repository" "test_repo" {
   }
 }
 
-data "github_actions_public_key" "example_public_key" {
-  repository = github_repository.test_repo.name
+```
+#private is false by default. Adjust to your use case.
+#visibility overrides private
+
+github_token
+github_account_id
+
+In order to access these var.github_token and var.github_account_id we need to add them as variables, for which we have created variables.tf
+
+```tf[variables.tf]
+# Github
+variable "github_token" {
+  description = "Github access token. Will be provided as ENV var."
+  type = string
 }
 
+variable "github_account_id" {
+  description = "Github account id. Will be provided as ENV var."
+  type = string
+}
+```
+<p class="mt-2 max-w-4xl text-sm text-gray-500">
+We can provide different arguments to each variable, such as description, type or default value for higher code robustness. Read more about Terraform variables <a href="https://www.terraform.io/docs/language/values/variables.html">here</a>
+</p>
+
+Finally we add <i>github_token</i>, <i>github_account_id</i> with their respective value as variables to our .env file.
+
+3. Docker Hub Configuration
+By now we have defined the remote repository on Github and provided Terraform the necessary rights to interact with this resource through the Access Token.
+Likewise we now provide Github with the rights to interact with Docker Hub in the course of our upcoming workflows in the form of a Docker Hub access token.
+We can create this token, by logging into our account, and select <i>Account Settings</i> -> <i>Security</i> -> <i>New Access Token</i>. Chose a meaningful description such as '<i>PROJECT_NAME – Github Actions Token</i>'.
+
+Now we can add these secrets to our github configuration:
+
+```tf[github.tf]
+...
+
 resource "github_actions_secret" "DOCKER_HUB_USERNAME" {
-  repository       = github_repository.test_repo.name
+  repository       = github_repository.project_repo.name
   secret_name      = "DOCKER_HUB_USERNAME"
-  plaintext_value  = "test_repo_key"
+  plaintext_value  = var.docker_hub_username
+}
+
+resource "github_actions_secret" "DOCKER_HUB_ACCESS_TOKEN" {
+  repository       = github_repository.project_repo.name
+  secret_name      = "DOCKER_HUB_ACCESS_TOKEN"
+  plaintext_value  = var.docker_hub_access_token
 }
 
 ```
 
+Like before, we add the new variables to `variables.tf` and add them to our .env file.
 
 
-1. Login & Create new access token
-In order to provide Github Action to access docker hub later in the process, we create access credentials and add them secrets to Github.
-We can create a new access token by clicking
-we created a PAT and added it to GitHub to ensure we can access Docker Hub from any workflow.
+```tf[variables.tf]
+# Docker Hub
+variable "docker_hub_username" {
+  description = "DOcker Hub username. Will be provided as ENV var."
+  type = string
+}
+
+variable "docker_hub_access_token" {
+  description = "DOcker Hub account id. Will be provided as ENV var."
+  type = string
+}
+```
 
 
-## Setup Github
-0. Create an account on <NuxtLink href="https://github.com/">Github</NuxtLink>
-
-1. Create Terraform configuration file for new Github repository
-We `cd`into terraform
 
 
+
+
+Like before, add the Access Token to your .env file.
 
 
 
@@ -224,7 +289,7 @@ In console: https://console.cloud.google.com/iam-admin
 
 
 - Terraform apply
-(if terraform apply fails, try: `gcloud auth application-default login` (cfr. <NuxtLink href="https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/issues/10">ref</NuxtLink>, <NuxtLink href="https://cloud.google.com/sdk/gcloud/reference/auth/application-default/">official docs</NuxtLink>)
+(if terraform apply fails, try: `gcloud auth application-default login` (cfr. <a href="https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/issues/10">ref</a>, <a href="https://cloud.google.com/sdk/gcloud/reference/auth/application-default/">official docs</a>)
 
 
 

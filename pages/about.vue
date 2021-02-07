@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto mt-48">
     Hi, I'm Thomas. Based on my experience in full-stack development and dev ops,
     I write articles to help creators in building and launching web applications.
   </div>
