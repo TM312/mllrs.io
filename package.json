@@ -17,6 +17,7 @@
   "dependencies": {
     "@nuxt/content": "^1.13.0",
     "@nuxtjs/sitemap": "^2.4.0",
+    "@tailwindcss/typography": "^0.4.0",
     "core-js": "^3.6.5",
     "eslint-plugin-vue": "^7.5.0",
     "nuxt": "^2.14.8",

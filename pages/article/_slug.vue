@@ -1,13 +1,53 @@
 <template>
-  <article class="container mx-auto px-48 my-8">
+  <article class="container mx-auto px-4 md:px-24 lg:px-40 my-8">
     <!-- <pre>{{ article }}</pre> -->
-    <ArticleHead :article="article" :series="series" class="mb-4">
+    <ArticleHead :article="article" :series="series" class="mb-10 ">
       <br>
     </ArticleHead>
-    <TOC v-if="article.toc.length > 0" :toc="article.toc" class="my-20 text-lg" />
 
     <!-- content from markdown -->
-    <nuxt-content :document="article" />
+    <div class="grid grid-cols-3 gap-2">
+      <div :class="`prose lg:prose-lg text-justify col-span-3 lg:col-span-${article.toc.length > 0 ? 2 : 3} order-last lg:order-first`">
+        <nuxt-content ref="nuxtContent" :document="article" />
+      </div>
+      <aside v-if="article.toc.length > 0" class="col-span-3 lg:col-span-1 lg:flex lg:flex-col">
+        <div class="sticky top-16 pl-6">
+          <h2
+            class="text-xl font-semibold text-grey-300 lg:mt-9 tracking-wider"
+          >
+            Table of contents
+          </h2>
+          <nav class="mt-4">
+            <ul>
+              <li
+                v-for="link of article.toc"
+                :key="link.id"
+                :class="{
+                  'pl-4': link.depth === 3
+                }"
+                class="font-semibold toc-list"
+                @click="currentlyActiveToc = link.id"
+              >
+                <NuxtLink
+                  :class="{
+                    'text-indigo-500 hover:text-indigo-600':
+                      link.id === currentlyActiveToc,
+                    'text-grey-300 hover:gray-700': link.id !== currentlyActiveToc
+                  }"
+                  role="button"
+                  class="transition-colors duration-75 text-base mb-2 block"
+                  :to="`#${link.id}`"
+                >
+                  {{ link.text }}
+                </NuxtLink>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <!-- <TOC v-if="article.toc.length > 0" ref="toc" :toc="article.toc" class="my-5 text-lg" @currentlyActiveToc="currentlyActiveToc=$event" /> -->
+      </aside>
+    </div>
+
     <ArticleTail :article="article" :tags="tags" class="my-4">
       <br>
     </ArticleTail>
@@ -41,6 +81,16 @@ export default {
       series
     }
   },
+  data () {
+    return {
+      currentlyActiveToc: '',
+      observer: null,
+      observerOptions: {
+        root: this.$refs.nuxtContent,
+        threshold: 0.3
+      }
+    }
+  },
 
   head () {
     return {
@@ -59,8 +109,28 @@ export default {
 
   mounted () {
     Prism.highlightAll()
-  }
 
+    // The Intersection Observer API provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or with a top-level document's viewport.
+    // detecting when an element scrolls into our viewpor
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.getAttribute('id')
+        if (entry.isIntersecting) {
+          this.currentlyActiveToc = id
+        }
+      })
+    }, this.observerOptions)
+
+    // Track all sections that have an `id` applied
+    document
+      .querySelectorAll('.nuxt-content h2[id], .nuxt-content h3[id]')
+      .forEach((section) => {
+        this.observer.observe(section)
+      })
+  },
+  beforeDestroy () {
+    this.observer.disconnect()
+  }
 }
 </script>
 <style>

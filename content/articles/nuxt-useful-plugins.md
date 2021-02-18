@@ -79,7 +79,7 @@ export default {
 ## List of Plugins
 
 
-1. Capitalize String
+### Capitalize String
 
 ```js[capitalize.js]
 import Vue from 'vue'
@@ -97,7 +97,7 @@ Vue.mixin({
 })
 ```
 
-2. Format Datetime object to human readable format
+### Format Datetime Object To Human Readable Format
 ```js[formatDate.js]
 import Vue from 'vue'
 
@@ -113,7 +113,7 @@ Vue.mixin({
 <small class="text-gray-600">You may extend this plugin to support different date formats depending on the user location by providing the respective arguments.</small>
 
 
-3. Sleep
+### Sleep
 
 ```js[sleep.js]
 import Vue from 'vue'

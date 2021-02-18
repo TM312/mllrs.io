@@ -5,7 +5,7 @@
       :alt="article.alt"
       class="h-64 rounded"
     >
-    <div class="mt-16 -mb-3 flex text-md">
+    <div class="mt-16 -mb-3">
       <span class="mr-2">
         {{ formatDate(article.createdAt) }}
       </span>
