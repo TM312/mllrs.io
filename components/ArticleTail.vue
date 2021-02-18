@@ -2,11 +2,13 @@
   <div>
     <CardRepository :repository="article.repository" />
     <span class="uppercase text-gray-800 tracking-wider font-bold text-ss pr-2 py-1">Tags: </span>
-    <span v-for="(tag, id) in article.tags" :key="id" class="mr-2">
-      <Badge
-        :to="`/tag/${tags[tag].slug}`"
-        :name="tags[tag].name"
-      />
+    <span v-if="typeof tags === 'object' && tags !== null">
+      <span v-for="(tag, id) in article.tags" :key="id" class="mr-2">
+        <Badge
+          :to="`/tag/${tags[tag].slug}`"
+          :name="tags[tag].name"
+        />
+      </span>
     </span>
     <div v-if="article.repository" class="uppercase text-gray-800 tracking-wider font-bold text-ss pr-2 py-1">
       <span>Repository:
