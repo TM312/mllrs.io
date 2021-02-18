@@ -2,15 +2,11 @@
   <div>
     <CardRepository :repository="article.repository" />
     <span class="uppercase text-gray-800 tracking-wider font-bold text-ss pr-2 py-1">Tags: </span>
-    <span v-for="(tag, id) in article.tags" :key="id">
-      <NuxtLink :to="`/tag/${tags[tag].slug}`">
-        <span
-          class="truncate uppercase text-green-500 tracking-wider font-medium text-ss pr-2 py-1  mr-2 mb-2 transition-colors duration-300 ease-linear"
-        >
-          {{ tags[tag].name }}
-        </span>
-      </NuxtLink>
-
+    <span v-for="(tag, id) in article.tags" :key="id" class="mr-2">
+      <Badge
+        :to="`/tag/${tags[tag].slug}`"
+        :name="tags[tag].name"
+      />
     </span>
     <div v-if="article.repository" class="uppercase text-gray-800 tracking-wider font-bold text-ss pr-2 py-1">
       <span>Repository:

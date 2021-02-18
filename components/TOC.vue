@@ -10,7 +10,6 @@
         </NuxtLink>
       </li>
     </ol>
-    <!-- {{ toc }} -->
   </div>
 </template>
 

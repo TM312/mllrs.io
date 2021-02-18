@@ -4,8 +4,7 @@
     <ArticleHead :article="article" :series="series" class="mb-4">
       <br>
     </ArticleHead>
-
-    <TOC :toc="article.toc" class="my-4" />
+    <TOC v-if="article.toc.length > 0" :toc="article.toc" class="my-20 text-lg" />
 
     <!-- content from markdown -->
     <nuxt-content :document="article" />
@@ -19,6 +18,7 @@ import Prism from '~/plugins/prism'
 
 export default {
   layout: 'main',
+  transition: 'home',
   async asyncData ({ $content, params }) {
     const article = await $content('articles', params.slug).fetch()
     const tagsList = await $content('tags')
@@ -31,16 +31,15 @@ export default {
       .only(['name', 'slug'])
       .where({ name: { $containsAny: article.series } })
       .fetch()
-    const series = await Object.assign({}, ...seriesList.map(s => ({ [s.name]: s })))
+
+    // https://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
+    const series = seriesList.length > 0 ? await Object.assign({}, ...seriesList.map(s => ({ [s.name]: s }))) : null
 
     return {
       article,
       tags,
       series
     }
-  },
-  mounted () {
-    Prism.highlightAll()
   },
 
   head () {
@@ -56,10 +55,18 @@ export default {
         { hid: 'twitter:description', name: 'twitter:description', content: this.article.description }
       ]
     }
+  },
+
+  mounted () {
+    Prism.highlightAll()
   }
+
 }
 </script>
 <style>
+  .home-enter-active, .home-leave-active { transition: opacity .3s; }
+  .home-enter, .home-leave-active { opacity: 0; }
+
 .nuxt-content p {
   margin-bottom: 20px;
   font-size: 16px;
