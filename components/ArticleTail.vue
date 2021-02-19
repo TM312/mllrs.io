@@ -1,7 +1,6 @@
 <template>
   <div>
-    <CardRepository :repository="article.repository" />
-    <span class="uppercase text-gray-800 tracking-wider font-bold text-ss pr-2 py-1">Tags: </span>
+    <!-- <span class="uppercase text-gray-800 tracking-wider font-bold text-ss pr-2 py-1">Tags: </span> -->
     <span v-if="typeof tags === 'object' && tags !== null">
       <span v-for="(tag, id) in article.tags" :key="id" class="mr-2">
         <Badge
@@ -10,12 +9,8 @@
         />
       </span>
     </span>
-    <div v-if="article.repository" class="uppercase text-gray-800 tracking-wider font-bold text-ss pr-2 py-1">
-      <span>Repository:
-      </span>
-      <a :href="article.repository">Here
-      </a>
-    </div>
+
+    <CardRepository :repository="article.repository" />
   </div>
 </template>
 

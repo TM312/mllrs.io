@@ -110,7 +110,7 @@ Vue.mixin({
   }
 })
 ```
-<small class="text-gray-600">You may extend this plugin to support different date formats depending on the user location by providing the respective arguments.</small>
+<small>You may extend this plugin to support different date formats depending on the user location by providing the respective arguments.</small>
 
 
 ### Sleep
@@ -126,7 +126,7 @@ Vue.mixin({
   }
 })
 ```
-<small class="text-gray-600">Call sleep as an asynchronous function, like <code class="bg-gray-800 text-gray-100 rounded p-1">await this.sleep(2500)</code></small>
+<small>Call sleep as an asynchronous function, like <code class="bg-gray-800 text-gray-100 rounded p-1">await this.sleep(2500)</code></small>
 
 
 

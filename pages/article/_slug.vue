@@ -6,8 +6,8 @@
     </ArticleHead>
 
     <!-- content from markdown -->
-    <div class="grid grid-cols-3 gap-2">
-      <div :class="`prose lg:prose-lg text-justify col-span-3 lg:col-span-${article.toc.length > 0 ? 2 : 3} order-last lg:order-first`">
+    <div :class="`${article.toc.length > 0 ? 'grid grid-cols-3 gap-2' : ''}`">
+      <div :class="`mx-auto prose lg:prose-md text-justify ${article.toc.length > 0 ? 'col-span-3 lg:col-span-2 order-last lg:order-first': ''}`">
         <nuxt-content ref="nuxtContent" :document="article" />
       </div>
       <aside v-if="article.toc.length > 0" class="col-span-3 lg:col-span-1 lg:flex lg:flex-col">
@@ -42,15 +42,14 @@
                 </NuxtLink>
               </li>
             </ul>
+            <ArticleTail :article="article" :tags="tags" class="my-4">
+              <br>
+            </ArticleTail>
           </nav>
         </div>
-        <!-- <TOC v-if="article.toc.length > 0" ref="toc" :toc="article.toc" class="my-5 text-lg" @currentlyActiveToc="currentlyActiveToc=$event" /> -->
+      <!-- <TOC v-if="article.toc.length > 0" ref="toc" :toc="article.toc" class="my-5 text-lg" @currentlyActiveToc="currentlyActiveToc=$event" /> -->
       </aside>
     </div>
-
-    <ArticleTail :article="article" :tags="tags" class="my-4">
-      <br>
-    </ArticleTail>
   </article>
 </template>
 <script>
@@ -137,37 +136,4 @@ export default {
   .home-enter-active, .home-leave-active { transition: opacity .3s; }
   .home-enter, .home-leave-active { opacity: 0; }
 
-.nuxt-content p {
-  margin-bottom: 20px;
-  font-size: 16px;
-  padding-top: 16px;
-}
-.nuxt-content h1 {
-  font-weight: bold;
-  font-size: 36px;
-  padding-top: 36px;
-}
-
-.nuxt-content h2 {
-  font-weight: bold;
-  font-size: 28px;
-  padding-top: 28px;
-}
-.nuxt-content h3 {
-  font-weight: bold;
-  font-size: 22px;
-  padding-top: 22px;
-}
-.nuxt-content li {
-  font-weight: bold;
-  font-size: 22px;
-  padding-top: 22px;
-}
-.icon.icon-link {
-  background-image: url('~assets/svg/icon-hashtag.svg');
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-size: 20px 20px;
-}
 </style>

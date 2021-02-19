@@ -13,6 +13,14 @@ module.exports = {
                 color: '#2c5282'
               }
             },
+            i: {
+              fontWeight: '700',
+              fontStyle: 'normal',
+              color: '#3182ce',
+              '&:hover': {
+                color: '#2c5282'
+              }
+            },
             small: {
               color: '#0000ff'
             }

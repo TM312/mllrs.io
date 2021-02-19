@@ -13,6 +13,7 @@ tags:
   - google_cloud
 
 ---
+
 ## Introduction
 Development is only one part when buildign software. Deployment and maintenance depicts a major hurdle for new comers attempting to ship a product / web application. This post guides you from the state of a containerized web application organized in a docker-compose file to a consistent CI/CD workflow. The core idea behind this approach is reduce the amount of manual setup and commands to a minimum.
 Our project is going to have two distinct environments, a <i>staging</i> and a <i>production</i> environment.
@@ -27,20 +28,17 @@ Our project is going to have two distinct environments, a <i>staging</i> and a <
 ├── .gitignore
 └── docker-compose.yml
 ```
-<small class="text-gray-600">Example project structure. If you don't have a project to work with use the one from the <a href="https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group">example repo</a> for this article</small>
+<small>Example project structure. If you don't have a project to work with use the one from the <a href="https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group">example repo</a> for this article</small>
 
 
-We will use
-<ul class="list-disc">
+We will use<br>
+  <i>Terraform</i> for the configuration of all relevant resources,<br>
+  a <i>Makefile</i> to store terminal commands.<br>
+  <i>Github Actions</i> to define the CI/CD workflow,<br>
+  <i>Docker Hub</i> to host our Docker release images, and<br>
+  <i>Google Cloud</i> to host our !!!<br>
+  <i>Cloudflare</i> !!!<br>
 
-  <li><i>Terraform</i> for the configuration of all relevant resources,</li>
-  <li>a <i>Makefile</i> to store terminal commands.
-  <li><i>Github Actions</i> to define the CI/CD workflow,</li>
-  <li><i>Docker Hub</i> to host our Docker release images, and</li>
-  <li><i>Google Cloud</i> to host our !!!</li>
-  <li><i>Cloudflare</i> !!!</li>
-
-</ul>
 
 
 If you are familiar with Terraform, Docker, Github Actions, and Google Cloud, you can jump directly to the <NuxtLink to="#guide">Guide</NuxtLink>.
@@ -51,10 +49,13 @@ The code repository can be found here.
 
 adasdd
 
-<ul class="list-disc font-normal">
-  <li>Terraform
-  <a href="https://www.terraform.io/">Terraform</a> is infrastructure as code software tool. That is you declare the configuration for the resources you use, such as Github or AWS/Google Cloud in configuration files. Thereby you create the base for fast and consistent setup of these resources and more generally a consistent CI/CD workflow.
-  Terraform configurations are written as yml files using a special Hashicorp syntax. However, understanding and learning the syntax is not too difficult.
+<ul>
+  <li>
+
+    Terraform
+    <a href="https://www.terraform.io/">Terraform</a> is infrastructure as code software tool. That is you declare the configuration for the resources you use, such as Github or AWS/Google Cloud in configuration files. Thereby you create the base for fast and consistent setup of these resources and more generally a consistent CI/CD workflow.
+    Terraform configurations are written as yml files using a special Hashicorp syntax. However, understanding and learning the syntax is not too difficult.
+
   </li>
 
 
@@ -87,7 +88,7 @@ If you don't have accounts for these services yet, now would be a good time to c
 
 ## Guide
 
-0. Install Terraform and upgrade.
+### Install Terraform and upgrade.
 First, we will set up terraform. Terraform provides different ways to install that can be found in their <a href="https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/gcp-get-started">official guide</a>.
 
 Install using `brew` as follows:
@@ -98,7 +99,7 @@ brew install hashicorp/tap/terraform && \
 brew upgrade hashicorp/tap/terraform #upgrade to latest version
 ```
 
-1. Initialize Terraform project
+### Initialize Terraform project
 
 As our first step to integrate Terraform we create a new directory in the project root called <i>terraform</i>.<br>
 <small class="text-gray-600">You may use <code class="bg-gray-800 text-gray-100 rounded p-1">mkdir terraform</code> in the terminal to do so.</small>
@@ -119,17 +120,16 @@ terraform-init:
 
 We run the command -> ###!!!!result
 
-2. Introduction to Terraform file structure setup
-Inside the <i>terraform directory</i> we create the following files and sub-directories: <br>
-<ul class="list-disc">
+### Introduction to Terraform file structure setup
 
-  <li>`main.tf` The main configuration file, to configure Terraform itself, including providers and and backend.</li>
-  <li>`variables.tf` Defines all variables used across configuration files. Click <a href="https://learn.hashicorp.com/tutorials/terraform/variables?in=terraform/configuration-language&utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS">here</a> for details on Terraform variables.</li>
-  <li>
-    `environments`Parent dir for environment related configuration files.<br>
-    `common.tfvars` holds all variables that are shared across environment, such as the name of our application, or domain. <br>
-    `stage/prod` hold environment specific variables such as the database type or Google Compute machine type.<br>
-  </li>
+Inside the <i>terraform directory</i> we create the following files and sub-directories: <br>
+<ul>
+
+  - `main.tf` The main configuration file, to configure Terraform itself, including providers and and backend.
+  - `variables.tf` Defines all variables used across configuration files. Click <a href="https://learn.hashicorp.com/tutorials/terraform/variables?in=terraform/configuration-language&utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS">here</a> for details on Terraform variables.
+  - `environments`Parent dir for environment related configuration files.<br>
+  - `common.tfvars` holds all variables that are shared across environment, such as the name of our application, or domain. <br>
+  - `stage/prod` hold environment specific variables such as the database type or Google Compute machine type.<br>
 
 </ul>
 
@@ -153,7 +153,7 @@ Inside the <i>terraform directory</i> we create the following files and sub-dire
 ```
 
 
-2. Setting up a remote Terraform backend on Google Cloud
+### Setting up a remote Terraform backend on Google Cloud
 
 We add a backend to define where Terraform stores the state about the configured resources. Before running any operation Terraform retrieves the infrastructure state as a reference. By default state would be stored in a local file named `terraform.tfstate`. However, we can easily set it up in a remote environment in a storage bucket on Google Cloud, which does not incur any significant costs but is a more secure and robust setup in case multiple developers work on the project. For more details check <a href="https://www.terraform.io/docs/language/state/index.html">here</a>.
 
@@ -189,7 +189,7 @@ create-tf-backend-bucket:
 	gsutil mb -p $(PROJECT_ID) gs://$(PROJECT_ID)-terraform
 
 ```
-<small class="text-gray-600">In a similar fashion you may add commands to create further buckets required by your app, for instance to store user assets.<small>
+<small>In a similar fashion you may add commands to create further buckets required by your app, for instance to store user assets.</small>
 
 We run the command as <code class="bg-gray-800 text-gray-100 rounded p-1">make create-tf-backend-bucket</code>
 
@@ -229,7 +229,7 @@ For additional details, see <a href="https://www.terraform.io/docs/language/stat
 
 
 
-3. Github Configuration
+### Github Configuration
 
 Next we use Terraform to configure a new Github repository for our project including necessary secrets to execute the intended workflows on other services.<br>
 <i class="text-gray-600 pr-20">Note: Terraform can manage the creation and lifecycle of all your GitHub repositories. Terraform will not touch existing GitHub repositories, so it is safe to adopt gradually.</i><br>
@@ -303,7 +303,7 @@ We can provide different arguments to each variable, such as description, type o
 
 Finally we add <i>github_token</i>, <i>github_account_id</i> with their respective value as variables to our .env file.
 
-3. Docker Hub Configuration
+### Docker Hub Configuration
 By now we have defined the remote repository on Github and provided Terraform the necessary rights to interact with this resource through the Access Token.
 Likewise we now provide Github with the rights to interact with Docker Hub in the course of our upcoming workflows in the form of a Docker Hub access token.
 We can create this token, by logging into our account, and select <i>Account Settings</i> -> <i>Security</i> -> <i>New Access Token</i>. Chose a meaningful description such as '<i>PROJECT_NAME – Github Actions Token</i>'.
@@ -391,7 +391,11 @@ In console: https://console.cloud.google.com/iam-admin
 
 
 
-<small class="text-gray-600">The number of cards displayed per row can be adjusted by changing the column values per size in the  component.</small>
+<small class="text-gray-600">
+
+The number of cards displayed per row can be adjusted by changing the column values per size in the  component.
+
+</small>
 
 ## References
 - Sid Palas – DevOps Crash Course<a href="https://www.youtube.com/watch?v=OXE2a8dqIAI">source</a>
