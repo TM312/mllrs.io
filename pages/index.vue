@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto md:container px-12 lg:px-48 xl:px-75 py-48">
-    <SectionArticles v-if="typeof articles === 'object' && articles !== null" :articles="articles" class="mb-8" />
+    <SectionArticles v-if="typeof articles === 'object' && articles !== null" :articles="articles" class="mb-16" />
     <SectionTags v-if="typeof tags === 'object' && tags !== null" :tags="tags" />
   </div>
 </template>

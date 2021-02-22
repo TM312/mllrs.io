@@ -1,10 +1,10 @@
 <template>
-  <img :src="dynamicImage" :alt="imageAlt" class="mt-1 mb-3 rounded">
+  <img :src="dynamicImage" :alt="imageAlt" class="mt-1 mb-3 rounded"></img>
 </template>
 
 <script>
 export default {
-  name: 'Image',
+  name: 'DImage',
   props: {
     file: {
       type: String,

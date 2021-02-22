@@ -42,7 +42,7 @@
                 </NuxtLink>
               </li>
             </ul>
-            <ArticleTail :article="article" :tags="tags" class="my-4">
+            <ArticleTail :article="article" :tags="tags" class="mt-8">
               <br>
             </ArticleTail>
           </nav>

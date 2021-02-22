@@ -10,7 +10,9 @@
       </span>
     </span>
 
-    <CardRepository :repository="article.repository" />
+    <CardRepository :repository="article.repository" class="mt-4 lg:mt-8" />
+
+    <VoltBatteryCounter class="hidden lg:flex mt-12 lg:mt-18" />
   </div>
 </template>
 

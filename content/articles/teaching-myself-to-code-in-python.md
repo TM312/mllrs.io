@@ -194,7 +194,7 @@ Eventually, I wanted to write the retrieved data into a database. This can be do
 
 <figure>
 
-  <Image post-name="learning_python" file="laut_de_scraper" Image-alt="Screenshot of the laut.de scaper code" ><br></Image>
+  <d-image post-name="learning_python" file="laut_de_scraper" Image-alt="Screenshot of the laut.de scaper code" ><br></d-image>
   <figcaption>The code for the laut.de-scraper.</figcaption>
 
 </figure>

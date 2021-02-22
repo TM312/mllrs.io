@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3 class="mb-4 font-bold text-2xl uppercase">
+    <p class="mb-4 font-bold text-xl uppercase">
       Tags
-    </h3>
+    </p>
     <span
       v-for="tag of tags"
       :key="tag.slug"
