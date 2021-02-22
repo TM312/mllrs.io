@@ -43,9 +43,16 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/content
-    '@nuxt/content'
+    '@nuxt/content',
+    '@nuxtjs/axios'
     // '@nuxtjs/sitemap'
   ],
+
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL || 'http://localhost:3000/' : 'http://localhost:3000/'
+    }
+  },
 
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {

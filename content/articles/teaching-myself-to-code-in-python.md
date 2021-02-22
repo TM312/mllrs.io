@@ -189,7 +189,7 @@ For this I relied on the requests library. Bs4 and requests are typically used i
 Eventually, I wanted to write the retrieved data into a database. This can be done using the os library, which allows for the creation of files such as csv, xlsx, or txt.
 
 
-  <img :src="require('../assets/images/learning_python/laut_de_scraper.png')"><br></img>
+  <!-- <img :src="require('~/assets/images/learning_python/laut_de_scraper.png')"><br></img> -->
 
 
 <figure>
