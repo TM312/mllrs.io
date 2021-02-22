@@ -7,19 +7,24 @@ module.exports = {
         DEFAULT: {
           css: {
             color: '#333',
+            // a: {
+            //   color: '#3182ce',
+            //   '&:hover': {
+            //     color: '#2c5282'
+            //   }
+            // },
             a: {
-              color: '#3182ce',
-              '&:hover': {
-                color: '#2c5282'
-              }
-            },
-            i: {
               fontWeight: '700',
               fontStyle: 'normal',
               color: '#3182ce',
               '&:hover': {
                 color: '#2c5282'
               }
+            },
+            i: {
+              fontWeight: '400',
+              fontStyle: 'normal',
+              color: '#0000ff'
             },
             small: {
               color: '#0000ff'

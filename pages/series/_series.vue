@@ -73,12 +73,13 @@
         </li>
       </ul>
     </div>
-    </a>
   </div>
 </template>
 
 <script>
 export default {
+  layout: 'main',
+  transition: 'home',
   async asyncData ({ $content, params }) {
     const seriesList = await $content('series')
       .where({ slug: { $contains: params.series } })

@@ -19,9 +19,12 @@
       <div class="block uppercase text-base text-center text-indigo-600 font-semibold tracking-wide uppercase">
         {{ !!series ? capitalize(series[article.series].name) : '' }}
       </div>
-      <span class="mt-2 block text-3xl text-center leading-8 font-bold tracking-tight text-gray-900 sm:text-4xl">
+      <div class="mt-2 block text-3xl text-center leading-8 font-bold tracking-tight text-gray-900 sm:text-4xl">
         {{ capitalize(article.title) }}
-      </span>
+      </div>
+      <p v-if="article.description" class="mt-8 text-xl text-center text-gray-500 leading-8">
+        {{ article.description }}
+      </p>
     </div>
   </div>
 </template>
