@@ -8,7 +8,7 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "local": "nuxt generate && nuxt",
-    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
+    "deploy": "push-dir --dir=dist --branch=master --cleanup",
     "clean": "rm -rf node_modules && rm package-lock.json && yarn cache clean --force",
     "reinstall": "yarn run clean && yarn install --force",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",

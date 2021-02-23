@@ -73,18 +73,18 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  },
+  }
   // sitemap: {
   //   hostname: process.env.BASE_URL,
   //   routes () {
   //     return getRoutes()
   //   }
   // }
-  hooks: {
-    'content:file:beforeInsert': (document) => {
-      if (document.extension === '.md') {
-        document.bodyPlainText = document.text
-      }
-    }
-  }
+//   hooks: {
+//     'content:file:beforeInsert': (document) => {
+//       if (document.extension === '.md') {
+//         document.bodyPlainText = document.text
+//       }
+//     }
+//   }
 }
