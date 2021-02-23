@@ -1,9 +1,6 @@
 // import getRoutes from './utils/getRoutes'
 export default {
   target: 'static',
-  //   router: {
-  //     base: '/blog/'
-  //   },
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -51,7 +48,7 @@ export default {
   publicRuntimeConfig: {
     faunaSecretKey: process.env.FAUNA_KEY,
     axios: {
-      baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL || 'http://localhost:8888/blog/' : 'http://localhost:8888/blog/'
+      baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL || 'http://localhost:8888/' : 'http://localhost:8888/'
     }
   },
   privateRuntimeConfig: {

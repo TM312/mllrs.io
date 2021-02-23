@@ -29,7 +29,7 @@ export default {
     }
   },
   async fetch () {
-    const { data } = await this.$axios.get(`/.netlify/functions/fetch_likes?slug=${this.$route.params.slug}`)
+    const { data } = await this.$axios.get(`.netlify/functions/fetch_likes?slug=${this.$route.params.slug}`)
     this.initialVolts = data.volts
   },
   computed: {
@@ -71,7 +71,7 @@ export default {
       }
     },
     async sendVoltageToMainframe (likesToSend) {
-      await this.$axios.post(`/.netlify/functions/register-like?slug=${this.$route.params.slug}&likesToSend=${likesToSend}`)
+      await this.$axios.post(`.netlify/functions/register-like?slug=${this.$route.params.slug}&likesToSend=${likesToSend}`)
     }
   }
 }
