@@ -49,8 +49,15 @@ export default {
   ],
 
   publicRuntimeConfig: {
+    faunaSecretKey: process.env.BLOG_SECRET_KEY,
     axios: {
-      baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL || 'http://localhost:3000/' : 'http://localhost:3000/'
+      baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL || 'http://localhost:8888/blog/' : 'http://localhost:8888/blog/'
+    }
+  },
+  privateRuntimeConfig: {
+    faunaSecretKey: process.env.BLOG_SECRET_KEY,
+    axios: {
+      baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL || 'http://localhost:8888/' : 'http://localhost:8888/'
     }
   },
 
@@ -66,11 +73,18 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  }
+  },
   // sitemap: {
   //   hostname: process.env.BASE_URL,
   //   routes () {
   //     return getRoutes()
   //   }
   // }
+  hooks: {
+    'content:file:beforeInsert': (document) => {
+      if (document.extension === '.md') {
+        document.bodyPlainText = document.text
+      }
+    }
+  }
 }
