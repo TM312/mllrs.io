@@ -1,9 +1,12 @@
 <template>
   <div class="mx-auto md:container px-12 lg:px-48 xl:px-75 py-48">
-    Hi, I'm Thomas. I write about building and launching web applications and more broadly innovation.
-    <br>
-    <br>
-    <small class="mt-8">This blog is with Nuxt.</small>
+    <p class="text-lg text-grey-900">
+      Hi, I'm Thomas. I write about building and launching web applications and more broadly innovation.
+    </p>
+
+    <div class="mt-12">
+      <small class="text-grey-600">This blog is built with Nuxt.</small>
+    </div>
   </div>
 </template>
 

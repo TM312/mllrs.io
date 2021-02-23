@@ -2,6 +2,9 @@ commit:
 	git add .
 	git commit -m $(msg)
 
+deploy-static:
+	yarn generate && \
+	yarn deploy
+
 deploy:
-	npm run generate && \
-	npm run deploy
+	git push origin master

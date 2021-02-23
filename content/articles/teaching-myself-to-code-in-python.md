@@ -6,7 +6,7 @@ series: starting_to_code
 createdAt: "2019-04-22T00:00:00.000Z"
 updatedAt: "2019-04-22T00:00:00.000Z"
 
-img: article/hello.png
+img: hello.png
 alt: header image
 tags:
   - python

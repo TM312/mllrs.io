@@ -4,7 +4,7 @@ description: A Collection Of Useful Nuxt Plugins
 series: building_blocks
 repository: https://github.com/TM312/building_blocks/tree/master/nuxt-useful-plugins
 
-img: article/hello.png
+img: hello.png
 alt: header image
 tags:
   - nuxtjs

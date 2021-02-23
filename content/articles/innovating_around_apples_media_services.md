@@ -4,7 +4,7 @@ description: A brief analysis of current trends in digital media and Apple's rol
 series: null
 # repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
 
-img: article/hello.png
+img: hello.png
 alt: THIS IS THE ALT
 tags:
   - innovation
