@@ -1,9 +1,17 @@
 // Credit to Josh Comeau
 const faunadb = require('faunadb')
 exports.handler = async (event) => {
-  const q = faunadb.query
+  const {
+    Exists,
+    Match,
+    Index,
+    Create,
+    Collection,
+    Get
+  } = faunadb.query
+
   const client = new faunadb.Client({
-    secret: process.env.BLOG_SECRET_KEY
+    secret: process.env.FAUNA_KEY
   })
 
   const { slug } = event.queryStringParameters
@@ -17,19 +25,19 @@ exports.handler = async (event) => {
   }
 
   const doesDocExist = await client.query(
-    q.Exists(q.Match(q.Index('likes_by_slug'), slug))
+    Exists(Match(Index('likes_by_slug'), slug))
   )
 
   if (!doesDocExist) {
     await client.query(
-      q.Create(q.Collection('likes'), {
+      Create(Collection('likes'), {
         data: { slug, likes: 1 }
       })
     )
   }
 
   const document = await client.query(
-    q.Get(q.Match(q.Index('likes_by_slug'), slug))
+    Get(Match(Index('likes_by_slug'), slug))
   )
 
   return {

@@ -1,12 +1,21 @@
 // Credit to Josh Comeau
 const faunadb = require('faunadb')
 exports.handler = async (event) => {
-  const q = faunadb.query
+  const {
+    Exists,
+    Match,
+    Index,
+    Create,
+    Collection,
+    Get,
+    Update
+
+  } = faunadb.query
   const client = new faunadb.Client({
-    secret: process.env.BLOG_SECRET_KEY
+    secret: process.env.FAUNA_KEY
   })
 
-  const { slug, voltsToSend } = event.queryStringParameters
+  const { slug, likesToSend } = event.queryStringParameters
 
   if (!slug) {
     return {
@@ -18,37 +27,37 @@ exports.handler = async (event) => {
   }
 
   const doesDocExist = await client.query(
-    q.Exists(q.Match(q.Index('likes_by_slug'), slug))
+    Exists(Match(Index('likes_by_slug'), slug))
   )
 
   if (!doesDocExist) {
     await client.query(
-      q.Create(q.Collection('volts'), {
-        data: { slug, volts: 0 }
+      Create(Collection('likes'), {
+        data: { slug, likes: 0 }
       })
     )
   }
 
   const document = await client.query(
-    q.Get(q.Match(q.Index('likes_by_slug'), slug))
+    Get(Match(Index('likes_by_slug'), slug))
   )
 
   await client.query(
-    q.Update(document.ref, {
+    Update(document.ref, {
       data: {
-        volts: document.data.volts + Number(voltsToSend >= 12 ? 12 : voltsToSend)
+        likes: document.data.likes + Number(likesToSend >= 12 ? 12 : likesToSend)
       }
     })
   )
 
   const updatedDocument = await client.query(
-    q.Get(q.Match(q.Index('likes_by_slug'), slug))
+    Get(Match(Index('likes_by_slug'), slug))
   )
 
   return {
     statusCode: 200,
     body: JSON.stringify({
-      volts: updatedDocument.data.volts
+      volts: updatedDocument.data.likes
     })
   }
 }

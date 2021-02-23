@@ -6,6 +6,7 @@
         <Badge
           :to="`/tag/${tags[tag].slug}`"
           :name="tags[tag].name"
+          class="mb-2"
         />
       </span>
     </span>

@@ -70,8 +70,8 @@ export default {
       //   this.capacityAudio.play()
       }
     },
-    async sendVoltageToMainframe (voltsToSend) {
-      await this.$axios.post(`/.netlify/functions/register-like?slug=${this.$route.params.slug}&voltsToSend=${voltsToSend}`)
+    async sendVoltageToMainframe (likesToSend) {
+      await this.$axios.post(`/.netlify/functions/register-like?slug=${this.$route.params.slug}&likesToSend=${likesToSend}`)
     }
   }
 }

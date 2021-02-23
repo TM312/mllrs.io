@@ -1,19 +1,22 @@
 <template>
-  <article class="container mx-auto px-4 md:px-24 lg:px-40 my-8">
+  <div class="container mx-auto px-4 md:px-24 lg:px-40 my-8">
     <!-- <pre>{{ article }}</pre> -->
     <ArticleHead :article="article" :series="series" class="mb-10 ">
       <br>
     </ArticleHead>
 
     <!-- content from markdown -->
-    <div :class="`${article.toc.length > 0 ? 'grid grid-cols-3 gap-2' : ''}`">
-      <div :class="`mx-auto prose lg:prose-md text-justify ${article.toc.length > 0 ? 'col-span-3 lg:col-span-2 order-last lg:order-first': ''}`">
-        <nuxt-content ref="nuxtContent" :document="article" />
-      </div>
-      <aside v-if="article.toc.length > 0" class="col-span-3 lg:col-span-1 lg:flex lg:flex-col">
-        <div class="sticky top-16 pl-6">
+    <div :class="`${article.toc.length > 0 ? 'grid grid-cols-1 xl:grid-cols-3 gap-10' : ''}`">
+      <!-- <div :class="`mx-auto ${article.toc.length > 0 ? 'col-span-1 lg:col-span-2 order-last lg:order-first': ''}`"> -->
+      <section :class="`block ${article.toc.length > 0 ? 'col-span-1 xl:col-span-2 mt-0 order-last xl:order-first' : 'col-span-1 xl:col-span-3'}`">
+        <article :class="`prose lg:prose-xl text-justify ${article.toc.length > 0 ? '' : 'mx-auto'}`">
+          <nuxt-content ref="nuxtContent" :document="article" />
+        </article>
+      </section>
+      <aside v-if="article.toc.length > 0">
+        <div class="sticky top-16">
           <h2
-            class="text-xl font-semibold text-grey-300 lg:mt-9 tracking-wider"
+            class="text-xl font-semibold text-grey-300 xl:mt-9 tracking-wider"
           >
             Table of contents
           </h2>
@@ -50,7 +53,7 @@
       <!-- <TOC v-if="article.toc.length > 0" ref="toc" :toc="article.toc" class="my-5 text-lg" @currentlyActiveToc="currentlyActiveToc=$event" /> -->
       </aside>
     </div>
-  </article>
+  </div>
 </template>
 <script>
 import Prism from '~/plugins/prism'

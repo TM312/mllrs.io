@@ -49,13 +49,13 @@ export default {
   ],
 
   publicRuntimeConfig: {
-    faunaSecretKey: process.env.BLOG_SECRET_KEY,
+    faunaSecretKey: process.env.FAUNA_KEY,
     axios: {
       baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL || 'http://localhost:8888/blog/' : 'http://localhost:8888/blog/'
     }
   },
   privateRuntimeConfig: {
-    faunaSecretKey: process.env.BLOG_SECRET_KEY,
+    faunaSecretKey: process.env.FAUNA_KEY,
     axios: {
       baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL || 'http://localhost:8888/' : 'http://localhost:8888/'
     }
