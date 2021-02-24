@@ -1,3 +1,7 @@
+run-local:
+	netlify dev
+
+
 commit:
 	git add .
 	git commit -m $(msg)

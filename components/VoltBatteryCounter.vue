@@ -36,9 +36,6 @@ export default {
     voltsMaxed () {
       return this.storedUserVoltage >= 12
     },
-    isSoundEnabled () {
-      return this.$store.state.isSoundEnabled
-    },
     storedUserVoltage () {
       return this.$store.state.storedUserVoltage
     }
