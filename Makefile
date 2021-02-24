@@ -4,7 +4,7 @@ run-local:
 
 commit:
 	git add .
-	git commit -m $(msg)
+	git commit -m "$(msg)"
 
 deploy-static:
 	yarn generate && \

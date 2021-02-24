@@ -13,7 +13,7 @@
 
     <CardRepository :repository="article.repository" class="mt-4 lg:mt-8" />
 
-    <VoltBatteryCounter class="hidden lg:flex mt-12 lg:mt-18" />
+    <LikeCounter class="hidden lg:flex mt-8 lg:mt-12" />
   </div>
 </template>
 

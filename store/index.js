@@ -1,20 +1,20 @@
 export const state = () => ({
-  storedUserVoltage: 1
+  storedUserLikes: 1
 })
 
 export const mutations = {
-  initializeVoltage (state, slug) {
-    const storedVolts = Math.abs(Number(localStorage.getItem(slug)))
+  initializeUserLikes (state, slug) {
+    const storedLikes = Math.abs(Number(localStorage.getItem(slug)))
 
-    if (storedVolts) {
-      storedVolts >= 12 ? state.storedUserVoltage = 12 : state.storedUserVoltage = storedVolts
+    if (storedLikes) {
+      storedLikes >= 10 ? state.storedUserLikes = 10 : state.storedUserLikes = storedLikes
     } else {
       localStorage.setItem(slug, 1)
-      state.storedUserVoltage = 1
+      state.storedUserLikes = 1
     }
   },
-  incrementVoltage (state, slug) {
-    state.storedUserVoltage = state.storedUserVoltage + 1
-    localStorage.setItem(slug, state.storedUserVoltage)
+  incrementUserLikes (state, slug) {
+    state.storedUserLikes = state.storedUserLikes + 1
+    localStorage.setItem(slug, state.storedUserLikes)
   }
 }

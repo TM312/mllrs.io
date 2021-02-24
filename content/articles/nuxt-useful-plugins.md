@@ -58,7 +58,7 @@ export default {
   <div>
     <b>Name:</b> {{ user.name }}<br>
     <b>Email:</b> {{ user.email }}<br>
-    <b>Registered On:</b> {{ formatDate(user.registered_on) }}
+    <b>Registered On:</b> {{ formatDate(user.registeredOn) }}
   </div>
 
 </template>
@@ -66,7 +66,7 @@ export default {
 export default {
     name: 'FoorComponent',
     props: {
-      taxAuditor: {
+      user: {
         type: Object,
         required: true
       }
