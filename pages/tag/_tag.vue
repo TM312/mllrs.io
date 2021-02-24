@@ -1,67 +1,57 @@
 
 <template>
-  <div
-    class="flex lg:h-screen w-screen lg:overflow-hidden xs:flex-col lg:flex-row"
-  >
-    <div class="relative lg:w-1/2 xs:w-full xs:h-84 lg:h-full post-left">
-      <img
-        :src="tag.img"
-        :alt="tag.name"
-        class="absolute h-full w-full object-cover"
-      >
+  <div class="relative bg-gray-50 pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">
+    <div class="absolute inset-0">
+      <div class="bg-white h-1/3 sm:h-2/3" />
     </div>
-
-    <div class="overlay" />
-    <div class="absolute top-32 left-32 right-32 text-white">
-      <NuxtLink to="/">
-        <Logo />
-      </NuxtLink>
-      <div class="mt-16 -mb-3 flex flex-col text-sm">
-        <div class="relative lg:w-1/2 xs:w-full xs:h-84 lg:h-full post-left">
-          <h1 class="text-4xl font-bold uppercase">
-            {{ tag.name }}
-          </h1>
-          <p class="mb-4 uppercase">
-            {{ tag.description }}
-          </p>
-          <nuxt-content :document="tag" />
+    <div class="relative max-w-7xl mx-auto">
+      <div class="text-center">
+        <h2 class="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">
+          {{ capitalize(tag.name) }}
+        </h2>
+        <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+          {{ tag.description }}
+        </p>
+      </div>
+      <div class="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
+        <div v-for="article in articles" :key="article.slug" class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+          <div class="flex-shrink-0">
+            <img class="h-48 w-full object-cover" :src="article.img" :alt="article.alt">
+          </div>
+          <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+            <div class="flex-1">
+              <p class="text-sm font-medium text-indigo-600">
+                <NuxtLink :to="`/series/${article.series}`" class="hover:underline">
+                  {{ article.series ? capitalize(article.series) : 'Single Article' }}
+                </NuxtLink>
+              </p>
+              <NuxtLink :to="`/article/${article.slug}`" class="block mt-2">
+                <p class="text-xl font-semibold text-gray-900">
+                  {{ article.title }}
+                </p>
+                <p class="mt-3 text-base text-gray-500">
+                  {{ article.description }}
+                </p>
+              </NuxtLink>
+            </div>
+            <div class="mt-6 flex items-center">
+              <div>
+                <div class="flex space-x-1 text-sm text-gray-500">
+                  <time :datetime="formatDate(article.updatedAt, true)">
+                    {{ formatDate(article.updatedAt, true) }}
+                  </time>
+                  <span aria-hidden="true">
+                    &middot;
+                  </span>
+                  <span>
+                    {{ article.readingTime }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      class="relative xs:py-8 xs:px-8 lg:py-32 lg:px-16 lg:w-1/2 xs:w-full h-full overflow-y-scroll markdown-body post-right custom-scroll"
-    >
-      <ul>
-        <li
-          v-for="article in articles"
-          :key="article.slug"
-          class="w-full px-2 xs:mb-6 md:mb-12 article-card"
-        >
-          <NuxtLink
-            :to="`/article/${article.slug}`"
-            class="flex transition-shadow duration-150 ease-in-out shadow-sm hover:shadow-md xxlmax:flex-col"
-          >
-            <img
-              v-if="article.img"
-              class="h-48 xxlmin:w-1/2 xxlmax:w-full object-cover"
-              :src="article.img"
-              :alt="article.alt"
-            >
-
-            <div
-              class="p-6 flex flex-col justify-between xxlmin:w-1/2 xxlmax:w-full"
-            >
-              <h2 class="font-bold">
-                {{ article.title }}
-              </h2>
-              <p>{{ article.description }}</p>
-              <p class="font-bold text-gray-600 text-sm">
-                {{ formatDate(article.updatedAt) }}
-              </p>
-            </div>
-          </NuxtLink>
-        </li>
-      </ul>
     </div>
   </div>
 </template>

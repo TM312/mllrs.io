@@ -5,7 +5,7 @@
     </p>
 
     <div class="mt-12">
-      <small class="text-grey-600">This blog is built with Nuxt.</small>
+      <small class="text-grey-500">This blog is built with Nuxt, FaunaDB, Netlify.</small>
     </div>
   </div>
 </template>

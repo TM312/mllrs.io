@@ -41,7 +41,8 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/cloudinary'
     // '@nuxtjs/sitemap'
   ],
 
@@ -52,13 +53,13 @@ export default {
   publicRuntimeConfig: {
     faunaSecretKey: process.env.FAUNA_KEY,
     axios: {
-      browserBaseURL: process.env.BASE_URL
+      browserBaseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL : process.env.BASE_URL_DEV
     }
   },
   privateRuntimeConfig: {
     faunaSecretKey: process.env.FAUNA_KEY,
     axios: {
-      baseURL: process.env.BASE_URL
+      baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL : process.env.BASE_URL_DEV
     }
   },
 
@@ -72,20 +73,26 @@ export default {
     nestedProperties: ['author.name']
   },
 
+  cloudinary: {
+    cloudName: process.env.CLOUD_NAME
+  },
+
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  }
+  },
   // sitemap: {
   //   hostname: process.env.BASE_URL,
   //   routes () {
   //     return getRoutes()
   //   }
   // }
-//   hooks: {
-//     'content:file:beforeInsert': (document) => {
-//       if (document.extension === '.md') {
-//         document.bodyPlainText = document.text
-//       }
-//     }
-//   }
+  hooks: {
+    'content:file:beforeInsert': (document) => {
+      if (document.extension === '.md') {
+        document.bodyPlainText = document.text
+        const { text } = require('reading-time')(document.text)
+        document.readingTime = text
+      }
+    }
+  }
 }

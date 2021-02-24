@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="mb-4 font-bold text-xl uppercase">
+    <p class="mb-4 font-semibold text-xl uppercase">
       Tags
     </p>
     <span

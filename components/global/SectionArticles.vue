@@ -4,7 +4,7 @@
       <li
         v-for="article of articles"
         :key="article.slug"
-        class="mb-1.5"
+        class="mb-3 md:mb-1.5"
       >
         <NuxtLink
           :to="`/article/${article.slug}`"

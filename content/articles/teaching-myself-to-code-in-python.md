@@ -118,13 +118,13 @@ I interpreted my brother’s two propositions as follows :
 
 1. <b>editor S__ K__ rates Muse albums lower than his predecessors from the editorial team</b>
 
-*Based on the assumption that Muse albums are of a consistent quality, I should be able to test the proposition by comparing the ratings of every Muse album grouped by editor. Since the number is fairly manageable (i.e. 8 Studio albums, and 3 Live albums), I actually don’t need Python, but it’s just an exercise anyway.*
+Based on the assumption that Muse albums are of a consistent quality, I should be able to test the proposition by comparing the ratings of every Muse album grouped by editor. Since the number is fairly manageable (i.e. 8 Studio albums, and 3 Live albums), I actually don’t need Python, but it’s just an exercise anyway.
 
 2. <b>editor S___ K___ rates albums very low in general</b>
 
-*[The underlying assumption here is that the “editorial rating” represents the editor’s rating who also writes the accompanying review text. There are two indicators that make this a plausible assumption: a) in some reviews the editors announce ratings, which can then be found as the official editorial rating, b) the ratings are stored as integers, which would be — due to its impreciseness — at least be questionable once it would be supposed to represent multiple ratings]*
+The underlying assumption here is that the “editorial rating” represents the editor’s rating who also writes the accompanying review text. There are two indicators that make this a plausible assumption: a) in some reviews the editors announce ratings, which can then be found as the official editorial rating, b) the ratings are stored as integers, which would be — due to its impreciseness — at least be questionable once it would be supposed to represent multiple ratings.
 
-*Two simple tests of the second proposition could be: i) compare the editor’s average rating with that of his peers at the editorial team and see where he is positioned in regards to the percentiles; ii) check for the average rating of the editor.*
+Two simple tests of the second proposition could be: i) compare the editor’s average rating with that of his peers at the editorial team and see where he is positioned in regards to the percentiles; ii) check for the average rating of the editor.
 
 In order to conduct these tests, I need to
 
@@ -193,14 +193,16 @@ Eventually, I wanted to write the retrieved data into a database. This can be do
 
 
 <figure>
+  <img src="~/assets/images/learning_python/laut_de_scraper.png"><br></img>
 
-  <d-image post-name="learning_python" file="laut_de_scraper" Image-alt="Screenshot of the laut.de scaper code" ><br></d-image>
+
+  <!-- <d-image post-name="learning_python" file="laut_de_scraper" Image-alt="Screenshot of the laut.de scaper code" ><br></d-image> -->
   <figcaption>The code for the laut.de-scraper.</figcaption>
 
 </figure>
 
 
-### 3. Data analysis
+### Data analysis
 
 In the beginning I had somehow expected that the main work of this project would lie in the data retrieval. I would just import my txt-File into Excel and then do the analysis manually. But only until the moment, when I realized that the Excel-sheet now comprised more than 22’000 rows, each containing all data points of interest for one review. I don’t know how to write VBA-macros, but it became pretty clear that there was no way to handle the data with regular functions. A few minutes of reading into Excel macros convinced me that it would stay that way in the near future.
 
@@ -208,7 +210,7 @@ Fortunately, I was referred to an excellent python library, perfectly suited to 
 
 There exists a YouTube tutorial, which I found very helpful to learn how to analyse the data set with pandas:
 
-<iframe width="510" height="287" src="https://www.youtube.com/embed/vmEHCJofslg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe class="mx-auto" width="561" height="316" src="https://www.youtube.com/embed/vmEHCJofslg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 - __Testing proposition one__<br>
   I tested proposition one by identifying all albums that were listed under the string “Muse” in the “Artist” column. The column name refers to the name of the first row of each column and can also be checked using dataframe.columns (see code line 10 below).

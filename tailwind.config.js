@@ -4,15 +4,19 @@ module.exports = {
   theme: {
     extend: {
       typography: {
-        DEFAULT: {
+        default: {
+
           css: {
             color: '#333',
-            // a: {
-            //   color: '#3182ce',
-            //   '&:hover': {
-            //     color: '#2c5282'
-            //   }
-            // },
+            h1: {
+              color: '#BA2D7E'
+            },
+            h2: {
+              color: '#6CE3D4'
+            },
+            h3: {
+              color: '#C6D0EB'
+            },
             a: {
               fontWeight: '700',
               fontStyle: 'normal',
@@ -28,6 +32,16 @@ module.exports = {
             },
             small: {
               color: '#0000ff'
+            },
+            code: {
+              color: '#f7fafc',
+              fontWeight: '400',
+              fontSize: '.875em',
+              backgroundColor: '#2d3748',
+              padding: '.25rem',
+              borderWidth: '0',
+              borderColor: '#edf2f7',
+              borderRadius: '.25rem'
             }
           }
         }
