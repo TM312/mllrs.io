@@ -45,16 +45,20 @@ export default {
     // '@nuxtjs/sitemap'
   ],
 
+  axios: {
+    baseURL: 'http://localhost:8888' // Used as fallback if no runtime config is provided
+  },
+
   publicRuntimeConfig: {
     faunaSecretKey: process.env.FAUNA_KEY,
     axios: {
-      baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL || 'http://localhost:8888/' : 'http://localhost:8888/'
+      browserBaseURL: process.env.BASE_URL
     }
   },
   privateRuntimeConfig: {
     faunaSecretKey: process.env.FAUNA_KEY,
     axios: {
-      baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL || 'http://localhost:8888/' : 'http://localhost:8888/'
+      baseURL: process.env.BASE_URL
     }
   },
 
