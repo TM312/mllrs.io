@@ -41,8 +41,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
-    '@nuxtjs/axios',
-    '@nuxtjs/cloudinary'
+    '@nuxtjs/axios'
     // '@nuxtjs/sitemap'
   ],
 
@@ -70,16 +69,22 @@ export default {
         theme: false
       }
     },
-    nestedProperties: ['author.name']
+    nestedProperties: ['article.tags']
   },
 
-  cloudinary: {
-    cloudName: process.env.CLOUD_NAME
-  },
+  //   cloudinary: {
+  //     cloudName: process.env.CLOUD_NAME
+  //   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {
-  },
+  //   build: {
+  //     extend (config, { isDev, isClient }) {
+  //       config.module.rules.push({
+  //         test: /\.md$/i,
+  //         loader: 'ignore-loader'
+  //       })
+  //     }
+  //   },
   // sitemap: {
   //   hostname: process.env.BASE_URL,
   //   routes () {
@@ -95,4 +100,5 @@ export default {
       }
     }
   }
+
 }

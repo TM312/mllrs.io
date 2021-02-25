@@ -20,8 +20,6 @@ export default {
   padding-left: 75px;
   padding-right: 75px;
 }
-/* .navbar{ min-height:50px } */
-.footer{ min-height:50px }
 
 /* Trick */
 .body{
@@ -31,6 +29,7 @@ export default {
 
 .footer{
   margin-top:auto;
+  min-height:50px
 }
 
 p {

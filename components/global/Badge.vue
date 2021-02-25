@@ -1,8 +1,9 @@
 <template>
-  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium hover:font-semibold border border-purple-100 hover:border-transparent bg-white hover:bg-purple-100 text-purple-800 truncate uppercase">
-    <NuxtLink v-if="!!name" :to="to">
+  <span :class="`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium hover:font-semibold border border-${color}-100 hover:border-transparent bg-white hover:bg-${color}-100 text-${color}-800 truncate ${ to ? 'uppercase' : ''}`">
+    <NuxtLink v-if="!!to" :to="to">
       {{ capitalize(name) }}
     </NuxtLink>
+    <span v-else>{{ capitalize(name) }}</span>
   </span>
 </template>
 
@@ -12,11 +13,16 @@ export default {
   props: {
     to: {
       type: String,
-      required: true
+      default: null
     },
     name: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    color () {
+      return this.to ? 'purple' : 'blue'
     }
   }
 

@@ -11,7 +11,7 @@
       </span>
     </span>
 
-    <CardRepository :repository="article.repository" class="mt-4 lg:mt-8" />
+    <CardRepository v-if="article.repository" :repository="article.repository" class="mt-4 lg:mt-8" />
 
     <LikeCounter class="hidden lg:flex mt-8 lg:mt-12" />
   </div>

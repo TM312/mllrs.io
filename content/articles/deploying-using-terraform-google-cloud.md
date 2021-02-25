@@ -4,6 +4,8 @@ description: Guide to deploy your project on Google Cloud
 series: dev_ops
 repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
 
+
+published: false
 img: hello.png
 alt: THIS IS THE ALT
 tags:

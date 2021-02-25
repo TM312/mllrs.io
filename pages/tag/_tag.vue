@@ -14,16 +14,17 @@
         </p>
       </div>
       <div class="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
-        <div v-for="article in articles" :key="article.slug" class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+        <div v-for="article in articles" :key="article.slug" class="flex flex-col rounded-lg shadow hover:shadow-lg overflow-hidden">
           <div class="flex-shrink-0">
             <img class="h-48 w-full object-cover" :src="article.img" :alt="article.alt">
           </div>
           <div class="flex-1 bg-white p-6 flex flex-col justify-between">
             <div class="flex-1">
-              <p class="text-sm font-medium text-indigo-600">
-                <NuxtLink :to="`/series/${article.series}`" class="hover:underline">
-                  {{ article.series ? capitalize(article.series) : 'Single Article' }}
+              <p class="text-sm font-medium">
+                <NuxtLink v-if="article.series" :to="`/series/${article.series}`" class="hover:underline text-indigo-600">
+                  {{ capitalize(article.series) }}
                 </NuxtLink>
+                <span v-else class="text-indigo-900">Single Article</span>
               </p>
               <NuxtLink :to="`/article/${article.slug}`" class="block mt-2">
                 <p class="text-xl font-semibold text-gray-900">
@@ -67,6 +68,7 @@ export default {
       .fetch()
     const tag = tags.length > 0 ? tags[0] : {}
     const articles = await $content('articles', params.slug)
+      .only(['title', 'description', 'updatedAt', 'readingTime', 'tags', 'img'])
       .where({ tags: { $contains: tag.name } })
       .sortBy('createdAt', 'asc')
       .fetch()

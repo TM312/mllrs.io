@@ -1,6 +1,8 @@
-run-local:
+run-local-net:
 	netlify dev
 
+run-local:
+	yarn run dev
 
 commit:
 	git add .

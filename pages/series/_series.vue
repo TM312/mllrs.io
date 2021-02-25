@@ -20,10 +20,11 @@
           </div>
           <div class="flex-1 bg-white p-6 flex flex-col justify-between">
             <div class="flex-1">
-              <p class="text-sm font-medium text-indigo-600">
-                <NuxtLink :to="`/series/${article.series}`" class="hover:underline">
-                  {{ article.series ? capitalize(article.series) : 'Single Article' }}
+              <p class="text-sm font-medium">
+                <NuxtLink v-if="article.series" :to="`/series/${article.series}`" class="hover:underline text-indigo-600">
+                  {{ capitalize(article.series) }}
                 </NuxtLink>
+                <span v-else class="text-indigo-900">Single Article</span>
               </p>
               <NuxtLink :to="`/article/${article.slug}`" class="block mt-2">
                 <p class="text-xl font-semibold text-gray-900">

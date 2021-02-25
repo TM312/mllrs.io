@@ -4,6 +4,7 @@ description: A Collection Of Useful Nuxt Plugins
 series: building_blocks
 repository: https://github.com/TM312/building_blocks/tree/master/nuxt-useful-plugins
 
+published: true
 img: hello.png
 alt: header image
 tags:
@@ -22,22 +23,27 @@ This article is intended to serve as a growing list of plugins I have found usef
 
 ## Recap
 
-1. Create a plugin as in the form of a global mixin in the plugins directory
+1. __Create a plugin as in the form of a global mixin in the plugins directory__
 
 ```js[formatDate.js]
 import Vue from 'vue'
 
 Vue.mixin({
   methods: {
-    formatDate(date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(date).toLocaleDateString('en', options)
+    formatDate(date, short=false) {
+      const options = {
+          year: 'numeric',
+          month: short ? 'long' : 'short',
+          day: 'numeric'
+    }
+      return new Date(date)
+        .toLocaleDateString('en', options)
     }
   }
 })
 ```
 
-2. Add the plugin to nuxt.config.js using its file name (the ending, .js can be omitted)
+2. __Add the plugin to nuxt.config.js using its file name__
 
 ```js[nuxt.config.js]
 export default {
@@ -50,21 +56,22 @@ export default {
 }
 ```
 
-3. Use the plugin like any other JS in your component.
-<small class="text-gray-500">Before creating a plugin, pay attention to the naming to avoid conflicts, as it will be globally accessible.</small>
+3. __Use the plugin like any other JS in your component.__
+
+*Before creating a plugin, pay attention to the naming to avoid conflicts, as it will be globally accessible.*
 
 ```vue{4}[FooComponent.vue]
 <template>
   <div>
     <b>Name:</b> {{ user.name }}<br>
-    <b>Email:</b> {{ user.email }}<br>
-    <b>Registered On:</b> {{ formatDate(user.registeredOn) }}
+    <b>Registered On:</b>
+    {{ formatDate(user.lastSeen) }}
   </div>
 
 </template>
 <script>
 export default {
-    name: 'FoorComponent',
+    name: 'FooComponent',
     props: {
       user: {
         type: Object,
@@ -87,29 +94,38 @@ import Vue from 'vue'
 Vue.mixin({
   methods: {
     capitalize (string) {
-      return string.toLowerCase().split('_').join(' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())
+      return string.toLowerCase()
+        .split('_')
+        .join(' ')
+        .replace(
+            /(^\w{1})|(\s{1}\w{1})/g,
+            match => match.toUpperCase()
+        )
     }
-    // capitalize(string) {
-    //  return string.toLowerCase().replaceAll("_", " ").replace(/(^\w{1})|(\s{1}\w{1})/g, (match) => match.toUpperCase())
-    },
   }
 })
 ```
 
-### Format Datetime Object To Human Readable Format
+### Human readable formatting of Date object
+
 ```js[formatDate.js]
 import Vue from 'vue'
 
 Vue.mixin({
   methods: {
-    formatDate(date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(date).toLocaleDateString('en', options)
+    formatDate(date, short=false) {
+      const options = {
+          year: 'numeric',
+          month: short ? 'long' : 'short',
+          day: 'numeric'
+    }
+      return new Date(date)
+        .toLocaleDateString('en', options)
     }
   }
 })
 ```
-<small>You may extend this plugin to support different date formats depending on the user location by providing the respective arguments.</small>
+*You may extend this plugin to support different date formats depending on the user location by providing the respective arguments.*
 
 
 ### Sleep
@@ -118,14 +134,16 @@ Vue.mixin({
 import Vue from 'vue'
 
 Vue.mixin({
-  methods: {
-    sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms))
+    methods: {
+        sleep(ms) {
+            return new Promise(
+                resolve => setTimeout(resolve, ms)
+        )
     },
   }
 })
 ```
-<small>Call sleep as an asynchronous function, like <code class="bg-gray-800 text-gray-100 rounded p-1">await this.sleep(2500)</code></small>
+*Call sleep as an asynchronous function, like `await this.sleep(2500)`*
 
 
 

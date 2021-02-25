@@ -8,16 +8,24 @@ module.exports = {
 
           css: {
             color: '#333',
-            h1: {
-              color: '#BA2D7E'
-            },
-            h2: {
-              color: '#6CE3D4'
-            },
-            h3: {
-              color: '#C6D0EB'
-            },
+            // h1: {
+            //   color: '#BA2D7E'
+            // },
+            // h2: {
+            //   color: '#6CE3D4'
+            // },
+            // h3: {
+            //   color: '#C6D0EB'
+            // },
             a: {
+              fontWeight: '700',
+              fontStyle: 'normal',
+              color: '#3182ce',
+              '&:hover': {
+                color: '#2c5282'
+              }
+            },
+            b: {
               fontWeight: '700',
               fontStyle: 'normal',
               color: '#3182ce',
@@ -28,7 +36,7 @@ module.exports = {
             i: {
               fontWeight: '400',
               fontStyle: 'normal',
-              color: '#0000ff'
+              color: '##6CE3D4'
             },
             small: {
               color: '#0000ff'

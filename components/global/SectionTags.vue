@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="mb-4 font-semibold text-xl uppercase">
-      Tags
+      Topics
     </p>
     <span
       v-for="tag of tags"

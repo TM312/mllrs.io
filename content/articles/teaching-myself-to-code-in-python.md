@@ -1,11 +1,12 @@
 ---
 title: Teaching myself to code in Python
 description: This part covers weeks 0 to 2. Week 0 served as the preparation for this project. In week 1, I learned the basic Python syntax. In week 2, I scraped the website of my favorite music magazine and gained surprising insights based on the requests, bs4, and pandas libraries.
-series: starting_to_code
+series: null
 # repository: https://github.com/TM312/building_blocks/tree/master/nuxt-useful-plugins
 createdAt: "2019-04-22T00:00:00.000Z"
 updatedAt: "2019-04-22T00:00:00.000Z"
 
+published: false
 img: hello.png
 alt: header image
 tags:
@@ -77,7 +78,7 @@ Three simple factors have been particularly valuable:
 
 <figure>
 
-  <img src="~/assets/images/learning_python/wiki_coding.png"><br></img>
+  <!-- <img src="~/assets/images/learning_python/wiki_coding.png"><br></img> -->
 
   <figcaption>A screenshot of my Google spreadsheet. I have started out by creating one worksheet per chapter, but more recently moved to topical worksheets, e.g., one for the pandas module.</figcaption>
 
@@ -88,7 +89,7 @@ Three simple factors have been particularly valuable:
 
 <figure>
 
-  <img src="~/assets/images/learning_python/os_module.png"><br></img>
+  <!-- <img src="~/assets/images/learning_python/os_module.png"><br></img> -->
 
 
   <figcaption>I played around with the ‘os’-module to create folders for each book chapter. I found it particularly exciting to see that the module allows one to create files and even write into them.</figcaption>
@@ -104,7 +105,7 @@ My brother has this theory. For many years, we both have been reading a German o
 
 <figure>
 
-  <img src="~/assets/images/learning_python/laut_main.png"><br></img>
+  <!-- <img src="~/assets/images/learning_python/laut_main.png"><br></img> -->
 
   <figcaption>Laut.de’s Main Page</figcaption>
 
@@ -142,7 +143,7 @@ Image for post
 
 <figure>
 
-  <img src="~/assets/images/learning_python/laut_album_subpage.png"><br></img>
+  <!-- <img src="~/assets/images/learning_python/laut_album_subpage.png"><br></img> -->
 
 
   <figcaption>laut.de’s ‘Album’ subpages appear suitable to collect the necessary information.</figcaption>
@@ -154,7 +155,7 @@ Chrome’s inspector tool allows to locate the information of interest within th
 
 <figure>
 
-  <img src="~/assets/images/learning_python/laut_de_src_code.png"><br></img>
+  <!-- <img src="~/assets/images/learning_python/laut_de_src_code.png"><br></img> -->
 
 
   <figcaption>A look at the source code allows to understand the underlying structure of the information displayed on the web page.</figcaption>
@@ -175,7 +176,7 @@ I found the official documentation quite helpful for the specification of the CS
 
 <figure>
 
-  <img src="~/assets/images/learning_python/bs4_inner_loop.png"><br></img>
+  <!-- <img src="~/assets/images/learning_python/bs4_inner_loop.png"><br></img> -->
 
 
   <figcaption>A code excerpt displaying the structure of the inner loop. Soup.find_all(*CSS_Selector*) represents the part of the source code in which the relevant data is stored. Each data point can be retrieved through an individual selector.</figcaption>
@@ -193,10 +194,9 @@ Eventually, I wanted to write the retrieved data into a database. This can be do
 
 
 <figure>
-  <img src="~/assets/images/learning_python/laut_de_scraper.png"><br></img>
+  <!-- <img src="~/assets/images/learning_python/laut_de_scraper.png"><br></img> -->
 
 
-  <!-- <d-image post-name="learning_python" file="laut_de_scraper" Image-alt="Screenshot of the laut.de scaper code" ><br></d-image> -->
   <figcaption>The code for the laut.de-scraper.</figcaption>
 
 </figure>
