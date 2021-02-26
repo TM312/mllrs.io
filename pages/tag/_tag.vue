@@ -68,7 +68,7 @@ export default {
       .fetch()
     const tag = tags.length > 0 ? tags[0] : {}
     const articles = await $content('articles', params.slug)
-      .only(['title', 'description', 'updatedAt', 'readingTime', 'tags', 'img'])
+      .only(['title', 'description', 'updatedAt', 'readingTime', 'tags', 'img', 'slug'])
       .where({ tags: { $contains: tag.name } })
       .sortBy('createdAt', 'asc')
       .fetch()

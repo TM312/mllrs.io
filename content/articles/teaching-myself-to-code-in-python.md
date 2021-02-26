@@ -27,6 +27,9 @@ I start with off with <a href="https://www.Python.org/">Python(3.7)</a>, because
 - one of the two main languages used for the development of machine learning models
 
 
+<dynamic-image filename="bs4-inner-loop.png" alt="dynamic image"><dynamic-image>
+
+
 __Why a (series of) blog post(s)?__
 
 In order to increase my commitment to this project, I have told some friends about my plans (~⅔ of whom can not code). This has lead to lots of positive feedback, which indicated three main things: many people

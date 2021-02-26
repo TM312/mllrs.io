@@ -34,7 +34,8 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@aceforth/nuxt-optimized-images'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -71,6 +72,10 @@ export default {
     },
     nestedProperties: ['article.tags']
   },
+
+    optimizedImages: {
+        optimizeImages: true
+    }
 
   //   cloudinary: {
   //     cloudName: process.env.CLOUD_NAME
