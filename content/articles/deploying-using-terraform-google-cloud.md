@@ -33,13 +33,15 @@ Our project is going to have two distinct environments, a <i>staging</i> and a <
 <small>Example project structure. If you don't have a project to work with use the one from the <a href="https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group">example repo</a> for this article</small>
 
 
-We will use<br>
-  <i>Terraform</i> for the configuration of all relevant resources,<br>
-  a <i>Makefile</i> to store terminal commands.<br>
-  <i>Github Actions</i> to define the CI/CD workflow,<br>
-  <i>Docker Hub</i> to host our Docker release images, and<br>
-  <i>Google Cloud</i> to host our !!!<br>
-  <i>Cloudflare</i> !!!<br>
+We will use
+<ol>
+    <li><i>Terraform</i> for the configuration of all relevant resources</li>
+    <li>a <i>Makefile</i> to store terminal commands</li>
+    <li><i>Github Actions</i> to define the CI/CD workflow</li>
+    <li><i>Docker Hub</i> to host our Docker release images, and</li>
+    <li><i>Google Cloud</i> to host our !!!</li>
+    <li><i>Cloudflare</i> !!!</li>
+</ol>
 
 
 
@@ -72,7 +74,7 @@ adasdd
 
 ## Prerequisites / Services
 <ul class="list-disc">
-  <li>`gsutil`: Which we will use to access Google Cloud Storage from a script. If you don't have it yet, click <a href="https://cloud.google.com/storage/docs/gsutil_install">here</a> to set it up.
+  <li>`gsutil`: Which we will use to access Google Cloud Storage from a script. If you don't have it yet, click <a href="https://cloud.google.com/storage/docs/gsutil_install">here</a> to set it up.</li>
   <!-- <li><a href="https://docs.docker.com/engine/install/">Docker</a> + <a href="https://docs.docker.com/compose/install/">Docker-Compose</a></li> -->
 </ul>
 
@@ -96,18 +98,20 @@ First, we will set up terraform. Terraform provides different ways to install th
 Install using `brew` as follows:
 
 ```bash
+
 brew tap hashicorp/tap && \
 brew install hashicorp/tap/terraform && \
 brew upgrade hashicorp/tap/terraform #upgrade to latest version
+
 ```
 
 ### Initialize Terraform project
 
 As our first step to integrate Terraform we create a new directory in the project root called <i>terraform</i>.<br>
-<small class="text-gray-600">You may use <code class="bg-gray-800 text-gray-100 rounded p-1">mkdir terraform</code> in the terminal to do so.</small>
+<small class="text-gray-600">You may use `mkdir terraform` in the terminal to do so.</small>
 
 We use a <a href="https://www.gnu.org/software/make/manual/make.html#Introduction">Makefile</a> to store our commands. This approach is a good way to reduce the amount of manual commands and standardize our deployment process. To start things off, create a file named <i>Makefile</i>.<br>
-<small class="text-gray-600">You may use <code class="bg-gray-800 text-gray-100 rounded p-1">touch Makefile</code> in the terminal to do so.</small>
+<small class="text-gray-600">You may use `touch Makefile`in the terminal to do so.</small>
 
 We add the following lines to go to the newly created terraform directory and initialize a workspace for our current environment.
 
@@ -118,13 +122,14 @@ terraform-init:
 	terraform init
 ```
 
-<code class="bg-gray-800 text-gray-100 rounded p-1">$(ENV)</code> is an environmental variable we can specify before running any command. By default we want our commands to run on the staging environment. Therefore we add the lines <code class="bg-gray-800 text-gray-100 rounded p-1">ENV=stage</code> to our <i>.env</i> file.
+`$(ENV)` is an environmental variable we can specify before running any command. By default we want our commands to run on the staging environment. Therefore we add the lines `ENV=stage` to our *.env* file.
 
 We run the command -> ###!!!!result
 
 ### Introduction to Terraform file structure setup
 
-Inside the <i>terraform directory</i> we create the following files and sub-directories: <br>
+Inside the *terraform directory* we create the following files and sub-directories:
+
 <ul>
 
   - `main.tf` The main configuration file, to configure Terraform itself, including providers and and backend.
@@ -152,6 +157,7 @@ Inside the <i>terraform directory</i> we create the following files and sub-dire
 ├── .gitignore
 ├── .dockerignore
 └── docker-compose.yml
+
 ```
 
 
@@ -299,16 +305,14 @@ variable "github_account_id" {
   type = string
 }
 ```
-<p class="mt-2 max-w-4xl text-sm text-gray-500">
-We can provide different arguments to each variable, such as description, type or default value for higher code robustness. Read more about Terraform variables <a href="https://www.terraform.io/docs/language/values/variables.html">here</a>
-</p>
+<p class="mt-2 max-w-4xl text-sm text-gray-500">We can provide different arguments to each variable, such as description, type or default value for higher code robustness. Read more about Terraform variables <a href="https://www.terraform.io/docs/language/values/variables.html">here</a></p>
 
-Finally we add <i>github_token</i>, <i>github_account_id</i> with their respective value as variables to our .env file.
+Finally we add *github_token*, *github_account_id* with their respective value as variables to our .env file.
 
 ### Docker Hub Configuration
 By now we have defined the remote repository on Github and provided Terraform the necessary rights to interact with this resource through the Access Token.
 Likewise we now provide Github with the rights to interact with Docker Hub in the course of our upcoming workflows in the form of a Docker Hub access token.
-We can create this token, by logging into our account, and select <i>Account Settings</i> -> <i>Security</i> -> <i>New Access Token</i>. Chose a meaningful description such as '<i>PROJECT_NAME – Github Actions Token</i>'.
+We can create this token, by logging into our account, and select <i>Account Settings</i> -> <i>Security</i> -> <i>New Access Token</i>. Chose a meaningful description such as *'PROJECT_NAME – Github Actions Token'*.
 
 Now we can add these secrets to our github configuration:
 
