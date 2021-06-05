@@ -4,13 +4,15 @@ description: A brief analysis of current trends in digital media and Apple's rol
 series: null
 # repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
 
-published: true
+published: false
 img: hello.png
 alt: THIS IS THE ALT
 tags:
   - innovation
 
 ---
+
+## Introduction
 
 From my perspective, there exists today three key trends shaping the dynamics of digital media:
 

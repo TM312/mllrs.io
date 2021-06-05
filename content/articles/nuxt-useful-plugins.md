@@ -13,7 +13,7 @@ tags:
 ---
 
 
-## Introuction
+## Introduction
 
 Their composable architecture is one of the key strength of modern JS frameworks like Nuxt or React. In Nuxt, components comprising HTML, JS, and CSS can be developed as reusable building blocks.
 
