@@ -28,12 +28,28 @@
 
         <div class="mt-24">
             <div
-                class="block uppercase text-base text-center text-indigo-600 font-semibold tracking-wide uppercase"
+                class="
+                    block
+                    uppercase
+                    text-base text-center text-indigo-600
+                    font-semibold
+                    tracking-wide
+                    uppercase
+                "
             >
                 {{ !!series ? capitalize(series[article.series].name) : "" }}
             </div>
             <div
-                class="mt-2 block text-3xl text-center leading-8 font-bold tracking-tight text-gray-900 sm:text-4xl"
+                class="
+                    mt-2
+                    block
+                    text-3xl text-center
+                    leading-8
+                    font-bold
+                    tracking-tight
+                    text-gray-900
+                    sm:text-4xl
+                "
             >
                 {{ capitalize(article.title) }}
             </div>
@@ -44,8 +60,6 @@
                 {{ article.description }}
             </p>
         </div>
-
-        <InfoBoxSeries :series="series" />
     </div>
 </template>
 

@@ -33,7 +33,7 @@ export default {
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
+    // '@nuxtjs/eslint-module',
     '@nuxtjs/tailwindcss',
     '@aceforth/nuxt-optimized-images'
   ],
@@ -73,9 +73,9 @@ export default {
     nestedProperties: ['article.tags']
   },
 
-    optimizedImages: {
-        optimizeImages: true
-    }
+  optimizedImages: {
+    optimizeImages: true
+  },
 
   //   cloudinary: {
   //     cloudName: process.env.CLOUD_NAME
@@ -94,8 +94,7 @@ export default {
   //   hostname: process.env.BASE_URL,
   //   routes () {
   //     return getRoutes()
-  //   }
-  // }
+
   hooks: {
     'content:file:beforeInsert': (document) => {
       if (document.extension === '.md') {

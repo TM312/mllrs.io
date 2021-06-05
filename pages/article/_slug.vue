@@ -15,16 +15,22 @@
         >
             <!-- <div :class="`mx-auto ${article.toc.length > 0 ? 'col-span-1 lg:col-span-2 order-last lg:order-first': ''}`"> -->
             <section
-                :class="`block ${
+                class="block"
+                :class="
                     article.toc.length > 0
                         ? 'col-span-1 xl:col-span-2 mt-0 order-last xl:order-first'
                         : 'col-span-1 xl:col-span-3'
-                }`"
+                "
             >
+                <info-box-series
+                    class="xl:mt-9 mb-10 prose"
+                    v-if="series && article"
+                    :series="series[article.series]"
+                />
+
                 <article
-                    :class="`prose lg:prose-xl text-justify ${
-                        article.toc.length > 0 ? '' : 'mx-auto'
-                    }`"
+                    class="prose lg:prose-xl text-justify"
+                    :class="article.toc.length > 0 ? '' : 'mx-auto'"
                 >
                     <nuxt-content ref="nuxtContent" :document="article" />
                 </article>
@@ -32,7 +38,13 @@
             <aside v-if="article.toc.length > 0">
                 <div class="sticky top-16">
                     <h2
-                        class="text-xl font-semibold text-grey-300 xl:mt-9 tracking-wider"
+                        class="
+                            text-xl
+                            font-semibold
+                            text-grey-300
+                            xl:mt-9
+                            tracking-wider
+                        "
                     >
                         Table of contents
                     </h2>
@@ -55,7 +67,13 @@
                                             link.id !== currentlyActiveToc,
                                     }"
                                     role="button"
-                                    class="transition-colors duration-75 text-base mb-2 block"
+                                    class="
+                                        transition-colors
+                                        duration-75
+                                        text-base
+                                        mb-2
+                                        block
+                                    "
                                     :to="`#${link.id}`"
                                 >
                                     {{ link.text }}
@@ -94,8 +112,8 @@
             );
 
             const seriesList = await $content("series")
-                .only(["name", "slug"])
-                .where({ name: { $containsAny: article.series } })
+                .only(["name", "slug", "description"])
+                .where({ slug: { $containsAny: article.series } })
                 .fetch();
 
             // https://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
@@ -103,7 +121,7 @@
                 seriesList.length > 0
                     ? await Object.assign(
                           {},
-                          ...seriesList.map((s) => ({ [s.name]: s }))
+                          ...seriesList.map((s) => ({ [s.slug]: s }))
                       )
                     : null;
 

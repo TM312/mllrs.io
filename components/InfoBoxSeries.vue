@@ -1,8 +1,15 @@
 <template>
-    <div>
-        Infobox<br />
-        {{ series }}
-        <br />
+    <div class="bg-gray-50 sm:rounded-lg">
+        <div class="px-4 sm:p-6">
+            <p class="text-xl font-semibold text-grey-300 text-gray-900">
+                About this series
+            </p>
+            <div class="mt-2 text-sm text-gray-500 text-justify small">
+                <p>
+                    {{ series.description }}
+                </p>
+            </div>
+        </div>
     </div>
 </template>
 
