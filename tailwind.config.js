@@ -3,15 +3,28 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      typography: {
-        default: {
+        animation: {
+            fadeIn: "fadeIn 2s ease-in forwards",
+            fadeOut: "fadeOut 2s ease-out forwards"
+        },
+        keyframes: {
+            fadeIn: {
+                "0%": { opacity: 0 },
+                "100%": { opacity: 1 }
+            },
+            fadeOut: {
+                "0%": { opacity: 1 },
+                "100%": { opacity: 0 }
+            }
+        },
+        typography: {
+            DEFAULT: {
 
-          css: {
-            color: '#333',
-            // h1: {
-            //   color: '#BA2D7E'
-            // },
-            // h2: {
+            css: {
+                // h1: {
+                //   color: '#BA2D7E'
+                // },
+                // h2: {
             //   color: '#6CE3D4'
             // },
             // h3: {
@@ -20,6 +33,7 @@ module.exports = {
             a: {
               fontWeight: '700',
               fontStyle: 'normal',
+              textDecoration: 'none',
               color: '#3182ce',
               '&:hover': {
                 color: '#2c5282'
@@ -57,6 +71,7 @@ module.exports = {
     }
   },
   variants: {
+      animation: ["motion-safe"],
     extend: {}
   },
   plugins: [

@@ -22,12 +22,6 @@
                         : 'col-span-1 xl:col-span-3'
                 "
             >
-                <info-box-series
-                    class="xl:mt-9 mb-10 prose"
-                    v-if="series && article"
-                    :series="series[article.series]"
-                />
-
                 <article
                     class="prose lg:prose-xl text-justify"
                     :class="article.toc.length > 0 ? '' : 'mx-auto'"
@@ -48,6 +42,7 @@
                     >
                         Table of contents
                     </h2>
+
                     <nav class="mt-4">
                         <ul>
                             <li
@@ -87,6 +82,13 @@
                         >
                             <br />
                         </ArticleTail>
+                        <info-box-series
+                            id="infoboxSeries"
+                            class="prose prose-red bg-indigo-50 sm:rounded-lg"
+                            v-if="series && article"
+                            :series="series[article.series]"
+                        >
+                        </info-box-series>
                     </nav>
                 </div>
                 <!-- <TOC v-if="article.toc.length > 0" ref="toc" :toc="article.toc" class="my-5 text-lg" @currentlyActiveToc="currentlyActiveToc=$event" /> -->
@@ -112,7 +114,6 @@
             );
 
             const seriesList = await $content("series")
-                .only(["name", "slug", "description"])
                 .where({ slug: { $containsAny: article.series } })
                 .fetch();
 
@@ -134,6 +135,7 @@
         data() {
             return {
                 currentlyActiveToc: "",
+                infoboxSeriesShown: true,
                 observer: null,
                 observerOptions: {
                     root: this.$refs.nuxtContent,
@@ -182,11 +184,34 @@
 
             // The Intersection Observer API provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or with a top-level document's viewport.
             // detecting when an element scrolls into our viewpor
+            var infoboxSeries = document.getElementById("infoboxSeries");
             this.observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     const id = entry.target.getAttribute("id");
                     if (entry.isIntersecting) {
                         this.currentlyActiveToc = id;
+
+                        if (
+                            this.article.triggerInfobox &&
+                            id == this.article.triggerInfobox
+                        ) {
+                            console.log("Hello world");
+                            // Add the fadeIn class:
+                            if (this.infoboxSeriesShown) {
+                                infoboxSeries.classList.add(
+                                    "motion-safe:animate-fadeOut"
+                                );
+                                this.infoboxSeriesShown = false;
+                            }
+                            // } else {
+                            //     infoboxSeries.classList.add(
+                            //         "motion-safe:animate-fadeIn"
+                            //     );
+                            //     this.infoboxSeriesShown = true;
+                            // }
+                        } else {
+                            element.classList.remove("motion-safe:animate-*");
+                        }
                     }
                 });
             }, this.observerOptions);

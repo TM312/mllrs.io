@@ -1,5 +1,10 @@
 <template>
-    <img :src="imgSrc()" :alt="alt" class="rounded shadow-lg" />
+    <div>
+        <img :src="imgSrc()" :alt="alt" class="rounded shadow-lg" />
+        <figcaption class="text-indigo-500 text-sm">
+            <slot></slot>
+        </figcaption>
+    </div>
 </template>
 
 <script>

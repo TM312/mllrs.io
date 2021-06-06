@@ -37,7 +37,7 @@
                     uppercase
                 "
             >
-                {{ !!series ? capitalize(series[article.series].name) : "" }}
+                {{ !!series ? series[article.series].name : "" }}
             </div>
             <div
                 class="
@@ -51,7 +51,7 @@
                     sm:text-4xl
                 "
             >
-                {{ capitalize(article.title) }}
+                {{ article.title }}
             </div>
             <p
                 v-if="article.description"
