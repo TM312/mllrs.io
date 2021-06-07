@@ -1,46 +1,54 @@
 <template>
-  <div>
-    <ul>
-      <li
-        v-for="article of articles"
-        :key="article.slug"
-        class="mb-3 md:mb-1.5"
-      >
-        <NuxtLink
-          v-if="article.published"
-          :to="`/article/${article.slug}`"
-        >
-          <span v-if="!!article && article.title" class="text-gray-800 font-semibold hover:text-purple-800 text-lg">
-            {{ capitalize(article.title) }}
-          </span>
-          <span class="text-gray-500 font-medium text-lg">
-            | {{ formatDate(article.createdAt) }}
-          </span>
-        </NuxtLink>
-        <div v-else>
-          <span class="text-gray-500 font-medium text-lg">{{ capitalize(article.title) }}</span>
-          <span class="ml-2">
-            <Badge name="coming soon" />
-          </span>
-        </div>
-      </li>
-    </ul>
-  </div>
+    <div>
+        <ul>
+            <li
+                v-for="article of articles"
+                :key="article.slug"
+                class="mb-3 md:mb-1.5"
+            >
+                <NuxtLink
+                    v-if="article.published"
+                    :to="`/article/${article.slug}`"
+                >
+                    <span
+                        v-if="!!article && article.title"
+                        class="
+                            text-gray-800
+                            font-semibold
+                            hover:text-purple-800
+                            text-lg
+                        "
+                    >
+                        {{ article.title }}
+                    </span>
+                    <span class="text-gray-500 font-medium text-lg">
+                        | {{ formatDate(article.createdAt) }}
+                    </span>
+                </NuxtLink>
+                <div v-else>
+                    <span class="text-gray-500 font-medium text-lg">{{
+                        article.title
+                    }}</span>
+                    <span class="ml-2">
+                        <Badge name="coming soon" />
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
-export default {
-  name: 'SectionArticles',
-  props: {
-    articles: {
-      type: [Object, Array],
-      required: true
-    }
-  }
-
-}
+    export default {
+        name: "SectionArticles",
+        props: {
+            articles: {
+                type: [Object, Array],
+                required: true,
+            },
+        },
+    };
 </script>
 
 <style>
-
 </style>

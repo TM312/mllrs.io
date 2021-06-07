@@ -116,7 +116,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
 
     In the [docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#client) we can get a good overview of available methods. Boto3 is quite comfortable to work with as the available resources and methods and their behavior are fairly consistent across services.
 
-    We can check if there exist any buckets for this account by using the <a href='https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.list_buckets'>`list_buckets` method of the S3 client</a>: `s3_client.list_buckets()`.
+    We can check if there exist any buckets for this account by using the `list_buckets` method of the <a href='https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.list_buckets'>S3 client</a>: `s3_client.list_buckets()`.
 
     This returns a dictionary with different meta data. The *'Bucket'*-key contains a list of existing buckets and is empty since we haven't yet created any bucket.
 
@@ -312,6 +312,9 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
         except Exception as e:
             print(str(e))
             raise e
+
+        # DO SOMETHING UNTIL JOB COMPLETED...
+
     else:
         print(
             f"The file '{filename}' has already been processed as the job name '{job_name}' and is therefore being skipped."
@@ -325,7 +328,8 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
 
     ```py
     from time import sleep
-    # check transcribe job
+
+    # ... STARTED TRANSCRIPTION JOB
     while True:
         result = transcribe_client.get_transcription_job(
             TranscriptionJobName=job_name
@@ -467,7 +471,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
 
     ```
 
-    We can now run the function to start the transcription. We can us a for loop to retrieve the yielded status updates.
+    We can now run the function to start the transcription. We use a for loop to retrieve regular status updates that are yielded from within the function.
 
     ```py
     from datetime import datetime
@@ -509,7 +513,10 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
     """
     ```
 
-    We retrieve the transcript
+    The JSON-file within the output bucket contains the transcript. Removing whitespace from the original filename was a naming condition by AWS Transcribe.
+
+    We can now use the `json` module to retrieve the transcript content.
+
 
     ```py
     import json
@@ -528,20 +535,67 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
     ```
 
     As we can see the transcript is a dictionary that contains meta data similar to the one seen before.
-    The transcript itself is inside the results key.
+    The transcript itself is inside the *results* key.
+
+    We retrieve the full transcript as `transcript_data['results']['transcripts'][0]['transcript']`. But especially when integrating our transcript into a data pipeline the *items* key might be valuable as it contains timestamp information for every token of the transcript. It also provides information about transcription confidence which can be used to define custom vocabulary.
 
 
+6. **Cleaning Up**
 
+    Let's clean everything up before we finish. This means we will:
+    - empty both buckets
+    - delete them
+    - delete the transcription job
+    - verify that everything is cleaned up
+
+    The respective `boto3`-clients can take care of that.
+
+    ```py
+    def delete_bucket_content(s3_client, bucket: str) -> None:
+        file_list = s3_client.list_objects_v2(Bucket=bucket)
+        if 'Contents' in file_list.keys():
+            for file in file_list['Contents']:
+            try:
+                s3_client.delete_object(
+                Bucket=bucket,
+                Key=file['Key']
+                )
+                print(f"Successfully deleted {file['Key']}.")
+            except Exception as e:
+                print(e)
+                raise e
+
+        else:
+            print(f'Bucket {S3_NAME_INPUT} already empty.')
+
+    delete_bucket_content(s3_client, S3_NAME_INPUT)
+    delete_bucket_content(s3_client, S3_NAME_OUTPUT)
+    s3_client.delete_bucket(Bucket=S3_NAME_INPUT)
+    s3_client.delete_bucket(Bucket=S3_NAME_OUTPUT)
+
+    transcribe_client.delete_transcription_job(TranscriptionJobName=transcript_data['jobName'])
+
+    ```
+
+    First, we delete the bucket content by listing its content and deleting every file we retrieve. Deleting the buckets then works out of the box. We can retrieve the transcription job name used by AWS Transcribe directly from the transcript dictionary.
+
+    ```py
+    print_bucket_list(s3_client)
+    print_transcription_job_list(transcribe_client)
+    ```
+
+    Calling functions from earlier verifies that the buckets including their content and the transcription job have been succesfully deleted.
 
 
 ## Conclusion and Outlook
 
+Nice, we successfully retrieved the transcript of our uploaded video. We did so using AWS Transcribe, AWS speech-to-text service first manually through the Management Console and before using `boto3` for programatic interactions.
+That’s it for part 1 and I hope it has been helpful.
 
+In the following parts of this series, we will
 
-That’s it for part 1 and I hope it has been helpful. In the following parts of this series, we will
-
-- automate the transcription using AWS Lambda (<NuxtLink to="/about">part 2</NuxtLink>)
-- set up and manage our infrastructure using `Terraform` (<NuxtLink to="/about">part 3</NuxtLink>)
+- automate the transcription using **AWS Lambda** (<NuxtLink to="/about">part 2</NuxtLink>). This allows us to automatically transcribe new videos that are being uploaded into our S3 input bucket.
+- set up and manage our infrastructure using **Terraform** (<NuxtLink to="/about">part 3</NuxtLink>) as a powerful approach to deploy and update our code and configurations automatically.
 
 
 
