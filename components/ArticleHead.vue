@@ -5,6 +5,7 @@
             <span class="mr-2">
                 {{ formatDate(article.createdAt) }}
             </span>
+
             <span
                 v-if="
                     !!article.updatedAt &&
@@ -23,6 +24,10 @@
                 class="mx-2 text-gray-500"
             >
                 <i>edited: </i>{{ formatDate(article.updatedAt) }}
+            </span>
+            <span class="mx-2 text-gray-500">•</span>
+            <span class="mx-2 text-gray-500">
+                {{ article.readingTime }}
             </span>
         </div>
 

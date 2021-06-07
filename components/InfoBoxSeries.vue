@@ -1,9 +1,9 @@
 <template>
     <div class="px-4 sm:p-6">
-        <p class="text-xl font-semibold text-grey-300 text-gray-900">
-            About this series
-        </p>
-        <div class="mt-2 text-sm text-gray-500 text-justify small">
+        <p class="text-xl font-semibold text-grey-600">About this series</p>
+        <div
+            class="prose prose-xs mt-2 text-sm text-grey-300 text-justify small"
+        >
             <nuxt-content :document="series" />
         </div>
     </div>

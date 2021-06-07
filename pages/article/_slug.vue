@@ -84,7 +84,7 @@
                         </ArticleTail>
                         <info-box-series
                             id="infoboxSeries"
-                            class="prose prose-red bg-indigo-50 sm:rounded-lg"
+                            class="bg-indigo-50 sm:rounded-lg"
                             v-if="series && article"
                             :series="series[article.series]"
                         >

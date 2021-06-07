@@ -17,7 +17,7 @@ tags:
 ---
 
 ## Introduction
-This is part 1 of 3 in this series about the AWS ecosystem, lambda, and resource management. In this article we have a look at the AWS service suite and how interact with it through the console UI. Our practical goal is to use AWS speech-to-text service <a href='https://aws.amazon.com/transcribe/'>AWS Transcribe</a> to create transcriptions of video data that has been uploaded to an S3 bucket, AWS web-accessible file storage service. To achieve this, we first use the AWS Management Console, before interacting with the service suite programmatically using the AWS SDK, `boto3`.
+This is part 1 of 3 in this series about the AWS ecosystem, lambda, and resource management. In this article we have a look at the AWS service suite and how interact with it through the console UI. Our practical goal is to use AWS speech-to-text service <a href='https://aws.amazon.com/transcribe/'>AWS Transcribe</a> to create transcriptions of video data that has been uploaded to an S3 bucket, AWS web-accessible file storage service. To achieve this, we first use the AWS Management Console, before interacting with the service suite programmatically using the AWS SDK, <code>boto3</code>.
 
 To reach our goal we need to **i) create an S3 bucket**, **ii) upload a video file to the bucket**, **iii) create a transcription job**, and finally **iv) checkout the transcript**. Let's get started.
 
@@ -35,6 +35,8 @@ To reach our goal we need to **i) create an S3 bucket**, **ii) upload a video fi
 
 
 1. **Create S3 bucket**
+
+    <blockquote-article img-org="aws-s3-logo.svg" img-org-alt="AWS S3 FAQ" article-slug="aws-transcribe">Amazon S3 is object storage built to store and retrieve any amount of data from anywhere. It’s a simple storage service that offers industry leading durability, availability, performance, security, and virtually unlimited scalability at very low costs.</blockquote-article>
 
     > Amazon S3 is object storage built to store and retrieve any amount of data from anywhere. It’s a simple storage service that offers industry leading durability, availability, performance, security, and virtually unlimited scalability at very low costs.
     > -- <cite>[AWS S3 FAQs](https://aws.amazon.com/s3/faqs/)</cite>
@@ -70,19 +72,19 @@ To reach our goal we need to **i) create an S3 bucket**, **ii) upload a video fi
 AWS Transcribe appears to be a suitable service for speech-to-text conversion. However, if we require more than a one-off solution, we would want to interact with the AWS services programatically.
 
 
-## AWS SDK – `boto3`
+<h2>AWS SDK – <code>boto3</code></h2>
 
 0. **Setup**
 
     [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) is AWS SDK for Python which provides us with access to S3 and Transcribe.
 
-    We install boto3 using `pip install boto3`.
+    We install boto3 using <code>pip install boto3</code>.
 
     Boto3 requires the authentication credentials 'aws_access_key_id' and 'aws_secret_access_key', to access resources through our account. We can create through the AWS IAM service. In the AWS Management Console we select *IAM* in the **Service Menu**. We click on *Users* > *Add user* and select *Programmatic access*. For our purposes we can add the user to Admins by selecting the field, which will provide full access to all available resources.
 
     *In production systems we would want to restrict its access to only those resources we need. For details, refer to the [official docs](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console).*
 
-    Once we created the user, we get the necessary credentials, which we can store in a config file. Create/Open the config file using vim via `vi ~/.aws/credentials` and add the following lines
+    Once we created the user, we get the necessary credentials, which we can store in a config file. Create/Open the config file using vim via <code>vi ~/.aws/credentials</code> and add the following lines
 
     ```ini
     [default]
@@ -116,7 +118,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
 
     In the [docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#client) we can get a good overview of available methods. Boto3 is quite comfortable to work with as the available resources and methods and their behavior are fairly consistent across services.
 
-    We can check if there exist any buckets for this account by using the `list_buckets` method of the <a href='https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.list_buckets'>S3 client</a>: `s3_client.list_buckets()`.
+    We can check if there exist any buckets for this account by using the `list_buckets` method of the <a href='https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.list_buckets'>S3 client</a>: <code>s3_client.list_buckets()</code>.
 
     This returns a dictionary with different meta data. The *'Bucket'*-key contains a list of existing buckets and is empty since we haven't yet created any bucket.
 
@@ -159,9 +161,9 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
     print_bucket_list(s3_client)
     ```
 
-    Above we use the same method, `s3_client.list_buckets()` as before and then print the content of the *'Buckets'* list inside.
+    Above we use the same method, <code>s3_client.list_buckets()</code> as before and then print the content of the *'Buckets'* list inside.
 
-    We can have a look at the content of the two newly created buckets using the `list_objects_v2` method:
+    We can have a look at the content of the two newly created buckets using the <code>list_objects_v2</code> method:
 
     ```py
     def print_bucket_content(s3_client, bucket: str) -> None:
@@ -179,7 +181,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
 
 2. **Upload video file to bucket**
 
-    Uploading our video to the video input bucket is easy. Using the `upload_file`-method we specify the input and output path incl. filename and the bucket we want to upload our file into.
+    Uploading our video to the video input bucket is easy. Using the <code>upload_file</code>-method we specify the input and output path incl. filename and the bucket we want to upload our file into.
 
     ```py
     from os import path
@@ -188,9 +190,9 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
     s3_client.upload_file(filename, S3_NAME_INPUT, s3_filename)
     ```
 
-    Above we split the path to our file and only retrieve the basename as our `s3_filename`. This will upload the file directly into the root level of the bucket. However, nested directory structures are equally possible inside an S3 bucket.
+    Above we split the path to our file and only retrieve the basename as our <code>s3_filename</code>. This will upload the file directly into the root level of the bucket. However, nested directory structures are equally possible inside an S3 bucket.
 
-    We can verify the upload by running the `print_bucket_function`from before.
+    We can verify the upload by running the <code>print_bucket_function</code> from before.
 
     ```py
     print_bucket_content(s3_client, S3_NAME_INPUT)
@@ -221,7 +223,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
     In the following we will look at each part separately before putting everything <a href="#transcription-handler">together</a>.
 
 
-    Given the filename as input, we can split name and file format us the internal `os.path` module.
+    Given the filename as input, we can split name and file format us the internal <code>os.path</code> module.
 
     ```py
     from os import path
@@ -289,9 +291,9 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
 
     ```
 
-    The response of the `list_transcription_jobs`-method,  is a dictionary that contains the list of jobs as the value of the *'TranscriptionJobSummaries'*-key. We use a list comprehension to retrieve only the job names.
+    The response of the <code>list_transcription_jobs</code>-method,  is a dictionary that contains the list of jobs as the value of the *'TranscriptionJobSummaries'*-key. We use a list comprehension to retrieve only the job names.
 
-    Given a job name `file_processed` is then a boolean indicating if a job with the same name already exists.
+    Given a job name <code>file_processed</code> is then a boolean indicating if a job with the same name already exists.
 
     If not, we will let the client start a new transcription job for the file.
 
@@ -322,7 +324,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
         return 'COMPLETED'
     ```
 
-    To start the transcription we use the `start_transcription_job`-method. For our demo file we hardcode the language code to be American English *('en-US')*. In other cases using a variable to allow providing metadata may be more sensitive.
+    To start the transcription we use the <code>start_transcription_job</code>-method. For our demo file we hardcode the language code to be American English *('en-US')*. In other cases using a variable to allow providing metadata may be more sensitive.
 
     Finally, while running the transcription we regularly check the status of the job. From earlier we have seen that the status will be pending for a while depending on the length of the audio.
 
@@ -537,7 +539,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
     As we can see the transcript is a dictionary that contains meta data similar to the one seen before.
     The transcript itself is inside the *results* key.
 
-    We retrieve the full transcript as `transcript_data['results']['transcripts'][0]['transcript']`. But especially when integrating our transcript into a data pipeline the *items* key might be valuable as it contains timestamp information for every token of the transcript. It also provides information about transcription confidence which can be used to define custom vocabulary.
+    We retrieve the full transcript as <code>transcript_data['results']['transcripts'][0]['transcript']</code>. But especially when integrating our transcript into a data pipeline the *items* key might be valuable as it contains timestamp information for every token of the transcript. It also provides information about transcription confidence which can be used to define custom vocabulary.
 
 
 6. **Cleaning Up**
@@ -548,7 +550,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
     - delete the transcription job
     - verify that everything is cleaned up
 
-    The respective `boto3`-clients can take care of that.
+    The respective <code>boto3</code>-clients can take care of that.
 
     ```py
     def delete_bucket_content(s3_client, bucket: str) -> None:
@@ -589,7 +591,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
 
 ## Conclusion and Outlook
 
-Nice, we successfully retrieved the transcript of our uploaded video. We did so using AWS Transcribe, AWS speech-to-text service first manually through the Management Console and before using `boto3` for programatic interactions.
+Nice, we successfully retrieved the transcript of our uploaded video. We did so using AWS Transcribe, AWS speech-to-text service first manually through the Management Console and before u<code>ing `boto3</code> for programatic interactions.
 That’s it for part 1 and I hope it has been helpful.
 
 In the following parts of this series, we will
