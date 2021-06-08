@@ -24,9 +24,9 @@ To reach our goal we need to **i) create an S3 bucket**, **ii) upload a video fi
 
 ## Prerequisites
 
-In order to use its services, we need to have an AWS account that we can set up [here](https://aws.amazon.com). Every account comes with a free tier that covers the use of all resources we need to reach our goal.
+In order to use its services, we need to have an [AWS account](https://aws.amazon.com). Every account comes with a free tier that covers the use of all resources we need to reach our goal.
 
-If you don't have [Jupyter Notebook](https://jupyter.org/) installed yet or access to [Google colab](https://colab.research.google.com). You may install either one, as it will be easier to follow along.
+Access to either [Jupyter Notebook](https://jupyter.org/) or access to [Google colab](https://colab.research.google.com) makes it easy to follow along.
 
 
 ## Manual transcription

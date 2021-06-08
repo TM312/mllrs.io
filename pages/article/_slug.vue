@@ -28,8 +28,23 @@
                 >
                     <nuxt-content ref="nuxtContent" :document="article" />
                 </article>
+
+                <article-tags :tags="tags" :article-tags="article.tags" />
             </section>
             <aside v-if="article.toc.length > 0">
+                <info-box-series
+                    id="infoboxSeries"
+                    class="
+                        bg-indigo-50
+                        sm:rounded-lg
+                        mt-16
+                        overflow-hidden
+                        h-32
+                    "
+                    v-if="series && article"
+                    :series="series[article.series]"
+                >
+                </info-box-series>
                 <div class="sticky top-16">
                     <h2
                         class="
@@ -82,13 +97,6 @@
                         >
                             <br />
                         </ArticleTail>
-                        <info-box-series
-                            id="infoboxSeries"
-                            class="bg-indigo-50 sm:rounded-lg"
-                            v-if="series && article"
-                            :series="series[article.series]"
-                        >
-                        </info-box-series>
                     </nav>
                 </div>
                 <!-- <TOC v-if="article.toc.length > 0" ref="toc" :toc="article.toc" class="my-5 text-lg" @currentlyActiveToc="currentlyActiveToc=$event" /> -->
@@ -184,34 +192,33 @@
 
             // The Intersection Observer API provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or with a top-level document's viewport.
             // detecting when an element scrolls into our viewpor
-            var infoboxSeries = document.getElementById("infoboxSeries");
+            // var infoboxSeries = document.getElementById("infoboxSeries");
             this.observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     const id = entry.target.getAttribute("id");
                     if (entry.isIntersecting) {
                         this.currentlyActiveToc = id;
 
-                        if (
-                            this.article.triggerInfobox &&
-                            id == this.article.triggerInfobox
-                        ) {
-                            console.log("Hello world");
-                            // Add the fadeIn class:
-                            if (this.infoboxSeriesShown) {
-                                infoboxSeries.classList.add(
-                                    "motion-safe:animate-fadeOut"
-                                );
-                                this.infoboxSeriesShown = false;
-                            }
-                            // } else {
-                            //     infoboxSeries.classList.add(
-                            //         "motion-safe:animate-fadeIn"
-                            //     );
-                            //     this.infoboxSeriesShown = true;
-                            // }
-                        } else {
-                            element.classList.remove("motion-safe:animate-*");
-                        }
+                        // if (
+                        //     this.article.triggerInfobox &&
+                        //     id == this.article.triggerInfobox
+                        // ) {
+                        //     // Add the fadeIn class:
+                        //     if (this.infoboxSeriesShown) {
+                        //         infoboxSeries.classList.add(
+                        //             "motion-safe:animate-fadeOut"
+                        //         );
+                        //         this.infoboxSeriesShown = false;
+                        //     }
+                        //     // } else {
+                        //     //     infoboxSeries.classList.add(
+                        //     //         "motion-safe:animate-fadeIn"
+                        //     //     );
+                        //     //     this.infoboxSeriesShown = true;
+                        //     // }
+                        // } else {
+                        //     element.classList.remove("motion-safe:animate-*");
+                        // }
                     }
                 });
             }, this.observerOptions);

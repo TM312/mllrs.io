@@ -34,6 +34,9 @@ module.exports = {
                 css: [
                     {
                         fontSize: rem(10),
+                        // fontFamily: {
+                        //     sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+                        // },
                         lineHeight: round(20 / 12),
                         p: {
                             marginTop: em(14, 12),
@@ -281,30 +284,30 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    require('tailwind-css-variables')(
-        {
-            colors: 'color',
-            screens: false,
-            fontFamily: false,
-            fontSize: false,
-            fontWeight: false,
-            lineHeight: false,
-            letterSpacing: false,
-            backgroundSize: false,
-            borderWidth: false,
-            borderRadius: false,
-            width: false,
-            height: false,
-            minWidth: false,
-            minHeight: false,
-            maxWidth: false,
-            maxHeight: false,
-            padding: false,
-            margin: false,
-            boxShadow: false,
-            zIndex: false,
-            opacity: false
-        }
-    )
+    // require('tailwind-css-variables')(
+    //     {
+    //         colors: 'color',
+    //         screens: false,
+    //         fontFamily: false,
+    //         fontSize: false,
+    //         fontWeight: false,
+    //         lineHeight: false,
+    //         letterSpacing: false,
+    //         backgroundSize: false,
+    //         borderWidth: false,
+    //         borderRadius: false,
+    //         width: false,
+    //         height: false,
+    //         minWidth: false,
+    //         minHeight: false,
+    //         maxWidth: false,
+    //         maxHeight: false,
+    //         padding: false,
+    //         margin: false,
+    //         boxShadow: false,
+    //         zIndex: false,
+    //         opacity: false
+    //     }
+    // )
   ]
 }
