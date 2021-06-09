@@ -1,6 +1,6 @@
 ---
 title: Transcribing Video Data With AWS Transcribe
-slug: aws-transcribe
+slug: aws-transcribe-lambda
 description: A brief introduction to the AWS ecosystem and boto3.
 series: introduction-to-aws-and-lambda
 # repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
@@ -15,16 +15,14 @@ tags:
 ---
 
 ## Introduction
-This is part 1 of 3 in a series on AWS, lambda, and resource management. In this article we have a look at the AWS service suite and how interact with it through the console UI. Our practical goal is to use AWS speech-to-text service <a href='https://aws.amazon.com/transcribe/'>AWS Transcribe</a> to create transcriptions of video data that has been uploaded to an S3 bucket, AWS web-accessible file storage service. To achieve this, we first use the AWS Management Console, before interacting with the service suite programmatically using the AWS SDK, <code>boto3</code>.
+This is part 2 of 3 in our series on AWS, lambda, and resource management. Previously, we learned how to use AWS Transcribe for speech-to-text conversion of videos we upload to a S3 bucket. In this part, we are going to automate this conversion step by using AWS Lambda. [Lambda](https://aws.amazon.com/lambda/) is an AWS service that allows to run code in response to event triggers without the need to manage the underlying compute infrastructure. This can be useful for various contexts. For instance, so far we manually executed a handler function to transcribe video files in an S3 bucket. Lambda now allows us to call this function based on any event we can communicate to the function, such as whenever a video file is being uploaded to the bucket.
 
-In pursuing our goal we aim to **i) create an S3 bucket**, **ii) upload a video file to the bucket**, **iii) create a transcription job**, and finally **iv) checkout the transcript**. Let's get started.
+In order to achieve this, we will **i) provide a role for the lambda function that allows it to interact with S3 and AWS Transcribe**, **ii) create the function and attach the role**, **iii) Define the event trigger**, and finally **iv) upload a video to our S3 bucket and check for a transcript**.
 
 
 ## Prerequisites
 
 In order to use its services, we need to have an [AWS account](https://aws.amazon.com). Every account comes with a free tier that covers the use of all resources we need to reach our goal.
-
-On top of that access to either [Jupyter Notebook](https://jupyter.org/) or access to [Google colab](https://colab.research.google.com) makes it easier to follow along.
 
 
 ## Manual transcription
@@ -76,11 +74,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
 
     [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) is AWS SDK for Python which provides us with access to S3 and Transcribe.
 
-    We install boto3 using <code>pip install boto3</code>. In Google Collab we can just call `!pip install boto3` directly inside the cell. Outside we would create a virtual environemnt to install the dependency there. For the sole purpose of following along this guide we could run
-    - `mkdir demo-aws-transcribe` to create our project directory *'demo-aws-transcribe'*,
-    - `cd demo-aws-transcribe` to go into the project directoy,
-    - `python - m venv venv` to create a virtual environment inside a directory venv,
-    - `source venv/bin/activate` to activate the virtual environment.
+    We install boto3 using <code>pip install boto3</code>.
 
     Boto3 requires the authentication credentials 'aws_access_key_id' and 'aws_secret_access_key', to access resources through our account. We can create through the AWS IAM service. In the AWS Management Console we select *IAM* in the **Service Menu**. We click on *Users* > *Add user* and select *Programmatic access*. For our purposes we can add the user to Admins by selecting the field, which will provide full access to all available resources.
 
