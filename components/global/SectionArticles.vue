@@ -8,7 +8,7 @@
             >
                 <NuxtLink
                     v-if="article.published"
-                    :to="`/article/${article.slug}`"
+                    :to="`/articles/${article.slug}`"
                 >
                     <span
                         v-if="!!article && article.title"
