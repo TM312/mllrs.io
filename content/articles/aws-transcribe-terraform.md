@@ -274,7 +274,6 @@ s3_client.delete_bucket(Bucket=S3_NAME_INPUT)
 s3_client.delete_bucket(Bucket=S3_NAME_OUTPUT)
 
 transcribe_client.delete_transcription_job(TranscriptionJobName=transcript_data['jobName'])
-
 ```
 
 Boto3 also contains access to the [IAM client](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iam.html#client). First, we get the role using the name we assigned to it earlier.

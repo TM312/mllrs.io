@@ -273,7 +273,6 @@ s3_client.delete_bucket(Bucket=S3_NAME_INPUT)
 s3_client.delete_bucket(Bucket=S3_NAME_OUTPUT)
 
 transcribe_client.delete_transcription_job(TranscriptionJobName=transcript_data['jobName'])
-
 ```
 
 Boto3 also contains access to the [IAM client](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iam.html#client). First, we get the role using the name we assigned to it earlier.
@@ -309,7 +308,6 @@ lambda_client = boto3.client(
     region_name=AWS_DEFAULT_REGION
 )
 lambda_client.delete_function(FunctionName=lambda_function_name)
-
 ```
 
 In the last step we manually verify that all resources have been deleted. Next to listing all remaining buckets and transcription jobs, we define two functions that print remaining lambda functions and iam roles respectively.
@@ -339,7 +337,6 @@ print_bucket_list(s3_client)
 print_transcription_job_list(transcribe_client)
 print_lambda_function_list(lambda_client)
 print_iam_role_list(iam_client)
-
 ```
 The output of calling these functions will be either empty or print only those functions that predate our experiment.
 
