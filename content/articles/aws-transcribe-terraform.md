@@ -1,6 +1,6 @@
 ---
-title: Using AWS Lambda For Automatic Video Data Transcriptions
-slug: aws-transcribe-lambda
+title: Deploying Services on AWS Using Terraform
+slug: aws-transcribe-terraform
 description: A step-by-step guide on how to create an AWS Lambda function that triggers AWS Transcribe whenever new items are uploaded to an S3 bucket.
 series: introduction-to-aws-and-lambda
 # repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
@@ -11,11 +11,12 @@ alt: THIS IS THE ALT
 tags:
   - AWS
   - python
+  - terraform
 
 ---
 
 ## Introduction
-This is part 2 of 3 in a series on AWS, lambda, and resource management. Previously, we learned how to use AWS Transcribe for speech-to-text conversion of videos we upload to an S3 bucket. In this part, we are going to automate this conversion step by using AWS Lambda.
+This is part 3 of 3 in a series on AWS, lambda, and resource management. Previously, we learned how to use AWS Transcribe for speech-to-text conversion of videos we upload to an S3 bucket. In this part, we are going to automate this conversion step by using AWS Lambda.
 
 [Lambda](https://aws.amazon.com/lambda/) is an AWS service that allows to run code in response to event triggers without the need to manage the underlying compute infrastructure. This can be useful for various contexts. For instance, so far we manually executed a handler function to transcribe video files in an S3 bucket. Lambda now allows us to call this function based on any event we can communicate to the function, such as whenever a video file is being uploaded to the bucket.
 
@@ -355,7 +356,7 @@ For a simple MVP this manual deployment of resources is sufficient. However, in 
 - make iterative code changes, from the configuration to the lambda handler function itself
 - deploy our resources across different environments, e.g. development, staging, production
 
-This can quickly cause complexity that is difficult to handle manually. In the last part of this series, we will therefore use **Terraform** to efficiently set up and manage all our resources (<NuxtLink to="/articles/aws-transcribe-terraform">part 3</NuxtLink>).
+This can quickly cause complexity that is difficult to handle manually. In the last part of this series, we will therefore use **Terraform** to efficiently set up and manage all our resources (<NuxtLink to="/about">part 3</NuxtLink>).
 
 
 
