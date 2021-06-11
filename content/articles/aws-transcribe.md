@@ -550,7 +550,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
     - delete the transcription job
     - verify that everything is cleaned up
 
-    The respective <code>boto3</code>-clients can take care of that.
+    The respective `boto3`-clients can take care of that.
 
     ```py
     def delete_bucket_content(s3_client, bucket: str) -> None:
@@ -591,7 +591,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
 
 ## Conclusion and Outlook
 
-Nice, we successfully retrieved the transcript of our uploaded video. We did so using AWS Transcribe, AWS speech-to-text service first manually through the Management Console and before u<code>ing `boto3</code> for programatic interactions.
+Nice, we successfully retrieved the transcript of our uploaded video. We did so using AWS Transcribe, AWS speech-to-text service first manually through the Management Console and before using `boto3`for programatic interactions.
 That’s it for part 1 and I hope it has been helpful.
 
 In the following parts of this series, we will
