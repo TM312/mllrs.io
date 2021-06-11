@@ -94,7 +94,7 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
 
     Now that we are set up, start a [Jupyter Notebook](https://jupyter.org/), [Google Colab](https://colab.research.google.com) or a Python Shell.
 
-1. **Create a S3 bucket**
+1. **Create an S3 bucket**
 
     First, let's get the S3 client, which allows us to interact with S3.
 
