@@ -29,8 +29,6 @@ On top of that access to either [Jupyter Notebook](https://jupyter.org/) or acce
 
 ## Manual transcription
 
-To reach our goal we need to **i) create an S3 bucket**, **ii) upload a video file to the bucket**, **iii) create a transcription job**, and finally **iv) checkout the transcript**. Let's get started.
-
 
 1. **Create S3 bucket**
 
