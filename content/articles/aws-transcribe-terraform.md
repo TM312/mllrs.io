@@ -16,334 +16,89 @@ tags:
 ---
 
 ## Introduction
-This is part 3 of 3 in a series on AWS, lambda, and resource management. Previously, we learned how to use AWS Transcribe for speech-to-text conversion of videos we upload to an S3 bucket. In this part, we are going to automate this conversion step by using AWS Lambda.
+This is part 3 of 3 in a series on AWS, lambda, and resource management. Previously, we learned how to use AWS Transcribe for speech-to-text conversion. Via AWS Lambda we automated the process to transcribe any new video that would be uploaded to an S3 bucket. In this part, we use `Terraform` to prepare all necessary configuration as code and deploy and update the required infrastructure within seconds.
 
-[Lambda](https://aws.amazon.com/lambda/) is an AWS service that allows to run code in response to event triggers without the need to manage the underlying compute infrastructure. This can be useful for various contexts. For instance, so far we manually executed a handler function to transcribe video files in an S3 bucket. Lambda now allows us to call this function based on any event we can communicate to the function, such as whenever a video file is being uploaded to the bucket.
+[Terraform](https://www.terraform.io/) is a an open-source tool to configure and manage infrastructure as code. Until now we either used the AWS Management Console or different clients of the AWS SDK, boto3, to manually create the required resources for the automatic transcription. This approach proves useful when testing, for very small applications, or one-off implementations with few changing parameters. However, when an application grows, i.e. more services being added, increasing interactions between those services, and iterative code/configuration changes, managing the required resources can quickly become overwhelming. Terraform allows us to write configuration files for every resource we need and deploys our infrastructure based on these. It also keeps track of the state of deployment and automatically redeploys, changes, or destroys infrastructure when new code or configurations are ready for deployment.
 
-In order to achieve this, we will **i) create two S3 buckets** used as input source and output bucket for AWS Transcribe, **ii) create an IAM role for the lambda function** that allows it to interact with S3 and AWS Transcribe, **iii) create the lambda function** and attach the role, **iv) define the event trigger**, **v) test our setup** by uploading a video to our S3 bucket and checking for a transcript. A final **vi) clean up** step makes sure that we get rid of all resources used for this demo.
+In order to let Terraform manage our Lambda function, we will **i) create a configuration for each resource**, **ii) initialize a terraform project**, **iii) deploy our resources**, and **iv) test our setup** by uploading a video to a hopefully newly created S3 input bucket and checking for a corresponding transcript. Finally, we **v) clean up** everything by destroying all resources used for this demo.
 
 
 ## Prerequisites
 
 To conduct the steps outlined above we need an AWS account with sufficient privileges to create lambda funtions and IAM roles. Using our personal account these privileges are given by default.
 
+Further, we need to install Terraform.Following the <a href="https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started">official tutorial</a> we can install it either manually or using `homebrew`:
+
+```bash
+#  install the HashiCorp tap
+brew tap hashicorp/tap
+
+# install the HashiCorp tap
+brew install hashicorp/tap/terraform
+
+# update homebrew
+brew update
+
+# update Terraform
+brew upgrade hashicorp/tap/terraform
+
+#Verfiy install
+terraform -help
+
+# Enable Tab completion
+# if not yet existent and using bash
+touch ~/.bashrc
+# if not yet existent and using zsh
+touch ~/.zshrc
+
+terraform -install-autocomplete
+```
+
+
 ## Steps
 
 Some of the steps used in this article are identical with those from the <nuxt-link to="/articles/aws-transcribe">first part</nuxt-link> of this series. In these cases detailed explanations are being omitted.
 
-1. **Create Two S3 buckets**
-
-We start by creating two S3 buckets. The first one will be used for as the input bucket containing video data and trigger for the lambda function. The second bucket stores the transcripts that are being returned as JSON files from AWS Transcribe.
-
-```py
-S3_NAME_INPUT = 'demo-s3-input-video'
-S3_NAME_OUTPUT = 'demo-s3-output-transcript'
-
-import boto3
-s3_client = boto3.client(
-    "s3",
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    region_name=AWS_DEFAULT_REGION
-)
-
-s3_client.create_bucket(
-    ACL='private',
-    Bucket=S3_NAME_INPUT,
-    CreateBucketConfiguration={
-        'LocationConstraint': AWS_DEFAULT_REGION
-    }
-)
-
-s3_client.create_bucket(
-    ACL='private',
-    Bucket=S3_NAME_OUTPUT,
-    CreateBucketConfiguration={
-        'LocationConstraint': AWS_DEFAULT_REGION
-    }
-)
-```
-
-
-2. **Create An IAM Role For The Lambda Function**
-
-[Identity and Access Management](https://aws.amazon.com/iam/) (IAM) is the AWS service to manage access to AWS services and resources. Before we create the Lambda function, we need to make sure to create an IAM role with privileges to read from and write to all resources we are going to need. Later then we will assign this role to the function. Our Lambda function should be able to:
-- read from the S3 input bucket into which video files are being uploaded
-- execute various AWS Transcribe methods
-- delegate write access to AWS Transcribe for the S3 output bucket
-- read and write logs via AWS Cloudwatch
-
-We
-
-*Login AWS > AWS Management Console > IAM > Access Management: Roles > Create Role > Choose a use case: Lambda*
-  - Permissions:
-    - AmazonS3FullAccess
-    - AmazonTranscribeFullAccess
-    - CloudWatchLogsFullAccess
-  - Name: e.g. *lambda_s3_create_transcribe_role*
-
-
-3. **Create The Lambda Function**
-Now we can create the lambda function itself.
-
-*Login AWS > AWS Management Console > Lambda >Create function:*
-
-  - provide name, e.g. "lambda_s3_put_transcribe"
-  - **Tab "Code"**
-    - provide name,
-    - attach newly created role,
-    - replace code in `lambda_function.py` with code below
-    - click "Deploy"
-
-The Lambda handler function is the center of our function. This is the function being executed when triggered.
-
-```py
-import boto3
-import os
-import time
-import logging
-from urllib.parse import unquote_plus
-
-log = logging.getLogger(__name__)
-
-# ref.: https://docs.aws.amazon.com/transcribe/latest/dg/API_StartTranscriptionJob.html, last checked: 04-21-2021
-LIST_OF_SUPPORTED_TRANSCRIPTION_FILE_FORMATS = [
-    "mp3",
-    "mp4",
-    "wav",
-    "flac",
-    "ogg",
-    "amr",
-    "webm",
-]
-
-S3_NAME_OUTPUT = 'demo-s3-output-transcript'
-S3_BASE_URI = "s3://"
-transcribe_client = boto3.client("transcribe")
-
-
-def lambda_handler(event, context):
-    """
-    This handler, being invoked on S3 Object Create Events,
-    - retrieves the filename and format of the uploaded file,
-    - checks the fileformat against the listof supported formats by AWS Transcribe
-    - checks if if file has been processed before
-    - starts transcription
-    """
-
-    S3_NAME_INPUT = event['Records'][0]['s3']['bucket']['name']
-
-    filename = unquote_plus(
-        event["Records"][0]["s3"]["object"]["key"], encoding="utf-8"
-    )
+1. **Create A Configuration For Each Resource**
 
-    job_name = os.path.splitext(filename)[0].replace(
-        " ", ""
-    )  # AWS Transcribe requires job_name to contain no whitespace
-    file_format = os.path.splitext(filename)[1][1:]
 
-    if file_format not in LIST_OF_SUPPORTED_TRANSCRIPTION_FILE_FORMATS:
-        log.debug(
-            f"Transcription not possible for file: {filename}. File format '{file_format}' not supported. "
-        )
-        return
 
-    # get job names
-    try:
-        job_names = AWSTranscribeSource.get_job_names(transcribe_client)
-    except Exception as e:
-        log.error(e)
-        raise e
 
-    # check if transcript already exists
-    file_processed = job_name in job_names
+2. **Initialize A Terraform Project**
 
-    if not file_processed:
-        job_uri = os.path.join(S3_BASE_URI, S3_NAME_INPUT, filename)
 
-        # start transcribe job
-        try:
-            transcribe_client.start_transcription_job(
-                TranscriptionJobName=job_name,
-                Media={"MediaFileUri": job_uri},
-                MediaFormat=file_format,
-                LanguageCode="en-US",
-                OutputBucketName=S3_NAME_OUTPUT,
-            )
-        except Exception as e:
-            log.error(e)
-            raise e
+3. **Deploy Our Resources**
 
-        # check transcribe job
-        while True:
-            result = transcribe_client.get_transcription_job(
-                TranscriptionJobName=job_name
-            )
 
-            # checks if transcription job is done (either as COMPLETED or FAILED)
-            if result["TranscriptionJob"]["TranscriptionJobStatus"] in [
-                "COMPLETED",
-                "FAILED",
-            ]:
-                break
-            time.sleep(15)
+4. **Test Our Setup**
 
-        if result["TranscriptionJob"]["TranscriptionJobStatus"] == "COMPLETED":
-            log.info(f"Transcription Job {job_name} completed (file: {filename})")
 
-        else:
-            log.debug(f"Transcription failed at job: {job_name} (file: {filename}")
+5. **Cleaning Up**
 
-    else:
-        log.info(
-            f"File: {filename} has already been processed and is therefore being skipped."
-        )
 
+6. **Bonus: Deploy Across Different Environments**
 
-class AWSTranscribeSource:
-    @staticmethod
-    def get_job_names(transcribe_client) -> list:
-        # all the transcriptions
-        transcription_jobs = transcribe_client.list_transcription_jobs()
+- Create Makefile
 
-        # list comprehension for job names in transcription_jobs
-        job_names = [
-            job["TranscriptionJobName"]
-            for job in transcription_jobs["TranscriptionJobSummaries"]
-        ]
+    `touch Makefile`
 
-        return job_names
-```
+    ```Makefile
 
-def lambda_handler(`event`, `context`)
+    ENV=dev
 
-`S3_NAME_INPUT = event['Records'][0]['s3']['bucket']['name']`
+    # to store config for different environments
+    tf-create-workspace:
+        cd terraform && \
+        terraform workspace new $(ENV)
 
-`filename = unquote_plus(event["Records"][0]["s3"]["object"]["key"], encoding="utf-8")`
 
-log -> cloud watch
+    tf-init:
+        cd terraform && \
+        terraform workspace select $(ENV) && \
+        terraform init
+    ```
 
 
-4. **Define The Event Trigger**
-We want our Lambda function to run whenever a file is being uploaded to the S3 input bucket. Fortunately, S3 can send out notifications to AWS Lambda for [certain events](https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html) among others, *new object created events*, which is what we are going to use.
-
-
-- **Tab "Function Overview"**
-    - click "+ Add trigger" > S3 > Select input bucket (*demo-s3-input-video*) > Event Type: All Create Events,
-    - attach newly created role
-
-
-5. **Test setup**
-
-That's it already. If we have set up the function correctly, we should now be able to trigger it by uploading a video to our input bucket. For this we can either use the Management Console or directly refer to the boto3 client.
-
-```py
-filename = '<path-to-our-video-file.mp4>'
-s3_filename = path.basename(filename)
-s3_client.upload_file(filename, S3_NAME_INPUT, s3_filename)
-```
-
-*intuitive > copy S3 file URI* (looks like this: `s3://squirro-testbucket/test_video.mp4`)
-
- Check Cloudwatch
-  - Check Transcribe
-  - Check Lambda
-  - Check Output Bucket
-
-
-
-6. **Cleaning Up**
-
-Let's clean everything up before we finish. This means we will:
-- empty both buckets *(same as in previous article)*
-- delete the buckets *(same as in previous article)*
-- delete the transcription job *(same as in previous article)*
-- detach all policies from the lambda role
-- delete the lambda role
-- delete lambda function
-- verify that everything is cleaned up
-
-
-
-We use the <code>boto3</code>-clients to efficiently clean up all created resources. For the first three steps we use the same functions as <nuxt-link to="/articles/aws-transcribe">before</nuxt-link>.
-
-```py
-delete_bucket_content(s3_client, S3_NAME_INPUT)
-delete_bucket_content(s3_client, S3_NAME_OUTPUT)
-s3_client.delete_bucket(Bucket=S3_NAME_INPUT)
-s3_client.delete_bucket(Bucket=S3_NAME_OUTPUT)
-
-transcribe_client.delete_transcription_job(TranscriptionJobName=transcript_data['jobName'])
-```
-
-Boto3 also contains access to the [IAM client](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iam.html#client). First, we get the role using the name we assigned to it earlier.
-
-```py
-iam_client = boto3.client(
-    "iam",
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    region_name=AWS_DEFAULT_REGION
-)
-role_name = "lambda_s3_create_transcribe_role"
-iam_client.get_role(RoleName=role_name)
-```
-
-Next, we detach all policies from the role and delete it.
-```py
-# detach policies from role
-for policy in iam_client.list_attached_role_policies(RoleName=role_name)['AttachedPolicies']:
-    policy_arn = policy['PolicyArn']
-    iam_client.detach_role_policy(RoleName=role_name, PolicyArn=policy_arn)
-iam_client.list_attached_role_policies(RoleName=role_name)
-iam_client.delete_role(RoleName=role_name)
-```
-
-
-Now, we can use the [Lambda client](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lambda.html#client) to delete the function.
-```py
-lambda_client = boto3.client(
-    "lambda",
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    region_name=AWS_DEFAULT_REGION
-)
-lambda_client.delete_function(FunctionName=lambda_function_name)
-
-```
-
-In the last step we manually verify that all resources have been deleted. Next to listing all remaining buckets and transcription jobs, we define two functions that print remaining lambda functions and iam roles respectively.
-
-```py
-def print_bucket_list(s3_client) -> None:
-    buckets = s3_client.list_buckets()
-    for i, bucket in enumerate(buckets.get('Buckets')):
-        print(f"{i}: {str(bucket.get('CreationDate').date())} | {bucket.get('Name')}")
-
-def print_transcription_job_list(transcribe_client) -> None:
-    transcription_job_list = transcribe_client.list_transcription_jobs()
-    for i, transcription_job in enumerate(transcription_job_list.get('TranscriptionJobSummaries')):
-        print(f"{i}: {str(transcription_job.get('CreationTime').date())} | {transcription_job.get('TranscriptionJobName')} | {transcription_job.get('TranscriptionJobStatus')}")
-
-def print_lambda_function_list(lambda_client) -> None:
-    lambda_function_list = lambda_client.list_functions()
-    for i, lambda_function in enumerate(lambda_function_list.get('Functions')):
-        print(f"{i}: {str(lambda_function.get('CreationTime').date())} | {lambda_function.get('TranscriptionJobName')} | {lambda_function.get('TranscriptionJobStatus')}")
-
-def print_iam_role_list(iam_client) -> None:
-    iam_role_list = iam_client.list_roles()
-    for i, iam_role in enumerate(iam_role_list.get('Roles')):
-        print(f"{i}: {str(iam_role.get('CreateDate').date())} | {iam_role.get('RoleName')} | {iam_role.get('Description')}")
-
-print_bucket_list(s3_client)
-print_transcription_job_list(transcribe_client)
-print_lambda_function_list(lambda_client)
-print_iam_role_list(iam_client)
-
-```
-The output of calling these functions will be either empty or print only those functions that predate our experiment.
-
-This final validation steps demonstrates the convenience which `boto3` provides in accessing a wide variety of services. Altough the interaction with AWS services divergerces on lower levels, the service clients share many high-level similarities like the `list_*`-method which makes it easy to dive into any new service.
 
 
 ## Conclusion and Outlook
