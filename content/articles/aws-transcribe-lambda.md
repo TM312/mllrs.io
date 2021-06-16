@@ -139,7 +139,7 @@ def lambda_handler(event, context):
     job_name = os.path.splitext(filename)[0].replace(
         " ", ""
     )  # AWS Transcribe requires job_name to contain no whitespace
-    file_format = os.path.splitext(filename)[1][1:]
+    file_format = os.path.splitext(filename)[1][1:].lower()
 
     if file_format not in LIST_OF_SUPPORTED_TRANSCRIPTION_FILE_FORMATS:
         log.debug(
