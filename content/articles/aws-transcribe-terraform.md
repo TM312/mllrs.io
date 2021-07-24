@@ -20,7 +20,7 @@ This is part 3 of 3 in a series on AWS, lambda, and resource management. Previou
 
 [Terraform](https://www.terraform.io/) is a an open-source tool to configure and manage infrastructure as code. Until now we either used the AWS Management Console or different clients of the AWS SDK, boto3, to manually create the required resources for the automatic transcription. This approach proves useful when testing, for very small applications, or one-off implementations with few changing parameters. However, when an application grows, i.e. more services being added, increasing interactions between those services, and iterative code/configuration changes, managing the required resources can quickly become overwhelming. Terraform allows us to write configuration files for every resource we need and deploys our infrastructure based on these. It also keeps track of the state of deployment and automatically redeploys, changes, or destroys infrastructure when new code or configurations are ready for deployment.
 
-In order to let Terraform manage our Lambda function, we will **i) create a configuration for each resource**, **ii) initialize a terraform project**, **iii) deploy our resources**, and **iv) test our setup** by uploading a video to a hopefully newly created S3 input bucket and checking for a corresponding transcript. Finally, we **v) clean up** everything by destroying all resources used for this demo.
+In order to let Terraform manage our Lambda function, we will **i) Setup our project and create a configuration for each resource**, **ii) initialize a terraform project**, **iii) deploy our resources**, and **iv) test our setup** by uploading a video to a hopefully newly created S3 input bucket and checking for a corresponding transcript. Finally, we **v) clean up** everything by destroying all resources used for this demo.
 
 
 ## Prerequisites
@@ -59,7 +59,173 @@ terraform -install-autocomplete
 
 Some of the steps used in this article are identical with those from the <nuxt-link to="/articles/aws-transcribe">first part</nuxt-link> of this series. In these cases detailed explanations are being omitted.
 
-1. **Create A Configuration For Each Resource**
+
+
+1. **Set Up Our Project And Create A Configuration For Each Resource**
+
+First, we create a new project, *terraform-lambda-demo*. Then, inside our project root we create our **lambda handler file**, `lambda_s3_create.py`, and a **terraform directory** inside which we are going to store all our terraform configuration files.
+
+```bash
+mkdir terraform-lambda-demo
+cd terraform-lambda-demo
+touch lambda_s3_create.py
+mkdir terraform
+cd terraform
+```
+
+!!! Reference to previous lambda
+
+Next, we create our main terraform file, `main.tf`, that tells terraform, which providers we are going to use.
+
+!!!DEF PROVIDERS
+
+`touch main.tf`
+
+```tf[main.tf]
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+```
+
+!!! USING AWS
+
+`touch aws.tf`
+
+!!! Required resources
+- provider aws
+
+```tf[main.tf]
+provider "aws" {
+   region = "ap-southeast-1"
+}
+```
+
+- resource
+    - aws_iam_role
+
+        ```tf[main.tf]
+        provider "aws" {
+            region = "ap-southeast-1"
+        }
+        ```
+
+    - aws_iam_policy
+
+        ```tf[main.tf]
+        # ...
+
+        resource "aws_iam_role" "lambda_s3_put_transcribe_role" {
+            name = "s3_put_transcribe_role"
+
+            assume_role_policy = <<EOF
+            {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                "Action": "sts:AssumeRole",
+                "Principal": {
+                    "Service": "lambda.amazonaws.com"
+                },
+                "Effect": "Allow"
+                }
+            ]
+            }
+            EOF
+        }
+        ```
+
+    - aws_iam_role_policy_attachment
+
+
+        ```tf[main.tf]
+        # ...
+
+        resource "aws_iam_policy" "lambda_s3_put_transcribe_policy" {
+        name        = "s3_put_transcribe_policy"
+        description = "Policy for AWS Lambda triggered by S3 PUT calling AWS Transcribe"
+
+        policy = <<EOF
+        {
+        "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Action": [
+                        "logs:DescribeLogStreams",
+                        "logs:GetLogEvents",
+                        "logs:CreateLogGroup",
+                        "logs:CreateLogStream",
+                        "logs:PutLogEvents"
+                    ],
+                    "Resource": "*"
+                },
+                {
+                    "Effect": "Allow",
+                    "Action": [
+                        "s3:ListBucket",
+                        "s3:GetObject",
+                        "s3:HeadObject"
+                    ],
+                    "Resource": [
+                        "arn:aws:s3:::${var.s3_name_input}",
+                        "arn:aws:s3:::${var.s3_name_input}/*"
+                    ]
+                },
+                {
+                    "Effect": "Allow",
+                    "Action": [
+                        "s3:ListBucket",
+                        "s3:GetObject",
+                        "s3:HeadObject",
+                        "s3:PutObject",
+                        "s3:PutObjectAcl"
+                    ],
+                    "Resource": [
+                        "arn:aws:s3:::${var.s3_name_output}"
+                    ]
+                },
+                {
+                    "Effect": "Allow",
+                    "Action": [
+                        "s3:ListBucket",
+                        "s3:GetObject",
+                        "s3:HeadObject",
+                        "s3:PutObject",
+                        "s3:PutObjectAcl",
+                        "transcribe:GetTranscriptionJob",
+                        "transcribe:ListTranscriptionJobs",
+                        "transcribe:StartTranscriptionJob"
+                    ],
+                    "Resource": "*"
+                }
+            ]
+        }
+        EOF
+        }
+
+        ```
+
+       !!! where tp get policy  Statement from
+
+
+
+    - aws_lambda_function
+    - aws_s3_bucket
+    - aws_s3_bucket
+    - aws_lambda_permission
+    - aws_s3_bucket_notification
+- data
+    - archive_file
+
+```tf[aws.tf]
+```
+
 
 
 

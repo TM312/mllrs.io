@@ -72,8 +72,6 @@ s3_client.create_bucket(
 - delegate write access to AWS Transcribe for the S3 output bucket
 - read and write logs via AWS Cloudwatch
 
-We
-
 *Login AWS > AWS Management Console > IAM > Access Management: Roles > Create Role > Choose a use case: Lambda*
   - Permissions:
     - AmazonS3FullAccess
@@ -94,13 +92,14 @@ Now we can create the lambda function itself.
     - replace code in `lambda_function.py` with code below
     - click "Deploy"
 
-The Lambda handler function is the center of our function. This is the function being executed when triggered.
+The following handler code is the center of our Lambda function.
 
 ```py
 import boto3
 import os
 import time
 import logging
+import re
 from urllib.parse import unquote_plus
 
 log = logging.getLogger(__name__)
@@ -126,101 +125,63 @@ def lambda_handler(event, context):
     This handler, being invoked on S3 Object Create Events,
     - retrieves the filename and format of the uploaded file,
     - checks the fileformat against the listof supported formats by AWS Transcribe
-    - checks if if file has been processed before
     - starts transcription
     """
 
     S3_NAME_INPUT = event['Records'][0]['s3']['bucket']['name']
 
-    filename = unquote_plus(
+    filepath = unquote_plus(
         event["Records"][0]["s3"]["object"]["key"], encoding="utf-8"
     )
 
-    job_name = os.path.splitext(filename)[0].replace(
-        " ", ""
-    )  # AWS Transcribe requires job_name to contain no whitespace
-    file_format = os.path.splitext(filename)[1][1:].lower()
+    # AWS Transcribe requires job_name to contain no whitespace
+    job_name = HelperService._sanitize_filepath(filepath)
+    file_format = os.path.splitext(filepath)[1][1:].lower()
 
     if file_format not in LIST_OF_SUPPORTED_TRANSCRIPTION_FILE_FORMATS:
         log.debug(
-            f"Transcription not possible for file: {filename}. File format '{file_format}' not supported. "
+            f"Transcription not possible for file: {filepath}. File format '{file_format}' not supported. "
         )
         return
 
-    # get job names
+
+    job_uri = os.path.join(S3_BASE_URI, S3_NAME_INPUT, filepath)
+
+    # start transcribe job
     try:
-        job_names = AWSTranscribeSource.get_job_names(transcribe_client)
+        transcribe_client.start_transcription_job(
+            TranscriptionJobName=job_name,
+            Media={"MediaFileUri": job_uri},
+            MediaFormat=file_format,
+            LanguageCode="en-US",
+            OutputBucketName=S3_NAME_OUTPUT,
+        )
     except Exception as e:
         log.error(e)
         raise e
 
-    # check if transcript already exists
-    file_processed = job_name in job_names
 
-    if not file_processed:
-        job_uri = os.path.join(S3_BASE_URI, S3_NAME_INPUT, filename)
+class HelperService:
 
-        # start transcribe job
-        try:
-            transcribe_client.start_transcription_job(
-                TranscriptionJobName=job_name,
-                Media={"MediaFileUri": job_uri},
-                MediaFormat=file_format,
-                LanguageCode="en-US",
-                OutputBucketName=S3_NAME_OUTPUT,
-            )
-        except Exception as e:
-            log.error(e)
-            raise e
-
-        # check transcribe job
-        while True:
-            result = transcribe_client.get_transcription_job(
-                TranscriptionJobName=job_name
-            )
-
-            # checks if transcription job is done (either as COMPLETED or FAILED)
-            if result["TranscriptionJob"]["TranscriptionJobStatus"] in [
-                "COMPLETED",
-                "FAILED",
-            ]:
-                break
-            time.sleep(15)
-
-        if result["TranscriptionJob"]["TranscriptionJobStatus"] == "COMPLETED":
-            log.info(f"Transcription Job {job_name} completed (file: {filename})")
-
-        else:
-            log.debug(f"Transcription failed at job: {job_name} (file: {filename}")
-
-    else:
-        log.info(
-            f"File: {filename} has already been processed and is therefore being skipped."
-        )
-
-
-class AWSTranscribeSource:
     @staticmethod
-    def get_job_names(transcribe_client) -> list:
-        # all the transcriptions
-        transcription_jobs = transcribe_client.list_transcription_jobs()
+    def _sanitize_filepath(filepath: str) -> str:
+        return re.sub(r"\W", "_", filepath.lower())
 
-        # list comprehension for job names in transcription_jobs
-        job_names = [
-            job["TranscriptionJobName"]
-            for job in transcription_jobs["TranscriptionJobSummaries"]
-        ]
 
-        return job_names
 ```
 
-def lambda_handler(`event`, `context`)
+The `lambda_handler`-function is being executed when triggered.
 
-`S3_NAME_INPUT = event['Records'][0]['s3']['bucket']['name']`
+    def lambda_handler(`event`, `context`)
 
-`filename = unquote_plus(event["Records"][0]["s3"]["object"]["key"], encoding="utf-8")`
+    `S3_NAME_INPUT = event['Records'][0]['s3']['bucket']['name']`
 
-log -> cloud watch
+    documentation: https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-content-structure.html
+
+    `filename = unquote_plus(event["Records"][0]["s3"]["object"]["key"], encoding="utf-8")`
+
+We import logging to have access to log events, which are visible in `AWS Cloudwatch`.
+
 
 
 4. **Define The Event Trigger**
@@ -243,6 +204,9 @@ s3_client.upload_file(filename, S3_NAME_INPUT, s3_filename)
 ```
 
 *intuitive > copy S3 file URI* (looks like this: `s3://squirro-testbucket/test_video.mp4`)
+
+log -> cloud watch
+*Lambda > Tab: Monitor > Cloudwatch !!!*
 
  Check Cloudwatch
   - Check Transcribe
@@ -353,8 +317,6 @@ For a simple MVP this manual deployment of resources is sufficient. However, in 
 - deploy our resources across different environments, e.g. development, staging, production
 
 This can quickly cause complexity that is difficult to handle manually. In the last part of this series, we will therefore use **Terraform** to efficiently set up and manage all our resources (<NuxtLink to="/articles/aws-transcribe-terraform">part 3</NuxtLink>).
-
-
 
 
 
