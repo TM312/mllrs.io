@@ -32,19 +32,18 @@
                 <article-tags :tags="tags" :article-tags="article.tags" />
             </section>
             <aside v-if="article.toc.length > 0">
-                <info-box-series
-                    id="infoboxSeries"
-                    class="
-                        bg-indigo-50
-                        sm:rounded-lg
-                        mt-16
-                        overflow-hidden
-                        h-32
-                    "
-                    v-if="series && article"
-                    :series="series[article.series]"
-                >
-                </info-box-series>
+                    <info-box-series
+                        id="infoboxSeries"
+                        class="
+                            mt-16
+                        "
+                        v-if="series && article"
+                        :series="series[article.series]"
+                        :show-details="infoboxSeriesShown"
+                        @mouseover.native="infoboxSeriesShown = true"
+                        @mouseleave.native="infoboxSeriesShown = false"
+                    >
+                    </info-box-series>
                 <div class="sticky top-16">
                     <h2
                         class="
@@ -143,7 +142,7 @@
         data() {
             return {
                 currentlyActiveToc: "",
-                infoboxSeriesShown: true,
+                infoboxSeriesShown: false,
                 observer: null,
                 observerOptions: {
                     root: this.$refs.nuxtContent,
@@ -235,13 +234,4 @@
         },
     };
 </script>
-<style>
-    .home-enter-active,
-    .home-leave-active {
-        transition: opacity 0.3s;
-    }
-    .home-enter,
-    .home-leave-active {
-        opacity: 0;
-    }
-</style>
+
