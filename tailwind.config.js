@@ -240,18 +240,14 @@ module.exports = {
                             fontWeight: '700',
                             fontStyle: 'normal',
                             textDecoration: 'none',
-                            color: '#3162ce',
+                            color: '#1e40af ',
                             '&:hover': {
-                                color: '#2c5242'
+                                color: '#1e3a8a'
                             }
                         },
                         b: {
                             fontWeight: '700',
                             fontStyle: 'normal',
-                            color: '#3162ce',
-                            '&:hover': {
-                                color: '#2c5242'
-                            }
                         },
                         i: {
                             fontWeight: '400',
