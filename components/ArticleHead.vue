@@ -39,7 +39,6 @@
                     text-base text-center text-indigo-600
                     font-semibold
                     tracking-wide
-                    uppercase
                 "
             >
                 {{ !!series ? series[article.series].name : "" }}
