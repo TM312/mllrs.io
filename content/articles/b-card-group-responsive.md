@@ -10,9 +10,7 @@ published: true
 img: hello.png
 alt: THIS IS THE ALT
 tags:
-  - nuxtjs
-  - bootstrap-vue
-
+  - NuxtJS
 ---
 
 <a class="font-bold text-purple-600" href="https://bootstrap-vue.org/" target="_blank"> Bootstrap-Vue (BV) </a> is a solid choice when building MVPs in Vue or Nuxt. Like it’s originator <a class="font-bold text-purple-600" href="https://getbootstrap.com/" target="_blank">Bootstrap</a> it comes with many pre-styled components. Beyond that BV relies on Javascript to provide additional functionality.

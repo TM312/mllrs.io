@@ -8,7 +8,7 @@ published: true
 img: hello.png
 alt: header image
 tags:
-  - nuxtjs
+  - NuxtJS
 
 ---
 
@@ -61,7 +61,7 @@ export default {
 
 *Before creating a plugin, pay attention to the naming to avoid conflicts, as it will be globally accessible.*
 
-```vue{4}[FooComponent.vue]
+```vue[FooComponent.vue]
 <template>
   <div>
     <b>Name:</b> {{ user.name }}<br>

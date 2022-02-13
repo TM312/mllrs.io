@@ -10,7 +10,7 @@ img: hello.png
 alt: THIS IS THE ALT
 tags:
   - AWS
-  - python
+  - Python
 
 ---
 

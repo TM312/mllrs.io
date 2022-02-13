@@ -2,20 +2,20 @@
 title: Transcribing Video Data With AWS Transcribe
 slug: aws-transcribe
 description: A brief introduction to the AWS ecosystem and boto3.
+createdAt: 2021-08-11T00:01:00.000Z
+updatedAt: 2021-08-11T00:01:00.000Z
 series: introduction-to-aws-and-lambda
-# repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
-
 published: true
-img: hello.png
+img: assets/article/hello.png
 alt: THIS IS THE ALT
 tags:
   - AWS
-  - python
+  - Python
 
 ---
 
 ## Introduction
-This is part 1 of 3 in a series on AWS, lambda, and resource management. In this article we have a look at the AWS service suite and how interact with it through the console UI. Our practical goal is to use AWS speech-to-text service <a href='https://aws.amazon.com/transcribe/'>AWS Transcribe</a> to create transcriptions of video data that has been uploaded to an S3 bucket, AWS web-accessible file storage service. To achieve this, we first use the AWS Management Console, before interacting with the service suite programmatically using the AWS SDK, <code>boto3</code>.
+This is part 1 of 3 in a series on AWS, lambda, and resource management. In this article we have a look at the AWS service suite and how interact with it through the console UI. Our practical goal is to use AWS speech-to-text service <a href='https://aws.amazon.com/transcribe/'>AWS Transcribe</a> to create transcriptions of video data that has been uploaded to an S3 bucket, AWS web-accessible file storage service. To achieve this, we first use the AWS Management Console, before interacting with the service suite programmatically using the AWS SDK, *boto3*.
 
 In pursuing our goal we aim to **i) create an S3 bucket**, **ii) upload a video file to the bucket**, **iii) create a transcription job**, and finally **iv) checkout the transcript**. Let's get started.
 
@@ -68,17 +68,17 @@ This file holds the full transcript but additionally provides timestamps and con
 AWS Transcribe appears to be a suitable service for speech-to-text conversion. However, if we require more than a one-off solution, we would want to interact with the AWS services programatically.
 
 
-<h2>AWS SDK – <code>boto3</code></h2>
+## boto3: AWS SDK
 
 0. **Setup**
 
-[Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) is AWS SDK for Python which provides us with access to S3 and Transcribe.
+[Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) is the AWS SDK for Python which provides us with access to S3 and Transcribe.
 
 We install boto3 using <code>pip install boto3</code>. In Google Collab we can just call `!pip install boto3` directly inside the cell. Outside we would create a virtual environemnt to install the dependency there. For the sole purpose of following along this guide we could run
-- `mkdir demo-aws-transcribe` to create our project directory *'demo-aws-transcribe'*,
-- `cd demo-aws-transcribe` to go into the project directoy,
-- `python - m venv venv` to create a virtual environment inside a directory venv,
-- `source venv/bin/activate` to activate the virtual environment.
+- <code>mkdir demo-aws-transcribe</code> to create our project directory *'demo-aws-transcribe'*,
+- <code>cd demo-aws-transcribe</code> to go into the project directoy,
+- <code>python -m venv venv</code> to create a virtual environment inside a directory venv,
+- <code>source venv/bin/activate</code> to activate the virtual environment.
 
 Boto3 requires the authentication credentials 'aws_access_key_id' and 'aws_secret_access_key', to access resources through our account. We can create through the AWS IAM service. In the AWS Management Console we select *IAM* in the **Service Menu**. We click on *Users* > *Add user* and select *Programmatic access*. For our purposes we can add the user to Admins by selecting the field, which will provide full access to all available resources.
 
@@ -86,7 +86,8 @@ Boto3 requires the authentication credentials 'aws_access_key_id' and 'aws_secre
 
 Once we created the user, we get the necessary credentials, which we can store in a config file. Create/Open the config file using vim via <code>vi ~/.aws/credentials</code> and add the following lines
 
-```ini
+<pre data-src="plugins/prism.js" data-label="Hello World!"></pre>
+```ini[~/.aws/credentials]
 [default]
 aws_access_key_id = <your-aws-access-key-id>
 aws_secret_access_key = <your-aws-secret-access-key>
@@ -608,7 +609,7 @@ Let's clean everything up before we finish. This means we will:
 - delete the transcription job
 - verify that everything is cleaned up
 
-The respective `boto3`-clients can take care of that.
+The respective boto3-clients can take care of that.
 
 ```py
 def delete_bucket_content(s3_client, bucket: str) -> None:
@@ -649,7 +650,7 @@ Calling functions from earlier verifies that the buckets including their content
 
 ## Conclusion and Outlook
 
-Nice, we successfully retrieved the transcript of our uploaded video. We did so using AWS Transcribe, AWS speech-to-text service first manually through the Management Console and before using `boto3`for programatic interactions.
+Nice, we successfully retrieved the transcript of our uploaded video. We did so using AWS Transcribe, AWS speech-to-text service first manually through the Management Console and before using *boto3* for programatic interactions.
 That’s it for part 1 and I hope it has been helpful.
 
 In the following parts of this series, we will

@@ -8,11 +8,11 @@ repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-ca
 published: false
 img: hello.png
 alt: THIS IS THE ALT
-tags:
-  - terraform
-  - docker
-  - github_actions
-  - google_cloud
+# tags:
+#   - terraform
+#   - docker
+#   - github_actions
+#   - google_cloud
 
 ---
 

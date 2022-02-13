@@ -7,8 +7,8 @@ series: null
 published: false
 img: hello.png
 alt: THIS IS THE ALT
-tags:
-  - innovation
+# tags:
+#   - innovation
 
 ---
 
