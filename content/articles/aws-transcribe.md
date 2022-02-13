@@ -74,11 +74,18 @@ AWS Transcribe appears to be a suitable service for speech-to-text conversion. H
 
 [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) is the AWS SDK for Python which provides us with access to S3 and Transcribe.
 
-We install boto3 using <code>pip install boto3</code>. In Google Collab we can just call `!pip install boto3` directly inside the cell. Outside we would create a virtual environemnt to install the dependency there. For the sole purpose of following along this guide we could run
-- <code>mkdir demo-aws-transcribe</code> to create our project directory *'demo-aws-transcribe'*,
-- <code>cd demo-aws-transcribe</code> to go into the project directoy,
-- <code>python -m venv venv</code> to create a virtual environment inside a directory venv,
-- <code>source venv/bin/activate</code> to activate the virtual environment.
+We install boto3 using <code>pip install boto3</code>. In Google Collab we can just call `!pip install boto3` directly inside the cell. Outside we would create a virtual environemnt to install the dependency there. For the sole purpose of following along this guide we could run the following commands in the terminal:
+
+```bash
+mkdir demo-aws-transcribe
+cd demo-aws-transcribe   
+python -m venv venv      
+source venv/bin/activate 
+```
+- *line 1* creates our project directory *demo-aws-transcribe*
+- in *line 2* we move into the project directoy
+- *line 3* creates a virtual environment inside a directory venv
+- *line 4* activates the virtual environment
 
 Boto3 requires the authentication credentials 'aws_access_key_id' and 'aws_secret_access_key', to access resources through our account. We can create through the AWS IAM service. In the AWS Management Console we select *IAM* in the **Service Menu**. We click on *Users* > *Add user* and select *Programmatic access*. For our purposes we can add the user to Admins by selecting the field, which will provide full access to all available resources.
 
@@ -86,7 +93,6 @@ Boto3 requires the authentication credentials 'aws_access_key_id' and 'aws_secre
 
 Once we created the user, we get the necessary credentials, which we can store in a config file. Create/Open the config file using vim via <code>vi ~/.aws/credentials</code> and add the following lines
 
-<pre data-src="plugins/prism.js" data-label="Hello World!"></pre>
 ```ini[~/.aws/credentials]
 [default]
 aws_access_key_id = <your-aws-access-key-id>
@@ -107,7 +113,7 @@ s3_client = boto3.client(
     region_name='<your-region-name, e.g.us-east-1>'
 )
 
-# if above causes errors we can provide the credentials directly, like
+# if above causes errors we can provide the credentials directly
 s3_client = boto3.client(
     "s3",
     aws_access_key_id=AWS_ACCESS_KEY_ID,
