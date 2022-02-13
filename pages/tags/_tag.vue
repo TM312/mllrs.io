@@ -27,7 +27,7 @@
                         sm:text-4xl
                     "
                 >
-                    {{ capitalize(tag.name) }}
+                    {{ tag.name }}
                 </h2>
                 <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
                     {{ tag.description }}
