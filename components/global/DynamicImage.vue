@@ -1,7 +1,7 @@
 <template>
     <div>
-        <img :src="imgSrc()" :alt="alt" class="rounded shadow-lg" />
-        <figcaption class="text-indigo-500 text-sm">
+        <img :src="imgSrc()" :alt="alt" class="rounded-lg shadow-lg" />
+        <figcaption class="font-sans text-gray-500 text-sm">
             <slot></slot>
         </figcaption>
     </div>
