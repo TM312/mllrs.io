@@ -2,7 +2,7 @@
     <div class="my-24" v-if="typeof tags === 'object' && tags !== null">
         <span v-for="(tag, id) in articleTags" :key="id" class="mr-2">
             <Badge
-                :to="`/tag/${tags[tag].slug}`"
+                :to="`/tags/${tags[tag].slug}`"
                 :name="tags[tag].name"
                 class="mb-2"
             />
