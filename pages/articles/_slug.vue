@@ -103,6 +103,7 @@
         </div>
     </div>
 </template>
+
 <script>
     import Prism from "~/plugins/prism";
 
@@ -234,4 +235,3 @@
         },
     };
 </script>
-
