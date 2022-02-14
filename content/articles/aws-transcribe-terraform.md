@@ -6,7 +6,7 @@ series: introduction-to-aws-and-lambda
 # repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
 
 published: true
-img: hello.png
+img: /article/hello2.png
 alt: THIS IS THE ALT
 tags:
   - AWS

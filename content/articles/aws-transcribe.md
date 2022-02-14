@@ -6,7 +6,7 @@ createdAt: 2021-08-11T00:01:00.000Z
 updatedAt: 2021-08-11T00:01:00.000Z
 series: introduction-to-aws-and-lambda
 published: true
-img: assets/article/hello.png
+img: /article/hello.png
 alt: THIS IS THE ALT
 tags:
   - AWS
@@ -15,7 +15,7 @@ tags:
 ---
 
 ## Introduction
-This is part 1 of 3 in a series on AWS, lambda, and resource management. In this article we have a look at the AWS service suite and how interact with it through the console UI. Our practical goal is to use AWS speech-to-text service <a href='https://aws.amazon.com/transcribe/'>AWS Transcribe</a> to create transcriptions of video data that has been uploaded to an S3 bucket, AWS web-accessible file storage service. To achieve this, we first use the AWS Management Console, before interacting with the service suite programmatically using the AWS SDK, *boto3*.
+This is part 1 of 3 in a series on AWS, lambda, and resource management. In this article we have a look at the AWS service suite and how interact with it through the console UI. Our practical goal is to use AWS speech-to-text service <a href='https://aws.amazon.com/transcribe/'>AWS Transcribe</a> to create transcriptions of video data that has been uploaded to an S3 bucket, AWS web-accessible file storage service. To achieve this, we first use the AWS Management Console before interacting with the service suite programmatically using the AWS SDK, *boto3*.
 
 In pursuing our goal we aim to **i) create an S3 bucket**, **ii) upload a video file to the bucket**, **iii) create a transcription job**, and finally **iv) checkout the transcript**. Let's get started.
 
