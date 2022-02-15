@@ -3,7 +3,8 @@ title: Useful Plugins For Nuxt
 description: A Collection Of Useful Nuxt Plugins
 series: building_blocks
 repository: https://github.com/TM312/building_blocks/tree/master/nuxt-useful-plugins
-
+createdAt: 2021-01-23T00:01:00.000Z
+updatedAt: 2021-01-23T00:01:00.000Z
 published: true
 img: hello.png
 alt: header image

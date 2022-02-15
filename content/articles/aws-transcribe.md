@@ -258,7 +258,6 @@ if file_format not in LIST_OF_SUPPORTED_TRANSCRIPTION_FILE_FORMATS:
         f"Transcription not possible for file: {filename}. File format '{file_format}' not supported. "
     )
     return
-
 ```
 
 So far we have only been interacting with the S3 client. In order to use AWS Transcribe we need to define a separate [client](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/transcribe.html#client), which we can retrieve analogously.
@@ -294,7 +293,6 @@ except Exception as e:
 
 # check if transcript already exists
 file_processed: bool = job_name in job_names
-
 ```
 
 The response of the <code>list_transcription_jobs</code>-method,  is a dictionary that contains the list of jobs as the value of the *'TranscriptionJobSummaries'*-key. We use a list comprehension to retrieve only the job names.
@@ -325,7 +323,7 @@ if not file_processed:
 
 else:
     print(
-        f"The file '{filename}' has already been processed as the job name '{job_name}' and is therefore being skipped."
+        f"'{filename}' has already been processed (job name: {job_name}) and is therefore skipped."
     )
     return 'COMPLETED'
 ```
@@ -356,7 +354,6 @@ if result["TranscriptionJob"]["TranscriptionJobStatus"] == "COMPLETED":
 
 else:
     print(f"Transcription failed at job '{job_name}' (file: '{filename}'")
-
 ```
 
 We use a `while` loop to check regularly if the transcription status is completed (or failed) and if so break out of the loop.
@@ -458,7 +455,7 @@ def transcription_handler(filename: str, S3_BASE_URI: str, S3_NAME_INPUT: str, S
 
     else:
         print(
-            f"The file '{filename}' has already been processed as the job name '{job_name}' and is therefore being skipped."
+            f"'{filename}' has already been processed (job name: {job_name}) and is therefore skipped."
         )
         return 'COMPLETED'
 
