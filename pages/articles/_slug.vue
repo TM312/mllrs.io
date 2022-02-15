@@ -29,7 +29,7 @@
                     <nuxt-content ref="nuxtContent" :document="article" />
                 </article>
 
-                <article-tags :tags="tags" :article-tags="article.tags" />
+                <article-tags v-if="article.tags" :tags="tags" :article-tags="article.tags" />
             </section>
             <aside v-if="article.toc.length > 0">
                     <info-box-series
@@ -113,13 +113,14 @@
         async asyncData({ $content, params }) {
             const article = await $content("articles", params.slug).fetch();
             const tagsList = await $content("tags")
-                .only(["name", "slug"])
                 .where({ name: { $containsAny: article.tags } })
+                .only(["name", "slug"])
                 .fetch();
-            const tags = await Object.assign(
-                {},
-                ...tagsList.map((s) => ({ [s.name]: s }))
-            );
+            const tags = tagsList.length > 0 
+                ? await Object.assign(
+                    {},
+                    ...tagsList.map((s) => ({ [s.name]: s }))
+                ): null;
 
             const seriesList = await $content("series")
                 .where({ slug: { $containsAny: article.series } })
