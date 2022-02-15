@@ -14,14 +14,15 @@ module.exports = {
 
         extend: {
 
-            // fontFamily: {
-            //     sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-            // },
             fontFamily: {
-                'body': ['"Open Sans"', 'sans-serif'],
-                'heading': ['"Libre Baskerville"', 'serif'],
-                'mono': ['"Libre Baskerville"', 'serif']
+                sans: ['Inter'],
+                mono: ['Inter'],
             },
+            // fontFamily: {
+            //     'body': ['"Open Sans"', 'sans-serif'],
+            //     'heading': ['"Libre Baskerville"', 'serif'],
+            //     'mono': ['"Libre Baskerville"', 'serif']
+            // },
 
             animation: {
                 fadeIn: "fadeIn 2s ease-in forwards",
@@ -36,10 +37,6 @@ module.exports = {
                     "0%": { opacity: 1 },
                     "100%": { opacity: 0 }
                 }
-            },
-            fontFamily: {
-                display: ['Times New Roman'],
-                body: ['Times New Roman']
             },
             typography: {
                 DEFAULT: {
@@ -69,9 +66,11 @@ module.exports = {
                             fontStyle: 'normal',
                         },
                         i: {
-                            fontWeight: '400',
-                            fontStyle: 'mono',
-                            color: '#6CE3D4'
+                            "@apply font-black uppercase": "",
+                            fontWeight: '700',
+                            fontStyle: 'normal',
+                            // fontWeight: 'bolder',
+                            // color: '#6CE3D4'
                         },
                         small: {
                             color: '#0000ff'
