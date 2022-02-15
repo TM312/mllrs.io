@@ -1,14 +1,15 @@
 ---
-title: Innovating around Apple's media services
+title: Thoughts on innovation around Apple's media services
+slug: innovating-apples-media-services
 description: A brief analysis of current trends in digital media and Apple's role within
 series: null
 # repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
-
-published: false
+createdAt: 2021-01-26T00:01:00.000Z
+updatedAt: 2021-09-13T00:01:00.000Z
+published: true
 img: hello.png
 alt: THIS IS THE ALT
-# tags:
-#   - innovation
+tags: null
 
 ---
 
@@ -31,8 +32,8 @@ __Apples Role__ Apple services (Apple Music, AppleTV+) are in competition with h
 
 ## Live
 
-Consumers move towards live consumption formats such as 24/7 talkshows on Clubhouse, game streams on Twitch, sales on Taobao Live.
-Unlike traditional media, livestreams are typically:
+Consumers move towards live consumption formats such as 24/7 talkshows on ~~Clubhouse~~ *(that did not age well)* Twitter Spaces, game streams on Twitch, sales on Taobao Live.
+Unlike traditional media, live streams are typically:
 1. unpolished,
 2. dynamic, and
 3. allow producer-consumer interaction.
@@ -54,4 +55,4 @@ __Apples Role__ The App Store is a democratisation platform that enables develop
 
 Today, Apple benefits from first-order revenue through direct sales of devices and content. Apple also benefits from higher-order network effects and revenue from developers distributing via App Store, and content creators monetising within apps.
 <br>
-For successful innovation, Apple can further leverage these higher-order effects by increasing support for content creators focusing on the above 3 trends. For instance, COVID bears great innovation potentials for app developers and artists as the pandemic has accelerated the scale and scope of mobile media consumption, while draining many traditional revenue channels such as music concerts. Hence, a possible avenue of innovation for Apple could be Clubhouse-for-music, where iTunes hosts live remote music festivals allowing for 24/7 listening and direct interactions with artists, similar to what Twitch allows with gamers.
+For successful innovation, Apple can further leverage these higher-order effects by increasing support for content creators focusing on the above 3 trends. For instance, COVID bears great innovation potentials for app developers and artists as the pandemic has accelerated the scale and scope of mobile media consumption, while draining many traditional revenue channels such as music concerts. Hence, a possible avenue of innovation for Apple could be ~~Clubhouse~~ Twitter-Spaces-for-music, where iTunes hosts live remote music festivals allowing for 24/7 listening and direct interactions with artists, similar to what Twitch allows with gamers.
