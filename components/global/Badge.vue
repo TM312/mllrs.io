@@ -1,5 +1,7 @@
 <template>
-  <span :class="`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium hover:font-semibold border border-${color}-100 hover:border-transparent bg-white hover:bg-${color}-100 text-${color}-800 truncate ${ to ? 'uppercase' : ''}`">
+  <span 
+    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium hover:font-semibold border hover:border-transparent truncate bg-white"
+    :class="`border-${color}-100  hover:bg-${color}-100 text-${color}-800 ${ to ? 'uppercase' : ''}`">
     <NuxtLink v-if="!!to" :to="to">
       {{ capitalize(name) }}
     </NuxtLink>
@@ -22,7 +24,7 @@ export default {
   },
   computed: {
     color () {
-      return this.to ? 'purple' : 'blue'
+      return this.to ? 'blue' : 'red'
     }
   }
 
