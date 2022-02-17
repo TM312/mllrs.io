@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto md:container px-12 lg:px-48 xl:px-75 py-48">
+    <div class="flex justify-start max-w-7xl mx-auto py-48">
         <p class="text-lg text-grey-900">
             My personal blog about programming and other interesting things.
         </p>
