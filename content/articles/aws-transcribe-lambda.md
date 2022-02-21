@@ -1,8 +1,8 @@
 ---
 title: Using AWS Lambda For Automatic Video Data Transcriptions
 slug: aws-transcribe-lambda
-description: A step-by-step guide on how to create an AWS Lambda function that triggers AWS Transcribe whenever new items are uploaded to an S3 bucket.
-series: introduction-to-aws-and-lambda
+description: A step-by-step guide on how to create an AWS Lambda function that triggers AWS Transcribe whenever new items are put into an S3 bucket.
+series: intro-to-aws-and-lambda
 # repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
 createdAt: 2021-06-07T00:01:00.000Z
 updatedAt: 2021-06-06T00:01:00.000Z
@@ -16,20 +16,20 @@ tags:
 ---
 
 ## Introduction
-This is part 2 of 3 in a series on AWS, lambda, and resource management. Previously, we learned how to use AWS Transcribe for speech-to-text conversion of videos we upload to an S3 bucket. In this part, we are going to automate this conversion step by using AWS Lambda.
+This is part 2 of 3 in a series on AWS, lambda, and infrastructure management. <NuxtLink to="/articles/aws-transcribe">Previously</NuxtLink>, we learned how to use AWS Transcribe for speech-to-text conversion of videos we upload to an S3 bucket. In this part, we are going to automate this conversion step by using AWS Lambda.
 
-[Lambda](https://aws.amazon.com/lambda/) is an AWS service that allows to run code in response to event triggers without the need to manage the underlying compute infrastructure. This can be useful for various contexts. For instance, so far we manually executed a handler function to transcribe video files in an S3 bucket. Lambda now allows us to call this function based on any event we can communicate to the function, such as whenever a video file is being uploaded to the bucket.
+[Lambda](https://aws.amazon.com/lambda/) is an AWS service that allows to run code in response to event triggers without the need to manage the underlying compute infrastructure. This can be useful for various contexts. For instance, so far we manually executed a handler function to transcribe video files located inside an S3 bucket. Lambda now allows us to call this function based on any event we can communicate to the function, such as S3 *Object create* events, which in our context corresponds to video file is being uploaded to the bucket.
 
 In order to achieve this, we will **i) create two S3 buckets** used as input source and output bucket for AWS Transcribe, **ii) create an IAM role for the lambda function** that allows it to interact with S3 and AWS Transcribe, **iii) create the lambda function** and attach the role, **iv) define the event trigger**, **v) test our setup** by uploading a video to our S3 bucket and checking for a transcript. A final **vi) clean up** step makes sure that we get rid of all resources used for this demo.
 
 
 ## Prerequisites
 
-To conduct the steps outlined above we need an AWS account with sufficient privileges to create lambda funtions and IAM roles. Using our personal account these privileges are given by default.
+To conduct the steps outlined above we need an AWS account with sufficient privileges to create lambda funtions and IAM roles. Our personal root user account holds these privileges by default.
 
 ## Steps
 
-Some of the steps used in this article are identical with those from the <nuxt-link to="/articles/aws-transcribe">first part</nuxt-link> of this series. In these cases detailed explanations are being omitted.
+Some of the steps used in this article are identical to those from the <nuxt-link to="/articles/aws-transcribe">first part</nuxt-link> of this series. In these cases detailed explanations are being omitted.
 
 1. **Create Two S3 buckets**
 
@@ -73,27 +73,29 @@ s3_client.create_bucket(
 - delegate write access to AWS Transcribe for the S3 output bucket
 - read and write logs via AWS Cloudwatch
 
-*Login AWS > AWS Management Console > IAM > Access Management: Roles > Create Role > Choose a use case: Lambda*
-  - Permissions:
+We click on *Login AWS > AWS Management Console > IAM > Access Management: Roles > Create Role > Choose a use case: Lambda*. We set the configuration as defined below.
+```md
+Permissions:
     - AmazonS3FullAccess
     - AmazonTranscribeFullAccess
     - CloudWatchLogsFullAccess
-  - Name: e.g. *lambda_s3_create_transcribe_role*
-
+Name: e.g. *lambda_s3_create_transcribe_role*
+```
 
 3. **Create The Lambda Function**
 Now we can create the lambda function itself.
 
-*Login AWS > AWS Management Console > Lambda >Create function:*
-
+We click on *Login AWS > AWS Management Console > Lambda >Create function:* and configure the function as below.
+```md
   - provide name, e.g. "lambda_s3_put_transcribe"
   - **Tab "Code"**
     - provide name,
     - attach newly created role,
-    - replace code in `lambda_function.py` with code below
+    - replace code in `lambda_function.py` with the code below
     - click "Deploy"
+```
 
-The following handler code is the center of our Lambda function.
+The following handler code is the center of our Lambda function. It strongly resembles the code we used before.
 
 ```py
 import boto3
@@ -105,7 +107,8 @@ from urllib.parse import unquote_plus
 
 log = logging.getLogger(__name__)
 
-# ref.: https://docs.aws.amazon.com/transcribe/latest/dg/API_StartTranscriptionJob.html, last checked: 04-21-2021
+# ref.: https://docs.aws.amazon.com/transcribe/latest/dg/API_StartTranscriptionJob.html 
+# last checked: 04-21-2021
 LIST_OF_SUPPORTED_TRANSCRIPTION_FILE_FORMATS = [
     "mp3",
     "mp4",
@@ -120,12 +123,11 @@ S3_NAME_OUTPUT = 'demo-s3-output-transcript'
 S3_BASE_URI = "s3://"
 transcribe_client = boto3.client("transcribe")
 
-
 def lambda_handler(event, context):
     """
     This handler, being invoked on S3 Object Create Events,
-    - retrieves the filename and format of the uploaded file,
-    - checks the fileformat against the listof supported formats by AWS Transcribe
+    - retrieves the filename and format of the uploaded file
+    - checks the file format against the list of supported formats
     - starts transcription
     """
 
@@ -141,10 +143,9 @@ def lambda_handler(event, context):
 
     if file_format not in LIST_OF_SUPPORTED_TRANSCRIPTION_FILE_FORMATS:
         log.debug(
-            f"Transcription not possible for file: {filepath}. File format '{file_format}' not supported. "
+            f"File format '{file_format}' of {filepath} is not supported."
         )
         return
-
 
     job_uri = os.path.join(S3_BASE_URI, S3_NAME_INPUT, filepath)
 
@@ -163,36 +164,24 @@ def lambda_handler(event, context):
 
 
 class HelperService:
-
     @staticmethod
     def _sanitize_filepath(filepath: str) -> str:
         return re.sub(r"\W", "_", filepath.lower())
-
-
 ```
 
-The `lambda_handler`-function is being executed when triggered.
+The `lambda_handler`-function is being executed when triggered by an event we still need to define. Inside we retrieve the name of the S3 bucket and filename of the object related to the event trigger. The structure of the AWS native `event` argument is documented <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-content-structure.html" >here</a>.
 
-    def lambda_handler(`event`, `context`)
-
-    `S3_NAME_INPUT = event['Records'][0]['s3']['bucket']['name']`
-
-    documentation: https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-content-structure.html
-
-    `filename = unquote_plus(event["Records"][0]["s3"]["object"]["key"], encoding="utf-8")`
-
-We import logging to have access to log events, which are visible in `AWS Cloudwatch`.
-
+We import logging to have access to log events, which are visible in the AWS Cloudwatch service.
 
 
 4. **Define The Event Trigger**
-We want our Lambda function to run whenever a file is being uploaded to the S3 input bucket. Fortunately, S3 can send out notifications to AWS Lambda for [certain events](https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html) among others, *new object created events*, which is what we are going to use.
+We want our Lambda function to run whenever a file is being uploaded to the S3 input bucket. Fortunately, S3 can send out notifications to AWS Lambda for [certain events](https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html) among others, *new object created events*, which is what we need for our use case. We set the trigger as defined below.
 
-
-- **Tab "Function Overview"**
+```md
+- Tab "Function Overview"
     - click "+ Add trigger" > S3 > Select input bucket (*demo-s3-input-video*) > Event Type: All Create Events,
     - attach newly created role
-
+```
 
 5. **Test setup**
 
@@ -305,19 +294,19 @@ print_iam_role_list(iam_client)
 ```
 The output of calling these functions will be either empty or print only those functions that predate our experiment.
 
-This final validation steps demonstrates the convenience which `boto3` provides in accessing a wide variety of services. Altough the interaction with AWS services divergerces on lower levels, the service clients share many high-level similarities like the `list_*`-method which makes it easy to dive into any new service.
+This final validation steps demonstrates the convenience which `boto3` provides in accessing a wide variety of services. Altough the interaction with AWS services differs on lower levels, the service clients share many similarities which makes it easy to dive into any new service.
 
 
 ## Conclusion and Outlook
 
-In this article, we successfully deployed an AWS Lambda function that automatically transcribes video data on upload to an S3 bucket. That’s it for part 2; I hope it has been helpful.
+In this article, we successfully deployed an AWS Lambda function that automatically transcribes video files when being uploaded into an S3 bucket. That’s it for part 2; I hope it has been helpful.
 
 For a simple MVP this manual deployment of resources is sufficient. However, in many cases we may want to extend on this infrastructure. For instance, we may
 - start integrating some complementary services, additional lambda functions, EC2 instances, etc. some of which may not even relate to AWS
 - make iterative code changes, from the configuration to the lambda handler function itself
 - deploy our resources across different environments, e.g. development, staging, production
 
-This can quickly cause complexity that is difficult to handle manually. In the last part of this series, we will therefore use **Terraform** to efficiently set up and manage all our resources (<NuxtLink to="/articles/aws-transcribe-terraform">part 3</NuxtLink>).
+This can quickly exceedsd a level of complexity that would be feasible to handle manually. In the last part of this series we will therefore use **Terraform** to efficiently set up and manage our infrastructure (<NuxtLink to="/articles/aws-transcribe-terraform">part 3</NuxtLink>).
 
 
 
