@@ -87,7 +87,6 @@ cd terraform-lambda-demo
 touch lambda_s3_create.py Makefile
 mkdir terraform
 touch terraform/main.tf terraform/variables.tf terraform/outputs.tf terraform/aws.tf 
-
 ```
 
 The code for the lambda function is the same as used in <NuxtLink to="/articles/aws-transcribe-lambda">part 2</NuxtLink>.
@@ -284,7 +283,7 @@ provider "aws" {
 
 ## Conclusion and Outlook
 
-In this article, we successfully deployed an AWS Lambda function that automatically transcribes video data on upload to an S3 bucket. That’s it for part 2; I hope it has been helpful.
+In this article, we successfully deployed an AWS Lambda function that automatically transcribes video data on upload to an S3 bucket. That’s it for part 3; I hope it has been helpful.
 
 For a simple MVP this manual deployment of resources is sufficient. However, in many cases we may want to extend on this infrastructure. For instance, we may
 - start integrating some complementary services, additional lambda functions, EC2 instances, etc. some of which may not even relate to AWS

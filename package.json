@@ -34,6 +34,8 @@
         "autoprefixer": "^10.2.6",
         "nuxt-purgecss": "^1.0.0",
         "postcss": "^8.3.0",
+        "prettier": "^2.5.1",
+        "prettier-plugin-tailwindcss": "^0.1.7",
         "push-dir": "^0.4.1",
         "tailwindcss": "^2.1.4"
     }

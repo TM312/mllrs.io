@@ -35,7 +35,7 @@ export default {
 <style>
 .box-enter-active,
 .box-leave-active {
-  transition: opacity 1.5s;
+  transition: opacity 1.5s ease-in-out;
   transition: max-height 1.5s ease-in-out;
   max-height: 1000px;
 }
