@@ -193,17 +193,13 @@ s3_filename = path.basename(filename)
 s3_client.upload_file(filename, S3_NAME_INPUT, s3_filename)
 ```
 
-*intuitive > copy S3 file URI* (looks like this: `s3://squirro-testbucket/test_video.mp4`)
+Once uploaded, we check that the function was triggered as expected. The `Monitor`-tab provides access to the Cloudwatch logs. Here, we can see that 
 
-log -> cloud watch
-*Lambda > Tab: Monitor > Cloudwatch !!!*
+<dynamic-image filename='lambda-cloudwatch.png' article-slug='aws-transcribe-lambda' alt='AWS Cloudwatch Logs'>The **Cloudwatch logs** indicate that the Lambda function was triggered after uploading the video file.</dynamic-image>
 
- Check Cloudwatch
-  - Check Transcribe
-  - Check Lambda
-  - Check Output Bucket
+<dynamic-image filename='transcribe-job-overview.png' article-slug='aws-transcribe-lambda' alt='AWS Transcribe Jobs Overview'>**AWS Transcribe** confirms that a transcription job corresponding our file upload is *in progress* or already *completed*.</dynamic-image>
 
-
+Finally, we find the transcript of our video as *path-to-our-video-file.json>* inside the output bucket we specified before.
 
 6. **Cleaning Up**
 
