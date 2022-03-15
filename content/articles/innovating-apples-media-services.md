@@ -15,7 +15,7 @@ tags: null
 
 ## Introduction
 
-From my perspective, there exists today three key trends shaping the dynamics of digital media:
+Today, there appears to exist three key trends shaping the dynamics of digital media.
 
 ## On Demand
 
