@@ -14,7 +14,7 @@
 
 <script>
     export default {
-        layout: "main",
+        layout: "default",
         transitions: "home",
     };
 </script>

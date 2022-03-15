@@ -1,6 +1,6 @@
 <template>
   <footer class="bg-white">
-    <div class="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto py-2 px-4 overflow-hidden sm:px-6 lg:px-8">
       <div class="mt-8 flex justify-center space-x-6">
         <a href="https://www.linkedin.com/in/thomas-m%C3%B6llers-78bb79b9/" target="_blank" class="text-gray-400 hover:text-gray-500">
           <span class="sr-only">LinkedIn</span>
@@ -24,7 +24,7 @@
         </a>
       </div>
       <p class="mt-8 text-center text-base text-gray-400">
-        &copy; 2021 Thomas Moellers
+        &copy; {{year}} Thomas Moellers
       </p>
     </div>
   </footer>
@@ -34,8 +34,12 @@
 
 <script>
 export default {
-  name: 'Footer'
-
+  name: 'Footer',
+  data() {
+    return {
+        year: new Date().getFullYear()
+    };
+  }
 }
 </script>
 

@@ -2,7 +2,6 @@
   <div class="body">
     <Navbar />
     <Nuxt />
-    <Footer class="footer" />
   </div>
 </template>
 
