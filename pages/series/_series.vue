@@ -70,9 +70,9 @@
                                 <NuxtLink
                                     v-if="article.series"
                                     :to="`/series/${article.series}`"
-                                    class="hover:underline text-indigo-600"
+                                    class="hover:underline text-indigo-600 uppercase"
                                 >
-                                    {{ capitalize(article.series) }}
+                                    {{ article.series }}
                                 </NuxtLink>
                                 <span v-else class="text-indigo-900"
                                     >Single Article</span

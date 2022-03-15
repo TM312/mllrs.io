@@ -55,13 +55,13 @@
                         overflow-hidden
                     "
                 >
-                    <div class="flex-shrink-0">
+                    <!-- <div class="flex-shrink-0">
                         <img
                             class="h-48 w-full object-cover"
                             :src="article.img"
                             :alt="article.alt"
                         />
-                    </div>
+                    </div> -->
                     <div
                         class="
                             flex-1
@@ -76,9 +76,9 @@
                                 <NuxtLink
                                     v-if="article.series"
                                     :to="`/series/${article.series}`"
-                                    class="hover:underline text-indigo-600"
+                                    class="hover:underline text-indigo-600 uppercase"
                                 >
-                                    {{ capitalize(article.series) }}
+                                    {{ article.series }}
                                 </NuxtLink>
                                 <span v-else class="text-indigo-900"
                                     >Single Article</span
@@ -138,6 +138,7 @@
                 .only([
                     "title",
                     "description",
+                    "series",
                     "updatedAt",
                     "readingTime",
                     "tags",

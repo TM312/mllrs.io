@@ -3,7 +3,7 @@ title: Bootrap-Vue Responsive Card Deck
 description: Make Bootstrap-Vues Card Decks responsive without custom CSS
 createdAt: 2021-01-11T00:01:00.000Z
 updatedAt: 2021-01-11T00:01:00.000Z
-series: building_blocks
+series: building-blocks
 repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
 
 published: true
