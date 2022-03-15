@@ -7,7 +7,7 @@ createdAt: 2021-06-20T00:01:00.000Z
 updatedAt: 2021-06-20T00:01:00.000Z
 # repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
 
-published: true
+published: false
 img: /article/hello2.png
 alt: THIS IS THE ALT
 tags:
