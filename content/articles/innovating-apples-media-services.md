@@ -7,8 +7,8 @@ series: null
 createdAt: 2021-01-26T00:01:00.000Z
 updatedAt: 2021-09-13T00:01:00.000Z
 published: true
-img: hello.png
-alt: THIS IS THE ALT
+# img: hello.png
+# alt: THIS IS THE ALT
 tags: null
 
 ---

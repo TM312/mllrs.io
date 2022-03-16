@@ -6,8 +6,8 @@ repository: https://github.com/TM312/building_blocks/tree/master/nuxt-useful-plu
 createdAt: 2021-01-23T00:01:00.000Z
 updatedAt: 2021-01-23T00:01:00.000Z
 published: true
-img: hello.png
-alt: header image
+# img: hello.png
+# alt: header image
 tags:
   - NuxtJS
 

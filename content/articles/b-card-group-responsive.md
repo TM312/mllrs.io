@@ -15,7 +15,7 @@ tags:
 
 <a class="font-bold text-purple-600" href="https://bootstrap-vue.org/" target="_blank"> Bootstrap-Vue (BV) </a> is a solid choice when building MVPs in Vue or Nuxt. Like it’s originator <a class="font-bold text-purple-600" href="https://getbootstrap.com/" target="_blank">Bootstrap</a> it comes with many pre-styled components. Beyond that BV relies on Javascript to provide additional functionality.
 
-BV’s <a href="https://bootstrap-vue.org/docs/components/card" target="_blank">`b-card`</a> component, a `div`with some minimal styling and predefined formatting, is commonly used when aiming to provide the preview of a feature, page, or other objects.
+BV’s <a href="https://bootstrap-vue.org/docs/components/card" target="_blank">`b-card`</a> component, a `div` with some minimal styling and predefined formatting, is commonly used when aiming to provide the preview of a feature, page, or other objects.
 
 As it lies in the nature of a preview, most often you may need not just one, but multiple cards. For this use case there exists the `b-card-group` component, which is wrapped around a set of cards. Adding the props <i>deck</i>, provides sets of equal width and height. This is useful when you know the number of needed cards in advance, this number is ideally below 5 and responsive design is not a major concern. Often, however, this does not apply because user objects are fetched dynamically.
 
