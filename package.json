@@ -28,7 +28,7 @@
         "faunadb": "^4.1.0",
         "nuxt": "^2.14.8",
         "nuxt-purgecss": "^1.0.0",
-        "postcss": "^8.3.0",
+        "postcss": "^8.1.10",
         "prettier": "^2.5.1",
         "prettier-plugin-tailwindcss": "^0.1.7",
         "prism-themes": "^1.7.0",
@@ -38,5 +38,10 @@
         "tailwindcss": "^2.1.4",
         "webpack": "4.46.0"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "css-loader": "^5.0.0",
+        "postcss-import": "^13.0.0",
+        "postcss-loader": "^4.1.0",
+        "postcss-url": "^10.1.1"
+    }
 }
