@@ -34,17 +34,17 @@ export default {
     buildModules: [
         // https://go.nuxtjs.dev/eslint
         // '@nuxtjs/eslint-module',
-        '@nuxtjs/google-fonts',
-        '@nuxtjs/tailwindcss',
-        '@aceforth/nuxt-optimized-images',
-        'nuxt-purgecss'
     ],
 
     // Modules (https://go.nuxtjs.dev/config-modules)
     modules: [
         // https://go.nuxtjs.dev/content
         '@nuxt/content',
-        '@nuxtjs/axios'
+        '@nuxtjs/axios',
+        '@nuxtjs/google-fonts',
+        '@nuxtjs/tailwindcss',
+        '@aceforth/nuxt-optimized-images',
+        'nuxt-purgecss'
         // '@nuxtjs/sitemap'
     ],
 
