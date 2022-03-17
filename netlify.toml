@@ -1,7 +1,16 @@
 
 [dev]
    command = "yarn dev"
+
+# Settings in the [build] context are global and are applied to 
+# all contexts unless otherwise overridden by more specific contexts.
 [build]
   command = "yarn generate"
   publish = "dist"
   functions = 'functions'  # directs netlify to where your functions directory is located
+
+# Production context: all deploys from the Production branch 
+# set in your site’s Branches settings in the UI
+# will inherit these settings.
+[context.production]
+  environment = { NODE_VERSION = "16.13.2" }
