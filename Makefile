@@ -1,3 +1,4 @@
+# requires Netlify CLI to be installed: https://docs.netlify.com/cli/get-started/
 run-local-net:
 	netlify dev
 
