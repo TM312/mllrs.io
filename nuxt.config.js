@@ -43,7 +43,8 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/google-fonts',
         '@nuxtjs/tailwindcss',
-        '@aceforth/nuxt-optimized-images',
+        // optimized images currently causes import issues, have to wait for update: https://www.npmjs.com/package/@aceforth/nuxt-optimized-images
+        //'@aceforth/nuxt-optimized-images',
         'nuxt-purgecss'
         // '@nuxtjs/sitemap'
     ],
@@ -82,9 +83,10 @@ export default {
         nestedProperties: ['article.tags']
     },
 
-    optimizedImages: {
-        optimizeImages: true
-    },
+    // corresponds to https://www.npmjs.com/package/@aceforth/nuxt-optimized-images
+    // optimizedImages: {
+    //     optimizeImages: true
+    // },
 
     //   cloudinary: {
     //     cloudName: process.env.CLOUD_NAME
