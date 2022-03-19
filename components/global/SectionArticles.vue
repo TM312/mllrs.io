@@ -30,7 +30,7 @@
                         article.title
                     }}</span>
                     <span class="ml-2">
-                        <Badge name="coming soon" />
+                        <Badge name="maintenance" />
                     </span>
                 </div>
             </li>
