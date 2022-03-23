@@ -8,7 +8,6 @@
             class="mt-4 lg:mt-8"
         />
 
-        <LikeCounter class="hidden lg:flex mt-8 lg:mt-12" />
     </div>
 </template>
 
