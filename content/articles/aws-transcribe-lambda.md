@@ -4,8 +4,8 @@ slug: aws-transcribe-lambda
 description: A step-by-step guide on how to create an AWS Lambda function that triggers AWS Transcribe whenever new items are put into an S3 bucket.
 series: intro-to-aws-and-lambda
 # repository: https://github.com/TM312/building_blocks/tree/master/responsive-b-card-group
-createdAt: 2021-06-07T00:01:00.000Z
-updatedAt: 2021-06-06T00:01:00.000Z
+createdAt: 2021-06-06T00:01:00.000Z
+updatedAt: 2021-06-07T00:01:00.000Z
 published: true
 img: /article/hello.png
 alt: THIS IS THE ALT
