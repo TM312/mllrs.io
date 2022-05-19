@@ -27,7 +27,7 @@
         "faunadb": "^4.5.4",
         "nuxt": "^2.14.8",
         "nuxt-purgecss": "^1.0.0",
-        "postcss": "^8.1.10",
+        "postcss": "^8.4.14",
         "prettier": "^2.6.2",
         "prettier-plugin-tailwindcss": "^0.1.7",
         "prism-themes": "^1.7.0",
