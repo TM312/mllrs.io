@@ -39,7 +39,7 @@
     },
     "devDependencies": {
         "css-loader": "^5.0.0",
-        "postcss-import": "^13.0.0",
+        "postcss-import": "^15.0.1",
         "postcss-loader": "^4.1.0",
         "postcss-url": "^10.1.1"
     }
