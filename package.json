@@ -23,7 +23,7 @@
         "@tailwindcss/typography": "^0.4.0",
         "autoprefixer": "^10.2.6",
         "consola": "^2.15.3",
-        "core-js": "^3.6.5",
+        "core-js": "^3.27.2",
         "faunadb": "^4.5.4",
         "nuxt": "^2.14.8",
         "nuxt-purgecss": "^1.0.0",
