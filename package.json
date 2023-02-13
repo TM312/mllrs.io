@@ -24,7 +24,7 @@
         "autoprefixer": "^10.2.6",
         "consola": "^2.15.3",
         "core-js": "^3.27.2",
-        "faunadb": "^4.5.4",
+        "faunadb": "^4.7.1",
         "nuxt": "^2.14.8",
         "nuxt-purgecss": "^1.0.0",
         "postcss": "^8.1.10",
