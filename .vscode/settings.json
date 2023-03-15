@@ -1,6 +1,0 @@
-{
-    "html.autoClosingTags": false,
-    "auto-close-tag.enableAutoCloseSelfClosingTag": false,
-    "javascript.autoClosingTags": false,
-    "editor.insertSpaces": false
-}

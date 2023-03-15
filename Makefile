@@ -5,10 +5,6 @@ run-local-net:
 run-local:
 	yarn run dev
 
-commit:
-	git add .
-	git commit -m "$(msg)"
-
 deploy-static:
 	yarn generate && \
 	yarn deploy
