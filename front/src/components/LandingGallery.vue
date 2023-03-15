@@ -39,10 +39,10 @@
             <p class="mt-2 text-sm leading-6 text-gray-400 line-clamp-3">{{ project.description }}</p>
           </div>
         </div>
-        <div class="flex flex-wrap items-center gap-2 mt-2">
+        <!-- <div class="flex flex-wrap items-center gap-2 mt-2">
           <span v-for="category, i in project.categories" :key="i"  class="text-xs relative z-10 rounded-full bg-gray-800 py-1 px-2.5 font-medium text-gray-300">{{
             category }}</span>
-        </div>
+        </div> -->
       </article>
     </div>
   </div>
