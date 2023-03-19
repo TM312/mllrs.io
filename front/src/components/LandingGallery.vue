@@ -64,7 +64,7 @@ const projects = [
     title: 'Pantari.io',
     href: 'https://pantari.io',
     description:
-      'A webapp for businesses to manage their waiting queues. It ',
+      'A webapp for businesses to manage their waiting queues. Customers can register from their phones and get real-time updates on status and waiting times.',
     // imageUrl: getImgUrl('pantari-img.png'),
     date: '2022',
     datetime: '2020-03-16',
@@ -75,7 +75,7 @@ const projects = [
     title: 'Superpowers',
     href: 'https://github.com/TM312/superpowers',
     description:
-      'A PoC for a composable API that executes different function sequences depending on the input. The API is designed as a set of serverless functions and therefore modular and extensible.',
+      'A PoC for a composable API that executes different function sequences depending on the input. The API is designed as a modular set of serverless functions and therefore easily extensible.',
     imageUrl:
       '',
     date: '2021',
@@ -98,7 +98,7 @@ const projects = [
     title: 'BusinessModelNavigator.com',
     href: 'https://businessmodelnavigator.com',
     description:
-      'An educational webtool to stimulate corporate ideation processes. Sold to the Swiss innovation consultancy BMI Lab.',
+      'An educational webtool to stimulate corporate ideation processes. After gaining initial traction we sold it to the Swiss innovation consultancy BMI Lab.',
     imageUrl:
       '',
     date: '2018',
