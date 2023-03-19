@@ -3,19 +3,72 @@ import LandingGallery from "../components/LandingGallery.vue";
 import Main from "../layouts/Main.astro";
 ---
 
-<script>
+<script lang="ts">
 
-    window.addEventListener('keydown', (event) => {
-        if (event.key === '/' || event.key === '.') {
-            console.log('you pressed the slash');
-            event.preventDefault();
-            document.querySelector('div#search input').focus();
-        }
-    });
+  document.addEventListener('keydown', function(event) {
+    if (event.code === 'KeyP') {
+      const landingGallery = document.querySelector('#landing-gallery');
+
+      if (landingGallery.style.display === 'block') {
+        landingGallery.style.display = 'none';
+      } else {
+        landingGallery.style.display = 'block';
+      }
+    }
+  });
+	
+  // Define the behaviour for our new type of HTML element.
+//   class AstroLandingGallery extends HTMLElement {
+//     constructor() {
+//       super();
+//       let isOpen = false;
+
+//       const lg = this.querySelector("LandingGallery");
+//       const landingGallery = this.querySelector("#landing-gallery");
+// 	  console.log("landingGallery", landingGallery)
+// 	  console.log("lg", lg)
+
+//       // Each time the button is clicked, update the count.
+
+//       function handleKeyDown(event) {
+//         if (event.code === "KeyA") {
+//           isOpen = !isOpen;
+//           landingGallery.className = isOpen ? "block" : "hidden";
+//           console.log("isOpen", isOpen);
+//         }
+//       }
+
+//       landingGallery.addEventListener("keydown", handleKeyDown);
+
+//     }
+//   }
+
+//   // Tell the browser to use our AstroLandingGallery class for <astro-landing-gallery> elements.
+//   customElements.define("astro-landing-gallery", AstroLandingGallery);
+
 </script>
 
+<style>
+  .fade-enter-active {
+    transition: 1.4s ease-out;
+  }
+  .fade-leave-active {
+    transition: 1.3s ease-in;
+  }
+  .fade-enter-from,
+  .fade-leave-to {
+    transition: scale(0.95);
+    opacity: 0;
+  }
 
-<Main id='search'>
+  .fade-enter-to,
+  .fade-leave-from {
+    transition: scale(1);
+    opacity: 1;
+  }
+</style>
+
+<Main id="search">
   <div class="max-w-3xl sm:shrink-0">
     <h1
       class="mt-2 bg-gradient-to-br from-white to-gray-600 bg-clip-text text-transparent text-2xl leading-[28px] sm:text-4xl sm:leading-[48px] text-gray-400 font-bold"
@@ -28,7 +81,7 @@ import Main from "../layouts/Main.astro";
     <p class="mt-4 mb-8 text-base font-normal text-gray-400">
       <span class="inline-block max-w-[591px] align-top"
         >I've built and shipped digital products both as a solo maker and
-        product owner across the finance, automotive, and education sectors.</span
+        product owner in the finance, automotive, and education sectors.</span
       >
     </p>
 
@@ -46,12 +99,12 @@ import Main from "../layouts/Main.astro";
     <div class="flex mt-2 gap-x-4">
       <button
         class="inline-flex items-center justify-center h-10 gap-4 pl-4 pr-4 text-sm font-semibold text-black transition duration-200 ease-in-out bg-white border rounded-md cursor-pointer select-none border-sky-400 hover:bg-white/90 focus:ring-2 focus:ring-white/20 focus:outline-none focus:bg-white/90 disabled:hover:bg-white disabled:cursor-not-allowed disabled:opacity-70 sm:hidden"
-        
         >Project gallery</button
       >
-
     </div>
   </div>
+
+  
 
   <!-- <div class="flex justify-end">
     <div class="relative flex items-end">
@@ -61,9 +114,11 @@ import Main from "../layouts/Main.astro";
     </div>
   </div> -->
 
-  <div
-    class="relative hidden h-[600px]  lg:block overflow-y-auto"
-  >
-    <LandingGallery />
+  <div class="relative hidden h-[600px] lg:block overflow-y-auto">
+    <transition name="fade">
+      <astro-landing-gallery>
+        <LandingGallery id="landing-gallery" class="hidden" />
+      </astro-landing-gallery>
+    </transition>
   </div>
 </Main>
