@@ -4,12 +4,12 @@
     <article v-for="project in projects" :key="project.id"
       class="max-w-xl">
       <div class="">
-        <video ref="video2" muted loop @mouseenter="playVideo"
+        <video v-if="project.imageUrl != superpowers" ref="video2" muted loop @mouseenter="playVideo"
           @mouseleave="pauseVideo" class="object-cover w-full h-48 rounded-lg"
           :src="project.imageUrl" type="video/mp4" />
+        <img v-else :src="project.imageUrl.src" alt=""
+          class="object-cover w-full h-48 rounded-lg" />
       </div>
-      <!-- <img :src="vid.src" alt=""
-          class="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[3/2]" /> -->
       <div class="relative mt-2">
         <p class="mt-5 text-xs text-gray-500"
           v-text="project.date" />
@@ -33,8 +33,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import pantari from "../assets/videos/pantari.mp4"
-import businessmodelnavigator from "../assets/videos/businessmodelnavigator.mp4"
+import pantari from "../assets/videos/pantari.mp4";
+import businessmodelnavigator from "../assets/videos/businessmodelnavigator.mp4";
+import vat_automation from "../assets/videos/vat-automation.mp4";
+import superpowers from "../assets/images/superpowers.png";
 
 function playVideo() {
   if (!!pantari) {
@@ -84,7 +86,7 @@ const projects = [
     href: 'https://github.com/TM312/superpowers',
     description:
       'A PoC for a composable API that executes sequences of function based on the request input. The API is designed as a modular set of serverless functions and therefore easily extensible.',
-    imageUrl: pantari,
+    imageUrl: superpowers,
     date: '2021',
     datetime: '2021',
     // categories: ['Supabase'],
@@ -95,7 +97,7 @@ const projects = [
     href: 'https://github.com/TM312/vat_automation',
     description:
       'A web tool to automate VAT calculations and track sales for Amazon sellers. To cater the tool to user needs I collaborated with a leading Dutch VAT advisory and Amazon sellers.',
-    imageUrl: pantari,
+    imageUrl: vat_automation,
     date: '2020',
     // categories: ['Supabase'],
   },
