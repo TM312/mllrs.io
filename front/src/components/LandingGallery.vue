@@ -1,7 +1,6 @@
 <template>
-  <div class="mx-auto max-w-7xl ">
     <div
-      class="grid max-w-2xl grid-cols-1 mx-auto gap-y-20 gap-x-8 lg:mx-0 lg:max-w-none xl:grid-cols-2">
+      class="grid max-w-2xl grid-cols-1 mx-auto gap-y-6 lg:gap-y-20 gap-x-8 lg:mx-0 lg:max-w-none lg:grid-cols-2">
       <article v-for="project in projects" :key="project.id"
         class="flex flex-col items-start">
         <div class="relative w-full">
@@ -31,11 +30,10 @@
         </div> -->
       </article>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
 // // const imageUrl = new URL('/src/assets/images/logo.svg', import.meta.url)
 // function getImgUrl(vidName: string) {
@@ -45,15 +43,15 @@ import { ref, onMounted } from 'vue';
 
 
 
-onMounted(() => {
-  document.addEventListener('keypress', (event) => {
-    var name = event.key;
-    var code = event.code;
-    // Alert the key name and key code on keydown
-    alert(`Key pressed ${name} \r\n Key code value: ${code}`);
-    keypress.value = name
-  }, false);
-})
+// onMounted(() => {
+//   document.addEventListener('keypress', (event) => {
+//     var name = event.key;
+//     var code = event.code;
+//     // Alert the key name and key code on keydown
+//     alert(`Key pressed ${name} \r\n Key code value: ${code}`);
+//     keypress.value = name
+//   }, false);
+// })
 
 
 const d = ref<null | string>(null)
@@ -75,7 +73,7 @@ const projects = [
     title: 'Superpowers',
     href: 'https://github.com/TM312/superpowers',
     description:
-      'A PoC for a composable API that executes different function sequences depending on the input. The API is designed as a modular set of serverless functions and therefore easily extensible.',
+      'A PoC for a composable API that executes sequences of function based on the request input. The API is designed as a modular set of serverless functions and therefore easily extensible.',
     imageUrl:
       '',
     date: '2021',
