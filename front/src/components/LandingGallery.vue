@@ -4,8 +4,10 @@
     <article v-for="project in projects" :key="project.id"
       class="max-w-xl">
       <div class="">
-        <video v-if="project.imageUrl != superpowers" ref="video2" muted loop @mouseenter="playVideo"
-          @mouseleave="pauseVideo" class="object-cover w-full h-48 rounded-lg"
+        <video v-if="project.imageUrl != superpowers"
+          :ref="`video${project.id}`" muted loop
+          @mouseenter="playVideo(project.id)" @mouseleave="pauseVideo(project.id)"
+          class="object-cover w-full h-48 rounded-lg"
           :src="project.imageUrl" type="video/mp4" />
         <img v-else :src="project.imageUrl.src" alt=""
           class="object-cover w-full h-48 rounded-lg" />
@@ -31,21 +33,34 @@
 </template>
 
 <script setup lang="ts">
-
+import { ref } from "vue";
 import pantari from "../assets/videos/pantari.mp4";
 import businessmodelnavigator from "../assets/videos/businessmodelnavigator.mp4";
 import vat_automation from "../assets/videos/vat-automation.mp4";
 import superpowers from "../assets/images/superpowers.png";
 
-function playVideo() {
-  if (!!pantari) {
-    pantari.value.play();
+const video1 = ref(null);
+const video3 = ref(null);
+const video4 = ref(null);
+
+
+function playVideo(projectId: Number) {
+  if (projectId === 1 && !!video1.value) {
+    video1.value[0].play();
+  } else if (projectId === 3 && !!video3.value) {
+    video3.value[0].play();
+  } else if (projectId === 4 && !!video4.value) {
+    video4.value[0].play();
   }
 }
 
-function pauseVideo() {
-  if (!!pantari.value) {
-    pantari.value.pause();
+function pauseVideo(projectId: Number) {
+  if (projectId === 1 && !!video1.value) {
+    video1.value[0].pause();
+  } else if (projectId === 3 && !!video3.value) {
+    video3.value[0].pause();
+  } else if (projectId === 4 && !!video4.value) {
+    video4.value[0].pause();
   }
 }
 
