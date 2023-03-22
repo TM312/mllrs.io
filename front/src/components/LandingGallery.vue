@@ -31,7 +31,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 
 import pantari from "../assets/videos/pantari.mp4";
 import businessmodelnavigator from "../assets/videos/businessmodelnavigator.mp4";
@@ -49,23 +48,6 @@ function pauseVideo() {
     pantari.value.pause();
   }
 }
-// // const imageUrl = new URL('/src/assets/images/logo.svg', import.meta.url)
-// function getImgUrl(vidName: string) {
-//   // return new URL(`../assets/videos/${vidName}`, import.meta.url).href
-//   return new URL('/public/pantari-img.png', import.meta.url).href
-// }
-
-
-
-// onMounted(() => {
-//   document.addEventListener('keypress', (event) => {
-//     var name = event.key;
-//     var code = event.code;
-//     // Alert the key name and key code on keydown
-//     alert(`Key pressed ${name} \r\n Key code value: ${code}`);
-//     keypress.value = name
-//   }, false);
-// })
 
 
 const projects = [
