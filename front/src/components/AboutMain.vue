@@ -1,13 +1,13 @@
 <template>
     <div
-        class="text-gray-200 grid grid-cols-3 gap-x-20  font-mono justify-items-end">
+        class="text-gray-200 lg:grid grid-cols-3 gap-x-20 font-mono justify-items-end">
         <div class="max-w-lg col-span-2">
             <h1 class="text-gray-200 font-semibold leading-3">
                 Experience</h1>
             <div v-for="project, j in experience" :key="j"
                 class="mt-5">
                 <h3
-                    class="text-gray-300 font-medium leading-1 flex gap-x-2">
+                    class="text-gray-300 font-medium leading-1 flex gap-x-2 truncate">
                     <span v-text="project.institution" />
                     <span>|</span>
                     <span v-text="project.countryCode" />
@@ -18,7 +18,7 @@
                     <span>|</span>
                     <span v-text="project.timeSpan" />
                 </p>
-                <ul class="text-gray-700 hover:text-gray-400 font-regular text-sm text-justify">
+                <ul class="text-gray-500 font-regular text-sm text-justify">
                     <li v-for="item, k in project.description"
                         class="mt-2"
                         :key="k"
@@ -26,7 +26,7 @@
                 </ul>
             </div>
         </div>
-        <div class="max-w-sm w-full col-span-1">
+        <div class="max-w-sm w-full col-span-1 mt-20 lg:mt-0">
             <h1 class="text-gray-200 font-semibold leading-3">
                 Education</h1>
             <div v-for="station, i in education" :key="i"
