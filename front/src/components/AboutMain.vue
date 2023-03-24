@@ -88,21 +88,24 @@ const experience = [
         countryCode: "SG",
         role: "Solutions Engineer",
         timeSpan: "since 2021",
-        description: ["Implemented software solutions around textual and video data analysis at financial institutions and news aggregators. Deployed solutions both on premise (Linux/CentOS) and cloud. Responsible for project/stakeholder management."]
+        description: [
+            "Implemented software solutions around textual data analysis and search at financial institutions and news aggregators.",
+            "Developed a document handling solution at a leading bank in the APAC region from demo, to MVP, to roll-out with a 7-digit contract value. In the course of this my role shifted from single developer to product owner in a team of 8. Generated two further 6-digit follow-up projects til today.",
+        ]
     },
     {
         institution: "BMW / Institute of Technology Management",
         countryCode: "CH",
         role: "Project Lead HSG",
         timeSpan: "2015 – 2017",
-        description: ["Led team of 4 to develop methodology for the use of simulations in strategic decision making at BMW. Managed annual budget of US$95,000. Acquired BMW’s Swiss national subsidiary as customer. Within project timeframe methodology was used for 20 projects and presented to all BMW country CEOs at annual C-level conference.", "Coordinated stakeholders from HSG, FHS, BMW in organising a hackathon with 200 participants. Initiated and led a HSG-internal communication team and the development of a supporting web communication platform."]
+        description: ["Led a team of 4 to develop a methodology for the use of simulations in strategic decision making at BMW. Managed annual budget of US$95,000. Acquired BMW’s Swiss national subsidiary as customer. Within project timeframe methodology was used for 20 projects and presented to all BMW country CEOs at annual C-level conference.", "Coordinated stakeholders from HSG, FHS, BMW in organising a hackathon with 200 participants. Initiated and led a HSG-internal communication team and the development of a supporting web communication platform."]
     },
     {
         institution: "Institute of Technology Management",
         countryCode: "CH",
         role: "Program Manager",
         timeSpan: "2015 – 2019",
-        description: ["Developed and launched advanced studies program for top-level executives. Guided contractors and full-time personnel in marketing and organisation activities. Responsible for financial planning. Acquired partnerships with 30 entrepreneurs and scholars across CH and Bay Area. Program generated US$700,000 in revenue across 3 seasons."]
+        description: ["Developed and launched an advanced studies program for top-level executives. Guided contractors and full-time personnel in marketing and organisation activities. Responsible for financial planning. Acquired partnerships with 30 entrepreneurs and scholars across Switzerland and the Bay Area. The program generated US$700,000 in revenue across 3 seasons."]
     },
 ]
 </script>

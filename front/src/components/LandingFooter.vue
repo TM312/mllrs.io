@@ -28,7 +28,7 @@ const yearToday = new Date().getFullYear();
       </div>
       <!-- <div class="flex flex-col">
         <span class="text-xs font-normal text-gray-400"
-          >440004 Marine Terrace</span
+          ><Address></span
         ><span class="text-xs font-normal text-gray-400">Singapore, SG</span>
       </div> -->
     </div>
