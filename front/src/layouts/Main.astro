@@ -11,20 +11,18 @@ import LandingHeader from "../components/LandingHeader.vue";
     <meta name="generator" content={Astro.generator} />
     <title>Thomas M</title>
   </head>
-  <body class="bg-black">
-    <div class="relative  max-w-screen lg:max-h-screen">
-      <div
-        class="relative z-10 flex flex-col justify-between max-w-5xl min-h-screen px-4 mx-auto md:h-screen sm:px-8 md:max-w-7xl gap-y-8"
-      >
-        <LandingHeader/>
+  <body class="bg-black ">
+    <div
+      class="min-h-screen md:h-screen relative max-w-screen z-10 flex flex-col justify-between max-w-5xl px-4 mx-auto sm:px-8 md:max-w-7xl gap-y-8"
+    >
+      <LandingHeader />
 
-        <main class="items-center justify-between md:flex ">
-          
-            <slot /> <!-- content is injected here -->
-        </main>
+      <main class="">
+        <slot />
+        <!-- content is injected here -->
+      </main>
 
-        <LandingFooter />
-      </div>
+      <LandingFooter class="sticky bottom-0 pt-8 bg-black" />
     </div>
   </body>
 </html>

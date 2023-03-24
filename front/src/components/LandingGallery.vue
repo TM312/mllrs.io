@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid max-w-2xl grid-cols-1 mx-auto gap-y-6 lg:gap-y-20 gap-x-8 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+    class="grid max-w-2xl grid-cols-1 mx-auto gap-y-6 lg:gap-y-20 gap-x-8 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:pr-8">
     <article v-for="project in projects" :key="project.id"
       class="max-w-xl">
       <div class="">
