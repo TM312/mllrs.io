@@ -4,11 +4,12 @@
     <article v-for="project in projects" :key="project.id"
       class="max-w-xl">
       <div class="">
-        <video v-if="project.imageUrl != superpowers"
+        <video v-if="!!project.videoUrl"
           :ref="`video${project.id}`" muted loop
           @mouseenter="playVideo(project.id)" @mouseleave="pauseVideo(project.id)"
           class="object-cover w-full h-48 rounded-lg"
-          :src="project.imageUrl" type="video/mp4" />
+          :poster="project.imageUrl.src"
+          :src="project.videoUrl" type="video/mp4" />
         <img v-else :src="project.imageUrl.src" alt=""
           class="object-cover w-full h-48 rounded-lg" />
       </div>
@@ -36,8 +37,11 @@
 import { ref } from "vue";
 import pantari from "../assets/videos/pantari.mp4";
 import businessmodelnavigator from "../assets/videos/businessmodelnavigator.mp4";
-import vat_automation from "../assets/videos/vat-automation.mp4";
+import vatAutomation from "../assets/videos/vat-automation.mp4";
 import superpowers from "../assets/images/superpowers.png";
+import pantariImg from "../assets/images/pantari.png";
+import businessmodelnavigatorImg from "../assets/images/businessmodelnavigator.png";
+import vatAutomationImg from "../assets/images/vat-automation.png";
 
 const video1 = ref(null);
 const video3 = ref(null);
@@ -72,7 +76,8 @@ const projects = [
     href: 'https://pantari.io',
     description:
       'A webapp for businesses to manage their waiting queues. Customers can register from their phones and get real-time updates on status and waiting times.',
-    imageUrl: pantari,
+    imageUrl: pantariImg,
+    videoUrl:  pantari,
     date: '2022',
     datetime: '2020-03-16',
     // categories: ['Vue', 'TypeScript', 'SQL', 'Supabase', 'TailwindCSS'],
@@ -84,6 +89,7 @@ const projects = [
     description:
       'A PoC for a composable API that executes sequences of function based on the request input. The API is designed as a modular set of serverless functions and therefore easily extensible.',
     imageUrl: superpowers,
+    videoUrl:  null,
     date: '2021',
     datetime: '2021',
     // categories: ['Supabase'],
@@ -94,7 +100,8 @@ const projects = [
     href: 'https://github.com/TM312/vat_automation',
     description:
       'A web tool to automate VAT calculations and track sales for Amazon sellers. To cater the tool to user needs I collaborated with a leading Dutch VAT advisory and Amazon sellers.',
-    imageUrl: vat_automation,
+    imageUrl: businessmodelnavigatorImg,
+    videoUrl:  vatAutomation,
     date: '2020',
     // categories: ['Supabase'],
   },
@@ -104,7 +111,8 @@ const projects = [
     href: 'https://businessmodelnavigator.com',
     description:
       'An educational webtool to stimulate corporate ideation processes. After gaining initial traction we sold it to the Swiss innovation consultancy BMI Lab.',
-    imageUrl: businessmodelnavigator,
+    imageUrl: vatAutomationImg,
+    videoUrl:  businessmodelnavigator,
     date: '2018',
     // categories: ['Supabase'],
   },
