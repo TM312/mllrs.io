@@ -38,10 +38,10 @@ import { ref } from "vue";
 import pantari from "../assets/videos/pantari.mp4";
 import businessmodelnavigator from "../assets/videos/businessmodelnavigator.mp4";
 import vatAutomation from "../assets/videos/vat-automation.mp4";
-import superpowers from "../assets/images/superpowers.png";
-import pantariImg from "../assets/images/pantari.png";
-import businessmodelnavigatorImg from "../assets/images/businessmodelnavigator.png";
-import vatAutomationImg from "../assets/images/vat-automation.png";
+import superpowers from "../assets/images/superpowers.webp";
+import pantariImg from "../assets/images/pantari.webp";
+import businessmodelnavigatorImg from "../assets/images/businessmodelnavigator.webp";
+import vatAutomationImg from "../assets/images/vat-automation.webp";
 
 const video1 = ref(null);
 const video3 = ref(null);
