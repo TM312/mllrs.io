@@ -42,7 +42,7 @@ const yearToday = new Date().getFullYear();
         </span>
       </a>
     </div>
-    <button class="text-sm text-gray-400 hover:text-gray-300">
+    <button class="text-sm text-gray-400 hover:text-gray-100">
       <a href="/about/">©
       {{yearToday}} Dr. Thomas Moellers</a>
       </button>
