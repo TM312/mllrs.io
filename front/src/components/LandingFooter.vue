@@ -36,7 +36,7 @@ const yearToday = new Date().getFullYear();
       class="text-sm font-semibold text-sky-500 hover:text-sky-400">
       <a href="mailto:tm@protonmail.ch"
         class="flex items-center gap-2">
-        <span>Hire me</span>
+        <span>Work with me</span>
         <span>
           <HeroIconMailOpen />
         </span>
