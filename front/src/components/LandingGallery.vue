@@ -22,7 +22,7 @@
             v-text="project.title" />
         </h3>
         <p
-          class="mt-2 text-sm leading-6 text-gray-400 line-clamp-3">
+          class="mt-2 text-sm leading-6 text-gray-400">
           {{ project.description }}</p>
       </div>
       <!-- <div class="flex flex-wrap items-center gap-2 mt-2">
