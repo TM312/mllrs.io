@@ -5,8 +5,7 @@
       <div>
         <h1
           class="inline-block max-w-lg align-top mt-2 bg-gradient-to-br from-white to-gray-600 bg-clip-text text-transparent text-2xl leading-[28px] sm:text-4xl sm:leading-[48px] text-gray-400 font-bold">
-          Hi, I'm Thomas,<br />a developer and project manager
-          based in Singapore </h1>
+          Hi, I'm Thomas,<br />a software engineer based in Singapore </h1>
         <p
           class="mt-4 mb-8 text-base font-normal text-gray-400">
           <span
