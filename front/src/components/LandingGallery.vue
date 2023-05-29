@@ -6,7 +6,8 @@
       <div class="">
         <video v-if="!!project.videoUrl"
           :ref="`video${project.id}`" muted loop
-          @mouseenter="playVideo(project.id)" @mouseleave="pauseVideo(project.id)"
+          @mouseenter="playVideo(project.id)"
+          @mouseleave="pauseVideo(project.id)"
           class="object-cover w-full h-48 rounded-lg"
           :poster="project.imageUrl.src"
           :src="project.videoUrl" type="video/mp4" />
@@ -21,9 +22,8 @@
           <a :href="project.href" target="blank"
             v-text="project.title" />
         </h3>
-        <p
-          class="mt-2 text-sm leading-6 text-gray-400">
-          {{ project.description }}</p>
+        <p class="mt-2 text-sm leading-6 text-gray-400"> {{
+          project.description }}</p>
       </div>
       <!-- <div class="flex flex-wrap items-center gap-2 mt-2">
           <span v-for="category, i in project.categories" :key="i"  class="text-xs relative z-10 rounded-full bg-gray-800 py-1 px-2.5 font-medium text-gray-300">{{
@@ -77,7 +77,7 @@ const projects = [
     description:
       'A webapp for businesses to manage their waiting queues. Customers can register from their phones and get real-time updates on status and waiting times.',
     imageUrl: pantariImg,
-    videoUrl:  pantari,
+    videoUrl: pantari,
     date: '2022',
     datetime: '2020-03-16',
     // categories: ['Vue', 'TypeScript', 'SQL', 'Supabase', 'TailwindCSS'],
@@ -89,7 +89,7 @@ const projects = [
     description:
       'A PoC for a composable API that executes sequences of function based on the request input. The API is designed as a modular set of serverless functions and therefore easily extensible.',
     imageUrl: superpowers,
-    videoUrl:  null,
+    videoUrl: null,
     date: '2021',
     datetime: '2021',
     // categories: ['Supabase'],
@@ -100,8 +100,8 @@ const projects = [
     href: 'https://github.com/TM312/vat_automation',
     description:
       'A web tool to automate VAT calculations and track sales for Amazon sellers. To cater the tool to user needs I collaborated with a leading Dutch VAT advisory and Amazon sellers.',
-    imageUrl: businessmodelnavigatorImg,
-    videoUrl:  vatAutomation,
+    imageUrl: vatAutomationImg,
+    videoUrl: vatAutomation,
     date: '2020',
     // categories: ['Supabase'],
   },
@@ -111,8 +111,8 @@ const projects = [
     href: 'https://businessmodelnavigator.com',
     description:
       'An educational webtool to stimulate corporate ideation processes. After gaining initial traction we sold it to the Swiss innovation consultancy BMI Lab.',
-    imageUrl: vatAutomationImg,
-    videoUrl:  businessmodelnavigator,
+    imageUrl: businessmodelnavigatorImg,
+    videoUrl: businessmodelnavigator,
     date: '2018',
     // categories: ['Supabase'],
   },

@@ -2,7 +2,7 @@
     <div
         class="text-gray-200 lg:grid grid-cols-3 gap-x-20 font-mono justify-items-end">
         <div
-            class="max-w-lg col-span-2 lg:pr-8 lg:h-5/6 lg:overflow-y-auto">
+            class="max-w-lg col-span-2 lg:pr-8 lg:overflow-y-auto">
             <h1
                 class="text-gray-200 font-semibold leading-3 text-lg sticky top-0 bg-black pb-5">
                 Experience</h1>
@@ -28,7 +28,8 @@
             </div>
         </div>
         <div class="max-w-sm w-full col-span-1 mt-20 lg:mt-0">
-            <h1 class="text-gray-200 font-semibold text-lg leading-3 sticky top-0 bg-black pb-5">
+            <h1
+                class="text-gray-200 font-semibold text-lg leading-3 sticky top-0 bg-black pb-5">
                 Education</h1>
             <div v-for="station, i in education" :key="i"
                 class="mt-5">
