@@ -11,7 +11,7 @@
           class="mt-4 mb-8 text-base font-normal text-gray-400">
           <span
             class="inline-block max-w-[591px] align-top">Hi,
-            I'm Thomas, I'm a software engineer and maker
+            it's Thomas 👋 I'm a software engineer and maker
             based in Singapore. I enjoy working across the
             full stack and on NLP-related problems. Have a
             look at some of my projects or check out my <a
