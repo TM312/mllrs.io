@@ -1,52 +1,42 @@
 
 <script lang="ts" setup>
-import python from '../assets/logos/python.svg'
-import vue from '../assets/logos/vue.svg'
-import postgresql from '../assets/logos/postgresql.svg'
-import tailwindcss from '../assets/logos/tailwindcss.svg'
-import docker from '../assets/logos/docker.svg'
-import terraform from '../assets/logos/terraform.svg'
-import rabbitmq from '../assets/logos/rabbitmq.svg'
-import redis from '../assets/logos/redis.svg'
-import aws from '../assets/logos/aws.svg'
-
 
 const logos = [
   {
     'name': 'Python',
-    'src': python,
+    'src': '/logos/python.svg',
   },
   {
     'name': 'VueJS',
-    'src': vue,
+    'src': '/logos/vue.svg',
   },
   {
     'name': 'Postgresql',
-    'src': postgresql,
+    'src': '/logos/postgresql.svg',
   },
   {
     'name': 'TailwindCSS',
-    'src': tailwindcss,
+    'src': '/logos/tailwindcss.svg',
   },
   {
     'name': 'Docker',
-    'src': docker,
+    'src': '/logos/docker.svg',
   },
   {
     'name': 'Terraform',
-    'src': terraform,
+    'src': '/logos/terraform.svg',
   },
   {
     'name': 'RabbitMQ',
-    'src': rabbitmq,
+    'src': '/logos/rabbitmq.svg',
   },
   {
     'name': 'Redis',
-    'src': redis,
+    'src': '/logos/redis.svg',
   },
   {
     'name': 'AWS',
-    'src': aws,
+    'src': '/logos/aws.svg',
   },
 
 ]
