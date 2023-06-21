@@ -34,9 +34,10 @@ const yearToday = new Date().getFullYear();
     </div>
     <div
       class="text-sm font-semibold text-sky-500 hover:text-sky-400">
-      <a href="mailto:tm@protonmail.ch"
+      <a href="mailto:tmoellers@protonmail.ch"
         class="flex items-center gap-2">
-        <span>Let's get in touch</span>
+        <span class="hidden sm:block">Let's get in
+          touch</span>
         <span>
           <HeroIconMailOpen />
         </span>
