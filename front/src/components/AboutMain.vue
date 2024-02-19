@@ -1,52 +1,39 @@
 <template>
-    <div
-        class="text-gray-200 lg:grid grid-cols-3 gap-x-20 font-mono justify-items-end">
-        <div
-            class="max-w-lg col-span-2 lg:pr-8 lg:overflow-y-auto">
-            <h1
-                class="text-gray-200 font-semibold leading-3 text-lg sticky top-0 bg-black pb-5">
+    <div class="text-gray-200 lg:grid grid-cols-3 gap-x-20 font-mono justify-items-end">
+        <div class="max-w-lg col-span-2 lg:pr-8 lg:overflow-y-auto">
+            <h1 class="text-gray-200 font-semibold leading-3 text-lg sticky top-0 bg-black pb-5">
                 Experience</h1>
-            <div v-for="project, j in experience" :key="j"
-                class="mt-5">
-                <h3
-                    class="text-gray-300 font-medium leading-1 flex gap-x-2 truncate">
+            <div v-for="project, j in experience" :key="j" class="mt-5">
+                <h3 class="text-gray-300 font-medium leading-1 flex gap-x-2 truncate">
                     <span v-text="project.institution" />
                     <span>|</span>
                     <span v-text="project.countryCode" />
                 </h3>
-                <p
-                    class="text-gray-400 font-extralight flex gap-x-2 text-sm">
+                <p class="text-gray-400 font-extralight flex gap-x-2 text-sm">
                     <span v-text="project.role" />
                     <span>|</span>
                     <span v-text="project.timeSpan" />
                 </p>
-                <ul
-                    class="text-gray-500 font-regular text-sm text-justify">
-                    <li v-for="item, k in project.description"
-                        class="mt-2" :key="k" v-text="item" />
+                <ul class="text-gray-500 font-regular text-sm text-justify">
+                    <li v-for="item, k in project.description" class="mt-2" :key="k" v-text="item" />
                 </ul>
             </div>
         </div>
         <div class="max-w-sm w-full col-span-1 mt-20 lg:mt-0">
-            <h1
-                class="text-gray-200 font-semibold text-lg leading-3 sticky top-0 bg-black pb-5">
+            <h1 class="text-gray-200 font-semibold text-lg leading-3 sticky top-0 bg-black pb-5">
                 Education</h1>
-            <div v-for="station, i in education" :key="i"
-                class="mt-5">
-                <h3
-                    class="text-gray-300 font-medium leading-1 flex gap-x-2">
+            <div v-for="station, i in education" :key="i" class="mt-5">
+                <h3 class="text-gray-300 font-medium leading-1 flex gap-x-2">
                     <span v-text="station.institution" />
                     <span>|</span>
                     <span v-text="station.countryCode" />
                 </h3>
-                <p
-                    class="text-gray-400 font-extralight flex gap-x-2 text-sm">
+                <p class="text-gray-400 font-extralight flex gap-x-2 text-sm">
                     <span v-text="station.degree" />
                     <span>|</span>
                     <span v-text="station.timeSpan" />
                 </p>
-                <p class="text-gray-500 font-regular text-sm font-mono"
-                    v-text="station.description" />
+                <p class="text-gray-500 font-regular text-sm font-mono" v-text="station.description" />
             </div>
         </div>
     </div>
@@ -89,7 +76,7 @@ const experience = [
         institution: "Squirro",
         countryCode: "SG",
         role: "Solutions Engineer",
-        timeSpan: "since 2021",
+        timeSpan: "2021 - 2023",
         description: [
             "Building software solutions around textual data analysis and search at financial institutions and news aggregators.",
             "Developed a document handling solution at a leading bank in the APAC region from demo, to MVP, to roll-out with a 7-digit dollar contract value and multiple follow-up projects. In the course of this my role shifted from single developer to product owner in a team of 8.",
@@ -109,7 +96,7 @@ const experience = [
         countryCode: "CH",
         role: "Program Manager",
         timeSpan: "2015 – 2019",
-        description: ["Designed, launched, and managed an advanced studies program on business model innovation across the University of St. Gallen and in the Bay Area for top-level executives. The program generated close to a 7-digit dollar value in revenue across 3 seasons."]
+        description: ["Launched an advanced studies program on business model innovation across the University of St. Gallen and in the Bay Area for top-level executives. The program generated close to a 7-digit dollar value in revenue across 3 seasons."]
     },
 ]
 </script>
